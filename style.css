@@ -255,3 +255,67 @@ button {
   background: #38bdf8;
   color: #0f172a;
 }
+.learning-sections {
+  padding: 90px 8%;
+  background: #111827;
+}
+
+.section-title {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 50px;
+}
+
+.section-title span {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.section-title h2 {
+  font-size: 42px;
+  margin: 14px 0;
+}
+
+.section-title p {
+  color: #cbd5e1;
+}
+
+.learning-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.learning-card {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: 0.3s;
+}
+
+.learning-card:hover {
+  transform: translateY(-8px);
+  border-color: #38bdf8;
+}
+
+.icon {
+  font-size: 36px;
+  margin-bottom: 18px;
+}
+
+.learning-card h3 {
+  margin-bottom: 12px;
+  font-size: 22px;
+}
+
+.learning-card p {
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+@media (max-width: 850px) {
+  .learning-grid {
+    grid-template-columns: 1fr;
+  }
+}
