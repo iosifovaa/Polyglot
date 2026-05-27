@@ -1,14 +1,13 @@
-const buttons = document.querySelectorAll(".language-buttons button");
-const startButton = document.querySelector(".main-btn");
-
-buttons.forEach(button => {
-  button.addEventListener("click", () => {
-    buttons.forEach(btn => btn.classList.remove("active"));
-    button.classList.add("active");
-    alert(`Выбран язык сайта: ${button.textContent}`);
-  });
-});
+const startButton = document.querySelector(".start-btn");
+const onboarding = document.querySelector("#onboarding");
+const optionButtons = document.querySelectorAll(".step-card button");
 
 startButton.addEventListener("click", () => {
-  alert("Скоро здесь будет регистрация и персональная анкета!");
+  onboarding.scrollIntoView({ behavior: "smooth" });
+});
+
+optionButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    button.classList.toggle("selected");
+  });
 });
