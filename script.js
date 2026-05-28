@@ -13,9 +13,27 @@ optionButtons.forEach(button => {
 });
 const lessonButtons = document.querySelectorAll(".lesson-card button");
 
+const modal = document.querySelector("#lessonModal");
+const modalTitle = document.querySelector("#modalTitle");
+const closeModal = document.querySelector(".close-modal");
+
 lessonButtons.forEach(button => {
   button.addEventListener("click", () => {
-    const lessonTitle = button.parentElement.querySelector("h3").textContent;
-    alert(`Открывается урок: ${lessonTitle}`);
+    const lessonTitle =
+      button.parentElement.querySelector("h3").textContent;
+
+    modalTitle.textContent = lessonTitle;
+
+    modal.classList.add("active");
   });
+});
+
+closeModal.addEventListener("click", () => {
+  modal.classList.remove("active");
+});
+
+window.addEventListener("click", e => {
+  if (e.target === modal) {
+    modal.classList.remove("active");
+  }
 });

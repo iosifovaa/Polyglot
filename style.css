@@ -466,3 +466,64 @@ button {
     grid-template-columns: 1fr;
   }
 }
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  width: 90%;
+  max-width: 520px;
+  background: #1e293b;
+  padding: 40px;
+  border-radius: 30px;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.close-modal {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.modal-content h2 {
+  margin-bottom: 24px;
+  font-size: 34px;
+}
+
+.lesson-example {
+  font-size: 22px;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.lesson-actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.lesson-actions button {
+  flex: 1;
+  background: #0f172a;
+  color: white;
+}
+
+.continue-btn {
+  width: 100%;
+  background: #38bdf8;
+  color: #0f172a;
+  font-weight: 700;
+}
