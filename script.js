@@ -11,3 +11,11 @@ optionButtons.forEach(button => {
     button.classList.toggle("selected");
   });
 });
+const lessonButtons = document.querySelectorAll(".lesson-card button");
+
+lessonButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const lessonTitle = button.parentElement.querySelector("h3").textContent;
+    alert(`Открывается урок: ${lessonTitle}`);
+  });
+});
