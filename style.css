@@ -527,3 +527,47 @@ button {
   color: #0f172a;
   font-weight: 700;
 }
+.series-section {
+  padding: 100px 8%;
+  background: #0f172a;
+}
+
+.series-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.series-card {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: 0.3s;
+}
+
+.series-card:hover {
+  transform: translateY(-8px);
+  border-color: #38bdf8;
+}
+
+.series-card h3 {
+  color: #38bdf8;
+  margin-bottom: 16px;
+}
+
+.series-card p {
+  margin-bottom: 12px;
+}
+
+.series-card button {
+  margin-top: 12px;
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+@media (max-width: 850px) {
+  .series-grid {
+    grid-template-columns: 1fr;
+  }
+}
