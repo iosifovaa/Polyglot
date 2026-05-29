@@ -669,3 +669,30 @@ button {
   opacity: 0.4;
   cursor: not-allowed;
 }
+.quiz-options {
+  display: grid;
+  gap: 12px;
+}
+
+.quiz-options button {
+  background: #0f172a;
+  color: white;
+  border: 1px solid #334155;
+}
+
+.quiz-options button:hover {
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+.correct-answer {
+  color: #22c55e !important;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.wrong-answer {
+  color: #ef4444 !important;
+  font-weight: 700;
+  font-size: 22px;
+}

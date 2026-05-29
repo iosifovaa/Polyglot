@@ -241,11 +241,43 @@ continueSeriesBtn.addEventListener("click", () => {
     currentPhraseIndex++;
     showSeriesPhrase();
   } else {
-    seriesModal.classList.remove("active");
-    alert("Урок завершён!");
+    showSeriesQuiz();
   }
 });
 
 closeSeries.addEventListener("click", () => {
   seriesModal.classList.remove("active");
 });
+function showSeriesQuiz() {
+  seriesTitle.textContent = "Мини-тест";
+
+  seriesPhrase.textContent = "Что означает фраза: Friends don't lie?";
+  seriesTranslation.textContent = "";
+
+  seriesExplanation.innerHTML = `
+    <div class="quiz-options">
+      <button onclick="checkQuizAnswer(true)">Друзья не лгут</button>
+      <button onclick="checkQuizAnswer(false)">Друзья не помогают</button>
+      <button onclick="checkQuizAnswer(false)">Друзья не разговаривают</button>
+    </div>
+  `;
+
+  continueSeriesBtn.style.display = "none";
+}
+
+function checkQuizAnswer(isCorrect) {
+  if (isCorrect) {
+    seriesExplanation.innerHTML = `
+      <p class="correct-answer">Правильно! +10 XP 🎉</p>
+    `;
+  } else {
+    seriesExplanation.innerHTML = `
+      <p class="wrong-answer">Неправильно. Попробуйте ещё раз.</p>
+    `;
+  }
+
+  setTimeout(() => {
+    seriesModal.classList.remove("active");
+    continueSeriesBtn.style.display = "block";
+  }, 1500);
+}
