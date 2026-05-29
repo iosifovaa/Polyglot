@@ -74,6 +74,16 @@ const seriesData = {
       phrase: "Could I BE wearing any more clothes?",
       translation: "Могу ли я надеть ещё больше одежды?",
       explanation: "Пример эмоциональной разговорной речи."
+    },
+    {
+      phrase: "He's her lobster.",
+      translation: "Он её судьба.",
+      explanation: "В сериале 'lobster' используется как метафора настоящей любви."
+    },
+    {
+      phrase: "Welcome to the real world. It sucks. You're gonna love it.",
+      translation: "Добро пожаловать в реальный мир. Он ужасен. Тебе понравится.",
+      explanation: "Популярная фраза о взрослении и самостоятельной жизни."
     }
   ],
 
@@ -92,6 +102,16 @@ const seriesData = {
       phrase: "Emotions are a gateway trait.",
       translation: "Эмоции — это черта, которая открывает путь к другим слабостям.",
       explanation: "Более сложная фраза для расширения словарного запаса."
+    },
+    {
+      phrase: "I find social media to be a soul-sucking void.",
+      translation: "Я считаю социальные сети высасывающей душу пустотой.",
+      explanation: "Полезная современная лексика."
+    },
+    {
+      phrase: "People like to break me down.",
+      translation: "Люди любят пытаться сломить меня.",
+      explanation: "Фраза о давлении со стороны окружающих."
     }
   ],
 
@@ -110,6 +130,16 @@ const seriesData = {
       phrase: "She's our friend and she's crazy.",
       translation: "Она наша подруга, и она сумасшедшая.",
       explanation: "Пример связки предложений через 'and'."
+    },
+    {
+      phrase: "Why are you keeping this curiosity door locked?",
+      translation: "Почему ты держишь дверь любопытства закрытой?",
+      explanation: "Метафорическая фраза о познании нового."
+    },
+    {
+      phrase: "Sometimes your total obliviousness just blows my mind.",
+      translation: "Иногда твоя полная неосведомлённость просто поражает меня.",
+      explanation: "Полезная разговорная конструкция."
     }
   ]
 };
