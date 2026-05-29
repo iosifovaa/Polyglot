@@ -16,6 +16,13 @@ const lessonButtons = document.querySelectorAll(".lesson-card button");
 const modal = document.querySelector("#lessonModal");
 const modalTitle = document.querySelector("#modalTitle");
 const closeModal = document.querySelector(".close-modal");
+const modalExample = document.querySelector("#modalExample");
+
+const lessonData = {
+  "Приветствие": "Hello! How are you? — Привет! Как дела?",
+  "Путешествия": "Where is the hotel? — Где находится отель?",
+  "Сериалы": "What are you up to? — Чем занимаешься?"
+};
 
 lessonButtons.forEach(button => {
   button.addEventListener("click", () => {
@@ -23,6 +30,7 @@ lessonButtons.forEach(button => {
       button.parentElement.querySelector("h3").textContent;
 
     modalTitle.textContent = lessonTitle;
+    modalExample.textContent = lessonData[lessonTitle];
 
     modal.classList.add("active");
   });
