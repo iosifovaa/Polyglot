@@ -249,35 +249,91 @@ closeSeries.addEventListener("click", () => {
   seriesModal.classList.remove("active");
 });
 function showSeriesQuiz() {
+  const quizzes = {
+    "🎬 Friends": {
+      question: "Что означает фраза: How you doin'?",
+      answers: [
+        { text: "Как дела?", correct: true },
+        { text: "Где ты живёшь?", correct: false },
+        { text: "Что ты делаешь?", correct: false }
+      ]
+    },
+
+    "🎬 Wednesday": {
+      question: "Что означает фраза: I act as if I don't care?",
+      answers: [
+        { text: "Я веду себя так, будто мне всё равно.", correct: true },
+        { text: "Мне всё нравится.", correct: false },
+        { text: "Я очень переживаю.", correct: false }
+      ]
+    },
+
+    "🎬 Stranger Things": {
+      question: "Что означает фраза: Friends don't lie?",
+      answers: [
+        { text: "Друзья не лгут.", correct: true },
+        { text: "Друзья не помогают.", correct: false },
+        { text: "Друзья не разговаривают.", correct: false }
+      ]
+    }
+  };
+
+  const quiz = quizzes[currentSeries];
+
   seriesTitle.textContent = "Мини-тест";
-
-  seriesPhrase.textContent = "Что означает фраза: Friends don't lie?";
+  seriesPhrase.textContent = quiz.question;
   seriesTranslation.textContent = "";
+  seriesExplanation.innerHTML = "";
 
-  seriesExplanation.innerHTML = `
-    <div class="quiz-options">
-      <button onclick="checkQuizAnswer(true)">Друзья не лгут</button>
-      <button onclick="checkQuizAnswer(false)">Друзья не помогают</button>
-      <button onclick="checkQuizAnswer(false)">Друзья не разговаривают</button>
-    </div>
-  `;
+  const quizBox = document.createElement("div");
+  quizBox.classList.add("quiz-options");
 
+  quiz.answers.forEach(answer => {
+    const button = document.createElement("button");
+    button.textContent = answer.text;
+
+    button.addEventListener("click", () => {
+      checkQuizAnswer(answer.correct);
+    });
+
+    quizBox.appendChild(button);
+  });
+
+  seriesExplanation.appendChild(quizBox);
   continueSeriesBtn.style.display = "none";
 }
 
 function checkQuizAnswer(isCorrect) {
-  if (isCorrect) {
-    seriesExplanation.innerHTML = `
-      <p class="correct-answer">Правильно! +10 XP 🎉</p>
-    `;
-  } else {
-    seriesExplanation.innerHTML = `
-      <p class="wrong-answer">Неправильно. Попробуйте ещё раз.</p>
-    `;
+
+  const oldWrong =
+    document.querySelector(".wrong-answer");
+
+  if (oldWrong) {
+    oldWrong.remove();
   }
 
-  setTimeout(() => {
-    seriesModal.classList.remove("active");
-    continueSeriesBtn.style.display = "block";
-  }, 1500);
+  if (isCorrect) {
+
+    seriesExplanation.innerHTML = `
+      <p class="correct-answer">
+        Правильно! Урок завершён. +10 XP 🎉
+      </p>
+    `;
+
+    setTimeout(() => {
+      seriesModal.classList.remove("active");
+      continueSeriesBtn.style.display = "block";
+    }, 1800);
+
+  } else {
+
+    seriesExplanation.insertAdjacentHTML(
+      "beforeend",
+      `<p class="wrong-answer">
+        Неправильно. Попробуйте ещё раз.
+      </p>`
+    );
+
+  }
+
 }
