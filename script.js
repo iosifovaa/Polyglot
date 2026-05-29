@@ -45,3 +45,77 @@ window.addEventListener("click", e => {
     modal.classList.remove("active");
   }
 });
+const seriesButtons =
+  document.querySelectorAll(".series-card button");
+
+const seriesModal =
+  document.querySelector("#seriesModal");
+
+const seriesTitle =
+  document.querySelector("#seriesTitle");
+
+const seriesPhrase =
+  document.querySelector("#seriesPhrase");
+
+const seriesTranslation =
+  document.querySelector("#seriesTranslation");
+
+const seriesExplanation =
+  document.querySelector("#seriesExplanation");
+
+const closeSeries =
+  document.querySelector(".close-series");
+
+const seriesData = {
+  "🎬 Friends": {
+    phrase: "How you doin'?",
+    translation: "Как дела?",
+    explanation:
+      "Популярное неформальное приветствие."
+  },
+
+  "🎬 Wednesday": {
+    phrase: "I act as if I don't care.",
+    translation:
+      "Я веду себя так, будто мне всё равно.",
+    explanation:
+      "Пример использования конструкции 'as if'."
+  },
+
+  "🎬 Stranger Things": {
+    phrase: "Friends don't lie.",
+    translation: "Друзья не лгут.",
+    explanation:
+      "Простое предложение в Present Simple."
+  }
+};
+
+seriesButtons.forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    const card =
+      button.parentElement;
+
+    const title =
+      card.querySelector("h3").textContent;
+
+    seriesTitle.textContent = title;
+    seriesPhrase.textContent =
+      seriesData[title].phrase;
+
+    seriesTranslation.textContent =
+      seriesData[title].translation;
+
+    seriesExplanation.textContent =
+      seriesData[title].explanation;
+
+    seriesModal.classList.add("active");
+
+  });
+
+});
+
+closeSeries.addEventListener("click", () => {
+  seriesModal.classList.remove("active");
+});

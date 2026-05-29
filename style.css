@@ -571,3 +571,46 @@ button {
     grid-template-columns: 1fr;
   }
 }
+.series-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.series-modal.active {
+  display: flex;
+}
+
+.series-modal-content {
+  width: 90%;
+  max-width: 650px;
+  background: #1e293b;
+  padding: 40px;
+  border-radius: 30px;
+  position: relative;
+}
+
+.close-series {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.phrase-block {
+  margin: 24px 0;
+}
+
+.phrase-block h4 {
+  color: #38bdf8;
+  margin-bottom: 10px;
+}
+
+.phrase-block p {
+  color: #e2e8f0;
+}
