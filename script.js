@@ -1,16 +1,82 @@
-const startButton = document.querySelector(".start-btn");
-const onboarding = document.querySelector("#onboarding");
-const optionButtons = document.querySelectorAll(".step-card button");
+const onboardingSteps = [
+  {
+    title: "Выберите язык интерфейса",
+    description: "На каком языке вам удобно пользоваться сайтом?",
+    options: ["Русский", "Қазақша", "English", "Türkçe"]
+  },
+  {
+    title: "Какой язык вы хотите изучать?",
+    description: "Выберите язык, под который будет подбираться программа.",
+    options: ["English", "Türkçe", "Қазақша", "Deutsch", "Français", "한국어"]
+  },
+  {
+    title: "Какая у вас цель?",
+    description: "Это поможет подобрать темы и задания.",
+    options: ["Путешествия", "Работа", "Учёба", "Сериалы и фильмы"]
+  },
+  {
+    title: "Ваш уровень",
+    description: "Выберите примерный уровень владения языком.",
+    options: ["Beginner", "Elementary", "Intermediate", "Advanced"]
+  }
+];
 
-startButton.addEventListener("click", () => {
-  onboarding.scrollIntoView({ behavior: "smooth" });
-});
+let currentStep = 0;
 
-optionButtons.forEach(button => {
-  button.addEventListener("click", () => {
-    button.classList.toggle("selected");
+const stepNumber = document.querySelector("#stepNumber");
+const stepTitle = document.querySelector("#stepTitle");
+const stepDescription = document.querySelector("#stepDescription");
+const stepOptions = document.querySelector("#stepOptions");
+const nextStepBtn = document.querySelector("#nextStepBtn");
+const backStepBtn = document.querySelector("#backStepBtn");
+
+function renderStep() {
+  const step = onboardingSteps[currentStep];
+
+  stepNumber.textContent = `Шаг ${currentStep + 1} из ${onboardingSteps.length}`;
+  stepTitle.textContent = step.title;
+  stepDescription.textContent = step.description;
+
+  stepOptions.innerHTML = "";
+
+  step.options.forEach(option => {
+    const button = document.createElement("button");
+    button.textContent = option;
+
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".step-options button").forEach(btn => {
+        btn.classList.remove("selected");
+      });
+
+      button.classList.add("selected");
+    });
+
+    stepOptions.appendChild(button);
   });
+
+  nextStepBtn.textContent =
+    currentStep === onboardingSteps.length - 1 ? "Завершить" : "Далее";
+
+  backStepBtn.disabled = currentStep === 0;
+}
+
+nextStepBtn.addEventListener("click", () => {
+  if (currentStep < onboardingSteps.length - 1) {
+    currentStep++;
+    renderStep();
+  } else {
+    alert("Программа обучения настроена!");
+  }
 });
+
+backStepBtn.addEventListener("click", () => {
+  if (currentStep > 0) {
+    currentStep--;
+    renderStep();
+  }
+}); 
+
+renderStep();
 const lessonButtons = document.querySelectorAll(".lesson-card button");
 
 const modal = document.querySelector("#lessonModal");
