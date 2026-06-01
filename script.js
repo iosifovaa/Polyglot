@@ -111,7 +111,7 @@ window.addEventListener("click", e => {
     modal.classList.remove("active");
   }
 });
-const seriesButtons = document.querySelectorAll(".series-card button");
+const seriesButtons = document.querySelectorAll(".video-lesson-card button");
 
 const seriesModal = document.querySelector("#seriesModal");
 const seriesTitle = document.querySelector("#seriesTitle");
@@ -227,7 +227,7 @@ function showSeriesPhrase() {
 
 seriesButtons.forEach(button => {
   button.addEventListener("click", () => {
-    const card = button.parentElement;
+    const card = button.closest(".video-lesson-card");
     currentSeries = card.querySelector("h3").textContent;
     currentPhraseIndex = 0;
 
@@ -313,7 +313,7 @@ function checkQuizAnswer(isCorrect) {
   }
 
   if (isCorrect) {
-    
+
     seriesTitle.textContent = "Урок завершён 🎉";
     seriesPhrase.textContent = "+10 XP";
     seriesTranslation.textContent = "Вы успешно прошли мини-урок по сериалу.";
