@@ -393,3 +393,67 @@ nextSeriesPhraseBtn.addEventListener("click", () => {
   seriesStudyTranslation.textContent = lesson.translation;
   seriesStudyExplanation.textContent = lesson.explanation;
 });
+
+const shortLessons = [
+  {
+    video: "https://www.youtube.com/embed/hiLAFv_nveY",
+    category: "Coffee Shop • Beginner",
+    phrase: "Can I get a latte, please?",
+    translation: "Можно мне латте, пожалуйста?",
+    explanation: [
+      "<strong>Can I get...</strong> — можно мне...",
+      "<strong>latte</strong> — латте",
+      "<strong>please</strong> — пожалуйста"
+    ]
+  },
+  {
+    video: "https://www.youtube.com/embed/TMr2t8LaGwk",
+    category: "Asking Directions • Beginner",
+    phrase: "Where is the nearest station?",
+    translation: "Где находится ближайшая станция?",
+    explanation: [
+      "<strong>where is...</strong> — где находится...",
+      "<strong>nearest</strong> — ближайший",
+      "<strong>station</strong> — станция"
+    ]
+  },
+  {
+    video: "https://www.youtube.com/embed/F4Km4JIEyis",
+    category: "Meeting People • Beginner",
+    phrase: "Nice to meet you.",
+    translation: "Приятно познакомиться.",
+    explanation: [
+      "<strong>nice</strong> — приятно",
+      "<strong>meet</strong> — познакомиться",
+      "<strong>you</strong> — ты / вы"
+    ]
+  }
+];
+
+let currentShort = 0;
+
+const shortVideo = document.querySelector("#shortVideo");
+const shortCategory = document.querySelector("#shortCategory");
+const shortPhrase = document.querySelector("#shortPhrase");
+const shortTranslation = document.querySelector("#shortTranslation");
+const shortExplanation = document.querySelector("#shortExplanation");
+const nextShortBtn = document.querySelector("#nextShortBtn");
+
+nextShortBtn.addEventListener("click", () => {
+  currentShort++;
+
+  if (currentShort >= shortLessons.length) {
+    currentShort = 0;
+  }
+
+  const lesson = shortLessons[currentShort];
+
+  shortVideo.src = lesson.video;
+  shortCategory.textContent = lesson.category;
+  shortPhrase.textContent = lesson.phrase;
+  shortTranslation.textContent = lesson.translation;
+
+  shortExplanation.innerHTML = lesson.explanation
+    .map(item => `<p>${item}</p>`)
+    .join("");
+});
