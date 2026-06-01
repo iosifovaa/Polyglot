@@ -345,3 +345,51 @@ function checkQuizAnswer(isCorrect) {
   }
 
 }
+const seriesVideoLessons = [
+  {
+    video: "https://www.youtube.com/embed/8wThS5WCzs4",
+    category: "Friends • A2–B1",
+    phrase: "How you doin'?",
+    translation: "Как дела?",
+    explanation: "Неформальное приветствие, которое часто используется в разговорной речи."
+  },
+  {
+    video: "https://www.youtube.com/embed/Di310WS8zLk",
+    category: "Wednesday • B1",
+    phrase: "I act as if I don't care.",
+    translation: "Я веду себя так, будто мне всё равно.",
+    explanation: "Конструкция “as if” используется для сравнения или описания поведения."
+  },
+  {
+    video: "https://www.youtube.com/embed/b9EkMc79ZSU",
+    category: "Stranger Things • B1–B2",
+    phrase: "Friends don't lie.",
+    translation: "Друзья не лгут.",
+    explanation: "Пример короткого отрицательного предложения в Present Simple."
+  }
+];
+
+let currentSeriesVideoLesson = 0;
+
+const seriesVideo = document.querySelector("#seriesVideo");
+const seriesCategory = document.querySelector("#seriesCategory");
+const seriesStudyPhrase = document.querySelector("#seriesStudyPhrase");
+const seriesStudyTranslation = document.querySelector("#seriesStudyTranslation");
+const seriesStudyExplanation = document.querySelector("#seriesStudyExplanation");
+const nextSeriesPhraseBtn = document.querySelector("#nextSeriesPhraseBtn");
+
+nextSeriesPhraseBtn.addEventListener("click", () => {
+  currentSeriesVideoLesson++;
+
+  if (currentSeriesVideoLesson >= seriesVideoLessons.length) {
+    currentSeriesVideoLesson = 0;
+  }
+
+  const lesson = seriesVideoLessons[currentSeriesVideoLesson];
+
+  seriesVideo.src = lesson.video;
+  seriesCategory.textContent = lesson.category;
+  seriesStudyPhrase.textContent = lesson.phrase;
+  seriesStudyTranslation.textContent = lesson.translation;
+  seriesStudyExplanation.textContent = lesson.explanation;
+});

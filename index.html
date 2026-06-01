@@ -221,133 +221,39 @@
 
   <div class="section-title">
     <span>Series Learning</span>
-    <h2>Изучение через сериалы</h2>
+    <h2>Изучение через видео-отрывки</h2>
     <p>
-      Смотрите трейлеры популярных сериалов, изучайте полезные фразы,
-      их перевод и объяснение.
+      Смотрите короткий отрывок, затем разбирайте фразу, перевод и объяснение.
     </p>
   </div>
 
-  <div class="video-lessons-grid">
+  <div class="series-video-lesson">
 
-    <!-- Friends -->
-    <div class="video-lesson-card">
-
-      <div class="video-placeholder">
-        <iframe
-          src="https://www.youtube.com/embed/8wThS5WCzs4"
-          title="Friends Trailer"
-          allowfullscreen>
-        </iframe>
-      </div>
-
-      <div class="video-content">
-
-        <h3>🎬 Friends</h3>
-        <p class="level">A2–B1 • Speaking</p>
-
-        <div class="phrase-box">
-          <strong>Фраза:</strong>
-          <p>How you doin'?</p>
-        </div>
-
-        <div class="phrase-box">
-          <strong>Перевод:</strong>
-          <p>Как дела?</p>
-        </div>
-
-        <div class="phrase-box">
-          <strong>Объяснение:</strong>
-          <p>
-            Неформальное приветствие. Часто используется
-            в повседневном разговорном английском.
-          </p>
-        </div>
-
-        <button>Разобрать фразу</button>
-
-      </div>
-
+    <div class="series-video">
+      <iframe
+        id="seriesVideo"
+        src="https://www.youtube.com/embed/8wThS5WCzs4"
+        title="Series video lesson"
+        allowfullscreen>
+      </iframe>
     </div>
 
-    <!-- Wednesday -->
-    <div class="video-lesson-card">
+    <div class="series-study-panel">
+      <span id="seriesCategory">Friends • A2–B1</span>
 
-      <div class="video-placeholder">
-        <iframe
-          src="https://www.youtube.com/embed/Di310WS8zLk"
-          title="Wednesday Trailer"
-          allowfullscreen>
-        </iframe>
+      <h3 id="seriesStudyPhrase">How you doin'?</h3>
+
+      <p class="series-study-translation" id="seriesStudyTranslation">
+        Как дела?
+      </p>
+
+      <div class="series-study-explanation" id="seriesStudyExplanation">
+        Неформальное приветствие, которое часто используется в разговорной речи.
       </div>
 
-      <div class="video-content">
-
-        <h3>🎬 Wednesday</h3>
-        <p class="level">B1 • Grammar</p>
-
-        <div class="phrase-box">
-          <strong>Фраза:</strong>
-          <p>I act as if I don't care.</p>
-        </div>
-
-        <div class="phrase-box">
-          <strong>Перевод:</strong>
-          <p>Я веду себя так, будто мне всё равно.</p>
-        </div>
-
-        <div class="phrase-box">
-          <strong>Объяснение:</strong>
-          <p>
-            Конструкция "as if" используется,
-            когда мы сравниваем поведение с чем-либо.
-          </p>
-        </div>
-
-        <button>Разобрать фразу</button>
-
-      </div>
-
-    </div>
-
-    <!-- Stranger Things -->
-    <div class="video-lesson-card">
-
-      <div class="video-placeholder">
-        <iframe
-          src="https://www.youtube.com/embed/b9EkMc79ZSU"
-          title="Stranger Things Trailer"
-          allowfullscreen>
-        </iframe>
-      </div>
-
-      <div class="video-content">
-
-        <h3>🎬 Stranger Things</h3>
-        <p class="level">B1–B2 • Vocabulary</p>
-
-        <div class="phrase-box">
-          <strong>Фраза:</strong>
-          <p>Friends don't lie.</p>
-        </div>
-
-        <div class="phrase-box">
-          <strong>Перевод:</strong>
-          <p>Друзья не лгут.</p>
-        </div>
-
-        <div class="phrase-box">
-          <strong>Объяснение:</strong>
-          <p>
-            Простое предложение в Present Simple.
-            Хороший пример отрицательной формы.
-          </p>
-        </div>
-
-        <button>Разобрать фразу</button>
-
-      </div>
-
+      <button id="nextSeriesPhraseBtn">
+        Следующая фраза
+      </button>
     </div>
 
   </div>
