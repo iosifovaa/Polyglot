@@ -696,3 +696,14 @@ button {
   font-weight: 700;
   font-size: 22px;
 }
+.finish-card {
+  background: #0f172a;
+  padding: 22px;
+  border-radius: 22px;
+  border: 1px solid #334155;
+}
+
+.finish-card p {
+  margin-bottom: 12px;
+  color: #e2e8f0;
+}

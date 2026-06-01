@@ -313,17 +313,25 @@ function checkQuizAnswer(isCorrect) {
   }
 
   if (isCorrect) {
+    
+    seriesTitle.textContent = "Урок завершён 🎉";
+    seriesPhrase.textContent = "+10 XP";
+    seriesTranslation.textContent = "Вы успешно прошли мини-урок по сериалу.";
 
     seriesExplanation.innerHTML = `
-      <p class="correct-answer">
-        Правильно! Урок завершён. +10 XP 🎉
-      </p>
+      <div class="finish-card">
+        <p>✅ Новая фраза изучена</p>
+        <p>⭐ Прогресс обновлён</p>
+        <p>🔥 Продолжайте обучение каждый день</p>
+      </div>
     `;
 
-    setTimeout(() => {
+    continueSeriesBtn.textContent = "Вернуться к сериалам";
+    continueSeriesBtn.style.display = "block";
+
+    continueSeriesBtn.onclick = () => {
       seriesModal.classList.remove("active");
-      continueSeriesBtn.style.display = "block";
-    }, 1800);
+    };
 
   } else {
 
