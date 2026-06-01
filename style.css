@@ -707,3 +707,43 @@ button {
   margin-bottom: 12px;
   color: #e2e8f0;
 }
+.music-section {
+  padding: 100px 8%;
+  background: #111827;
+}
+
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.music-card {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: 0.3s;
+}
+
+.music-card:hover {
+  transform: translateY(-8px);
+  border-color: #38bdf8;
+}
+
+.music-card h3 {
+  color: #38bdf8;
+  margin-bottom: 16px;
+}
+
+.music-card button {
+  margin-top: 14px;
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+@media (max-width: 850px) {
+  .music-grid {
+    grid-template-columns: 1fr;
+  }
+}
