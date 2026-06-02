@@ -1016,3 +1016,42 @@ button {
     height: 560px;
   }
 }
+.short-quiz {
+  display: none;
+  margin-top: 24px;
+  background: #0f172a;
+  padding: 22px;
+  border-radius: 22px;
+  border: 1px solid #334155;
+}
+
+.short-quiz.active {
+  display: block;
+}
+
+.short-quiz h4 {
+  color: #38bdf8;
+  margin-bottom: 12px;
+}
+
+.short-quiz-options {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.short-quiz-options button {
+  background: #1e293b;
+  color: white;
+  border: 1px solid #334155;
+}
+
+.short-quiz-options button:hover {
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+#shortQuizResult {
+  margin-top: 16px;
+  font-weight: 700;
+}

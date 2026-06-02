@@ -404,7 +404,16 @@ const shortLessons = [
       "<strong>Can I get...</strong> — можно мне...",
       "<strong>latte</strong> — латте",
       "<strong>please</strong> — пожалуйста"
-    ]
+    ],
+
+    quiz: {
+      question: "Что означает фраза: Can I get a latte, please?",
+      answers: [
+        { text: "Можно мне латте, пожалуйста?", correct: true },
+        { text: "Где находится станция?", correct: false },
+        { text: "Приятно познакомиться.", correct: false }
+      ]
+    }
   },
   {
     video: "https://www.youtube.com/embed/TMr2t8LaGwk",
@@ -415,7 +424,16 @@ const shortLessons = [
       "<strong>where is...</strong> — где находится...",
       "<strong>nearest</strong> — ближайший",
       "<strong>station</strong> — станция"
-    ]
+    ],
+
+    quiz: {
+      question: "Что означает фраза: Where is the nearest station?",
+      answers: [
+        { text: "Где находится ближайшая станция?", correct: true },
+        { text: "Можно мне кофе?", correct: false },
+        { text: "Приятно познакомиться.", correct: false }
+      ]
+    }
   },
   {
     video: "https://www.youtube.com/embed/V7Dvcy0gq-U",
@@ -426,7 +444,16 @@ const shortLessons = [
       "<strong>nice</strong> — приятно",
       "<strong>meet</strong> — познакомиться",
       "<strong>you</strong> — ты / вы"
-    ]
+    ],
+
+    quiz: {
+      question: "Что означает фраза: Nice to meet you?",
+      answers: [
+        { text: "Приятно познакомиться.", correct: true },
+        { text: "Как дела?", correct: false },
+        { text: "Спасибо.", correct: false }
+      ]
+    }
   }
 ];
 
@@ -438,6 +465,10 @@ const shortPhrase = document.querySelector("#shortPhrase");
 const shortTranslation = document.querySelector("#shortTranslation");
 const shortExplanation = document.querySelector("#shortExplanation");
 const nextShortBtn = document.querySelector("#nextShortBtn");
+const shortQuiz = document.querySelector("#shortQuiz");
+const shortQuizQuestion = document.querySelector("#shortQuizQuestion");
+const shortQuizOptions = document.querySelector("#shortQuizOptions");
+const shortQuizResult = document.querySelector("#shortQuizResult");
 
 nextShortBtn.addEventListener("click", () => {
   currentShort++;
@@ -454,6 +485,55 @@ nextShortBtn.addEventListener("click", () => {
   shortTranslation.textContent = lesson.translation;
 
   shortExplanation.innerHTML = lesson.explanation
-    .map(item => `<p>${item}</p>`)
-    .join("");
+  .map(item => `<p>${item}</p>`)
+  .join("");
+
+renderShortQuiz();
 });
+function renderShortQuiz() {
+
+  const lesson = shortLessons[currentShort];
+
+  shortQuiz.classList.add("active");
+
+  shortQuizQuestion.textContent =
+    lesson.quiz.question;
+
+  shortQuizResult.textContent = "";
+
+  shortQuizOptions.innerHTML = "";
+
+  lesson.quiz.answers.forEach(answer => {
+
+    const button =
+      document.createElement("button");
+
+    button.textContent = answer.text;
+
+    button.addEventListener("click", () => {
+
+      if (answer.correct) {
+
+        shortQuizResult.textContent =
+          "✅ Правильно! +10 XP";
+
+        shortQuizResult.style.color =
+          "#22c55e";
+
+      } else {
+
+        shortQuizResult.textContent =
+          "❌ Неправильно. Попробуйте ещё раз.";
+
+        shortQuizResult.style.color =
+          "#ef4444";
+
+      }
+
+    });
+
+    shortQuizOptions.appendChild(button);
+
+  });
+
+}
