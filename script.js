@@ -418,7 +418,7 @@ const shortLessons = [
     ]
   },
   {
-    video: "https://www.youtube.com/embed/3XZISddiZFQ",
+    video: "https://www.youtube.com/embed/V7Dvcy0gq-U",
     category: "Meeting People • Beginner",
     phrase: "Nice to meet you.",
     translation: "Приятно познакомиться.",
