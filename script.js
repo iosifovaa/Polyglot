@@ -478,6 +478,8 @@ nextShortBtn.addEventListener("click", () => {
   }
 
   const lesson = shortLessons[currentShort];
+  shortTranslation.classList.add("hidden-content");
+  shortExplanation.classList.add("hidden-content");
 
   shortVideo.src = lesson.video;
   shortCategory.textContent = lesson.category;
@@ -519,6 +521,9 @@ function renderShortQuiz() {
 
         shortQuizResult.style.color =
           "#22c55e";
+
+        shortTranslation.classList.remove("hidden-content");
+        shortExplanation.classList.remove("hidden-content");
 
       } else {
 

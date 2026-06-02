@@ -1055,3 +1055,6 @@ button {
   margin-top: 16px;
   font-weight: 700;
 }
+.hidden-content {
+  display: none;
+}
