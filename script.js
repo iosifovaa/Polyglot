@@ -480,6 +480,7 @@ nextShortBtn.addEventListener("click", () => {
   const lesson = shortLessons[currentShort];
   shortTranslation.classList.add("hidden-content");
   shortExplanation.classList.add("hidden-content");
+  nextShortBtn.classList.add("hidden-content");
 
   shortVideo.src = lesson.video;
   shortCategory.textContent = lesson.category;
@@ -525,7 +526,7 @@ function renderShortQuiz() {
         shortTranslation.classList.remove("hidden-content");
         shortExplanation.classList.remove("hidden-content");
         nextShortBtn.classList.remove("hidden-content");
-
+        
       } else {
 
         shortQuizResult.textContent =
