@@ -1058,3 +1058,6 @@ button {
 .hidden-content {
   display: none;
 }
+html {
+  scroll-behavior: smooth;
+}

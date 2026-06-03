@@ -480,8 +480,6 @@ nextShortBtn.addEventListener("click", () => {
   const lesson = shortLessons[currentShort];
   shortTranslation.classList.add("hidden-content");
   shortExplanation.classList.add("hidden-content");
-  nextShortBtn.classList.add("hidden-content");
-  renderShortQuiz();
 
   shortVideo.src = lesson.video;
   shortCategory.textContent = lesson.category;
@@ -491,8 +489,9 @@ nextShortBtn.addEventListener("click", () => {
   shortExplanation.innerHTML = lesson.explanation
   .map(item => `<p>${item}</p>`)
   .join("");
-});
 
+renderShortQuiz();
+});
 function renderShortQuiz() {
 
   const lesson = shortLessons[currentShort];
@@ -525,8 +524,7 @@ function renderShortQuiz() {
 
         shortTranslation.classList.remove("hidden-content");
         shortExplanation.classList.remove("hidden-content");
-        nextShortBtn.classList.remove("hidden-content");
-        
+
       } else {
 
         shortQuizResult.textContent =
@@ -544,8 +542,3 @@ function renderShortQuiz() {
   });
 
 }
-shortTranslation.classList.add("hidden-content");
-shortExplanation.classList.add("hidden-content");
-nextShortBtn.classList.add("hidden-content");
-
-renderShortQuiz();
