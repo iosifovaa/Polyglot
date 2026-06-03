@@ -397,45 +397,7 @@ button {
   color: #cbd5e1;
   font-size: 14px;
 }
-.lessons {
-  padding: 100px 8%;
-  background: #111827;
-}
 
-.lessons-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 26px;
-}
-
-.lesson-card {
-  background: #1e293b;
-  padding: 30px;
-  border-radius: 26px;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.lesson-card h3 {
-  font-size: 24px;
-  margin-bottom: 14px;
-  color: #38bdf8;
-}
-
-.lesson-card p {
-  color: #cbd5e1;
-  margin-bottom: 24px;
-}
-
-.lesson-card button {
-  background: #38bdf8;
-  color: #0f172a;
-}
-
-@media (max-width: 850px) {
-  .lessons-grid {
-    grid-template-columns: 1fr;
-  }
-}
 .modal {
   position: fixed;
   inset: 0;
