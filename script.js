@@ -524,6 +524,7 @@ function renderShortQuiz() {
 
         shortTranslation.classList.remove("hidden-content");
         shortExplanation.classList.remove("hidden-content");
+        nextShortBtn.classList.remove("hidden-content");
 
       } else {
 
