@@ -632,3 +632,123 @@ logoutBtn.addEventListener("click", () => {
   localStorage.removeItem("polyglotUser");
   showRegisterForm();
 });
+const quizModal = document.querySelector("#quizModal");
+const closeQuiz = document.querySelector("#closeQuiz");
+const quizProgress = document.querySelector("#quizProgress");
+const quizTitle = document.querySelector("#quizTitle");
+const quizQuestion = document.querySelector("#quizQuestion");
+const quizAnswerOptions = document.querySelector("#quizAnswerOptions");
+const quizResult = document.querySelector("#quizResult");
+const nextQuizQuestion = document.querySelector("#nextQuizQuestion");
+
+const coffeeQuiz = [
+  {
+    question: "Что обычно заказывает человек в coffee shop?",
+    answers: [
+      { text: "Coffee or latte", correct: true },
+      { text: "Train ticket", correct: false },
+      { text: "Hotel room", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'Can I get...'?",
+    answers: [
+      { text: "Можно мне...", correct: true },
+      { text: "Где находится...", correct: false },
+      { text: "Я работаю...", correct: false }
+    ]
+  },
+  {
+    question: "Как переводится 'please'?",
+    answers: [
+      { text: "Пожалуйста", correct: true },
+      { text: "Спасибо", correct: false },
+      { text: "Привет", correct: false }
+    ]
+  },
+  {
+    question: "Что значит 'Iced coffee'?",
+    answers: [
+      { text: "Холодный кофе", correct: true },
+      { text: "Горячий чай", correct: false },
+      { text: "Молочный коктейль", correct: false }
+    ]
+  },
+  {
+    question: "Как вежливо заказать кофе?",
+    answers: [
+      { text: "Can I get a coffee, please?", correct: true },
+      { text: "Give me coffee now", correct: false },
+      { text: "Coffee fast", correct: false }
+    ]
+  }
+];
+
+let currentQuizQuestion = 0;
+let quizScore = 0;
+let quizAnswered = false;
+
+function openCoffeeQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  quizTitle.textContent = "Coffee Shop Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+  const current = coffeeQuiz[currentQuizQuestion];
+
+  quizProgress.textContent = `Вопрос ${currentQuizQuestion + 1} из ${coffeeQuiz.length}`;
+  quizQuestion.textContent = current.question;
+  quizResult.textContent = "";
+  quizAnswerOptions.innerHTML = "";
+  nextQuizQuestion.classList.add("hidden-content");
+  quizAnswered = false;
+
+  current.answers.forEach(answer => {
+    const button = document.createElement("button");
+    button.textContent = answer.text;
+
+    button.addEventListener("click", () => {
+      if (quizAnswered) return;
+
+      quizAnswered = true;
+
+      if (answer.correct) {
+        quizScore++;
+        quizResult.textContent = "✅ Правильно!";
+        quizResult.style.color = "#22c55e";
+      } else {
+        quizResult.textContent = "❌ Неправильно.";
+        quizResult.style.color = "#ef4444";
+      }
+
+      nextQuizQuestion.classList.remove("hidden-content");
+    });
+
+    quizAnswerOptions.appendChild(button);
+  });
+}
+
+nextQuizQuestion.addEventListener("click", () => {
+  currentQuizQuestion++;
+
+  if (currentQuizQuestion < coffeeQuiz.length) {
+    renderQuizQuestion();
+  } else {
+    quizProgress.textContent = "Тест завершён";
+    quizQuestion.textContent = `Ваш результат: ${quizScore} из ${coffeeQuiz.length}`;
+    quizAnswerOptions.innerHTML = "";
+    quizResult.textContent = quizScore >= 4
+      ? "🎉 Отличный результат!"
+      : "Хорошая попытка! Попробуйте пройти ещё раз.";
+    quizResult.style.color = "#38bdf8";
+    nextQuizQuestion.classList.add("hidden-content");
+  }
+});
+
+closeQuiz.addEventListener("click", () => {
+  quizModal.classList.remove("active");
+});

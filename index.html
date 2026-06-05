@@ -456,7 +456,7 @@
 
     <h3 class="track-title">📖 Vocabulary Track</h3>
 
-    <div class="track-item">
+    <div class="track-item" onclick="openCoffeeQuiz()">
       <span>Level 1</span>
       <h4>Coffee Shop Quiz</h4>
     </div>
@@ -545,6 +545,26 @@
 </div>
 
 </section>
+
+<div class="quiz-modal" id="quizModal">
+  <div class="quiz-modal-content">
+    <span class="close-quiz" id="closeQuiz">&times;</span>
+
+    <span class="quiz-progress" id="quizProgress">Вопрос 1 из 5</span>
+
+    <h2 id="quizTitle">Coffee Shop Quiz</h2>
+
+    <p id="quizQuestion">Question</p>
+
+    <div class="quiz-answer-options" id="quizAnswerOptions"></div>
+
+    <p id="quizResult"></p>
+
+    <button id="nextQuizQuestion" class="hidden-content">
+      Следующий вопрос
+    </button>
+  </div>
+</div>
 
 <section class="dictionary-section" id="dictionary">
 

@@ -1383,3 +1383,74 @@ html {
   background: #ef4444;
   color: white;
 }
+.quiz-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.quiz-modal.active {
+  display: flex;
+}
+
+.quiz-modal-content {
+  width: 90%;
+  max-width: 650px;
+  background: #1e293b;
+  padding: 42px;
+  border-radius: 32px;
+  position: relative;
+}
+
+.close-quiz {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.quiz-progress {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+#quizQuestion {
+  font-size: 22px;
+  margin: 24px 0;
+}
+
+.quiz-answer-options {
+  display: grid;
+  gap: 14px;
+}
+
+.quiz-answer-options button {
+  background: #0f172a;
+  color: white;
+  border: 1px solid #334155;
+}
+
+.quiz-answer-options button:hover {
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+#quizResult {
+  margin-top: 18px;
+  font-weight: 700;
+}
+
+#nextQuizQuestion {
+  width: 100%;
+  background: #38bdf8;
+  color: #0f172a;
+  margin-top: 20px;
+}
+.track-item {
+  cursor: pointer;
+}
