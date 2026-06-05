@@ -509,3 +509,20 @@ function renderShortQuiz() {
   });
 
 }
+const dictionarySearch = document.querySelector(".dictionary-search input");
+const wordCards = document.querySelectorAll(".word-card");
+
+dictionarySearch.addEventListener("input", () => {
+  const searchText = dictionarySearch.value.toLowerCase();
+
+  wordCards.forEach(card => {
+    const word = card.querySelector("h3").textContent.toLowerCase();
+    const translation = card.querySelector("p").textContent.toLowerCase();
+
+    if (word.includes(searchText) || translation.includes(searchText)) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+});
