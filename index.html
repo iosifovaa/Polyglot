@@ -15,6 +15,7 @@
         <a href="#about">О проекте</a>
         <a href="#shorts">Уроки</a>
         <a href="#grammar">Грамматика</a>
+        <a href="#auth" id="profileLink">👤 Профиль</a>
       </nav>
     </header>
 
@@ -92,16 +93,32 @@
 
 <section class="auth-section" id="auth">
   <div class="auth-card">
-    <span>User Account</span>
-    <h2>Создайте профиль</h2>
-    <p>Введите имя, чтобы Polyglot мог персонализировать обучение.</p>
 
-    <input type="text" id="userNameInput" placeholder="Ваше имя">
-    <input type="email" id="userEmailInput" placeholder="Email">
+    <div id="registerForm">
+      <span>User Account</span>
+      <h2>Создайте профиль</h2>
+      <p>Введите данные, чтобы Polyglot мог персонализировать обучение.</p>
 
-    <button id="registerBtn">Зарегистрироваться</button>
+      <input type="text" id="userNameInput" placeholder="Ваше имя">
+      <input type="email" id="userEmailInput" placeholder="Email">
 
-    <p class="user-welcome" id="userWelcome"></p>
+      <button id="registerBtn">Зарегистрироваться</button>
+    </div>
+
+    <div id="profileBox" class="hidden-content">
+      <span>My Profile</span>
+      <h2>👤 Мой профиль</h2>
+
+      <div class="profile-info">
+        <p><strong>Имя:</strong> <span id="profileName"></span></p>
+        <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+        <p><strong>Изучаемый язык:</strong> English</p>
+        <p><strong>Уровень:</strong> B1</p>
+      </div>
+
+      <button id="logoutBtn">Выйти</button>
+    </div>
+
   </div>
 </section>
 

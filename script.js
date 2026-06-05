@@ -574,12 +574,36 @@ addWordBtn.addEventListener("click", () => {
 const userNameInput = document.querySelector("#userNameInput");
 const userEmailInput = document.querySelector("#userEmailInput");
 const registerBtn = document.querySelector("#registerBtn");
-const userWelcome = document.querySelector("#userWelcome");
+
+const registerForm = document.querySelector("#registerForm");
+const profileBox = document.querySelector("#profileBox");
+const profileName = document.querySelector("#profileName");
+const profileEmail = document.querySelector("#profileEmail");
+const logoutBtn = document.querySelector("#logoutBtn");
+const profileLink = document.querySelector("#profileLink");
+
+function showProfile(user) {
+  registerForm.classList.add("hidden-content");
+  profileBox.classList.remove("hidden-content");
+
+  profileName.textContent = user.name;
+  profileEmail.textContent = user.email;
+  profileLink.textContent = `👤 ${user.name}`;
+}
+
+function showRegisterForm() {
+  registerForm.classList.remove("hidden-content");
+  profileBox.classList.add("hidden-content");
+
+  profileLink.textContent = "👤 Профиль";
+}
 
 const savedUser = JSON.parse(localStorage.getItem("polyglotUser"));
 
 if (savedUser) {
-  userWelcome.textContent = `Добро пожаловать, ${savedUser.name}!`;
+  showProfile(savedUser);
+} else {
+  showRegisterForm();
 }
 
 registerBtn.addEventListener("click", () => {
@@ -598,8 +622,13 @@ registerBtn.addEventListener("click", () => {
 
   localStorage.setItem("polyglotUser", JSON.stringify(user));
 
-  userWelcome.textContent = `Добро пожаловать, ${name}!`;
+  showProfile(user);
 
   userNameInput.value = "";
   userEmailInput.value = "";
+});
+
+logoutBtn.addEventListener("click", () => {
+  localStorage.removeItem("polyglotUser");
+  showRegisterForm();
 });
