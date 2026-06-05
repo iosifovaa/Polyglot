@@ -570,3 +570,36 @@ addWordBtn.addEventListener("click", () => {
   newWordInput.value = "";
   newTranslationInput.value = "";
 });
+
+const userNameInput = document.querySelector("#userNameInput");
+const userEmailInput = document.querySelector("#userEmailInput");
+const registerBtn = document.querySelector("#registerBtn");
+const userWelcome = document.querySelector("#userWelcome");
+
+const savedUser = JSON.parse(localStorage.getItem("polyglotUser"));
+
+if (savedUser) {
+  userWelcome.textContent = `Добро пожаловать, ${savedUser.name}!`;
+}
+
+registerBtn.addEventListener("click", () => {
+  const name = userNameInput.value.trim();
+  const email = userEmailInput.value.trim();
+
+  if (name === "" || email === "") {
+    alert("Введите имя и email");
+    return;
+  }
+
+  const user = {
+    name: name,
+    email: email
+  };
+
+  localStorage.setItem("polyglotUser", JSON.stringify(user));
+
+  userWelcome.textContent = `Добро пожаловать, ${name}!`;
+
+  userNameInput.value = "";
+  userEmailInput.value = "";
+});
