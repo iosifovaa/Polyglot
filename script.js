@@ -526,3 +526,47 @@ dictionarySearch.addEventListener("input", () => {
     }
   });
 });
+const newWordInput = document.querySelector("#newWord");
+const newTranslationInput = document.querySelector("#newTranslation");
+const addWordBtn = document.querySelector("#addWordBtn");
+const dictionaryGrid = document.querySelector(".dictionary-grid");
+
+let savedWords = JSON.parse(localStorage.getItem("polyglotWords")) || [];
+
+function createWordCard(word, translation) {
+  const card = document.createElement("div");
+  card.classList.add("word-card");
+
+  card.innerHTML = `
+    <h3>${word}</h3>
+    <p>${translation}</p>
+  `;
+
+  dictionaryGrid.appendChild(card);
+}
+
+savedWords.forEach(item => {
+  createWordCard(item.word, item.translation);
+});
+
+addWordBtn.addEventListener("click", () => {
+  const word = newWordInput.value.trim();
+  const translation = newTranslationInput.value.trim();
+
+  if (word === "" || translation === "") {
+    alert("Введите слово и перевод");
+    return;
+  }
+
+  createWordCard(word, translation);
+
+  savedWords.push({
+    word: word,
+    translation: translation
+  });
+
+  localStorage.setItem("polyglotWords", JSON.stringify(savedWords));
+
+  newWordInput.value = "";
+  newTranslationInput.value = "";
+});

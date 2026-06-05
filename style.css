@@ -1289,3 +1289,28 @@ html {
     grid-template-columns: 1fr;
   }
 }
+.add-word-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 14px;
+  margin: 30px 0;
+}
+
+.add-word-box input {
+  padding: 16px 20px;
+  border-radius: 16px;
+  border: 1px solid #334155;
+  background: #1e293b;
+  color: white;
+}
+
+.add-word-box button {
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+@media (max-width: 800px) {
+  .add-word-box {
+    grid-template-columns: 1fr;
+  }
+}
