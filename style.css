@@ -1231,3 +1231,61 @@ html {
 .learning-card:hover {
   transform: translateY(-8px);
 }
+
+.dictionary-section {
+  padding: 100px 8%;
+}
+
+.dictionary-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dictionary-search {
+  margin: 40px 0;
+}
+
+.dictionary-search input {
+  width: 100%;
+  padding: 18px 24px;
+  border-radius: 18px;
+  border: 1px solid #334155;
+  background: #1e293b;
+  color: white;
+  font-size: 16px;
+}
+
+.dictionary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.word-card {
+  background: #1e293b;
+  padding: 24px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: 0.3s;
+}
+
+.word-card:hover {
+  transform: translateY(-5px);
+  border-color: #38bdf8;
+}
+
+.word-card h3 {
+  color: #38bdf8;
+  margin-bottom: 8px;
+}
+
+.word-card p {
+  margin: 0;
+  color: #cbd5e1;
+}
+
+@media (max-width: 900px) {
+  .dictionary-grid {
+    grid-template-columns: 1fr;
+  }
+}

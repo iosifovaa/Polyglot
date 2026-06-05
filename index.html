@@ -147,7 +147,7 @@
       <p>Проверяйте знания после каждого урока и отслеживайте результат.</p>
     </div>
 
-    <div class="learning-card">
+    <div class="learning-card" onclick="location.href='#dictionary'">
       <div class="icon">⭐</div>
       <h3>Словарь</h3>
       <p>Сохраняйте новые слова и полезные выражения в личный словарь.</p>
@@ -202,7 +202,7 @@
   </div>
 </section>
 
-<section class="dashboard">
+<section class="dashboard" id="dashboard">
   <div class="dashboard-header">
     <span>Your progress</span>
     <h2>Ваш прогресс обучения</h2>
@@ -375,6 +375,41 @@
 
 </section>
 
+<section class="grammar-section" id="grammar">
+
+  <div class="section-title">
+    <span>Grammar</span>
+    <h2>Грамматика простым языком</h2>
+    <p>Изучайте правила языка через понятные объяснения и реальные примеры.</p>
+  </div>
+
+  <div class="grammar-grid">
+
+    <div class="grammar-card">
+      <h3>Present Simple</h3>
+      <p>Используется для привычек, фактов и регулярных действий.</p>
+      <p><strong>Example:</strong> I study English every day.</p>
+      <button>Открыть тему</button>
+    </div>
+
+    <div class="grammar-card">
+      <h3>Present Continuous</h3>
+      <p>Используется для действий, которые происходят сейчас.</p>
+      <p><strong>Example:</strong> I am watching a series now.</p>
+      <button>Открыть тему</button>
+    </div>
+
+    <div class="grammar-card">
+      <h3>Past Simple</h3>
+      <p>Используется для действий, которые произошли в прошлом.</p>
+      <p><strong>Example:</strong> I watched a movie yesterday.</p>
+      <button>Открыть тему</button>
+    </div>
+
+  </div>
+
+</section>
+
 <section class="tests-section" id="tests">
 
   <div class="section-title">
@@ -479,41 +514,61 @@
 
 </section>
 
-<section class="grammar-section" id="grammar">
+<section class="dictionary-section" id="dictionary">
 
   <div class="section-title">
-    <span>Grammar</span>
-    <h2>Грамматика простым языком</h2>
-    <p>Изучайте правила языка через понятные объяснения и реальные примеры.</p>
+    <span>Personal Dictionary</span>
+    <h2>Ваш словарь</h2>
+    <p>Сохраняйте новые слова и выражения для повторения.</p>
   </div>
 
-  <div class="grammar-grid">
+  <div class="dictionary-container">
 
-    <div class="grammar-card">
-      <h3>Present Simple</h3>
-      <p>Используется для привычек, фактов и регулярных действий.</p>
-      <p><strong>Example:</strong> I study English every day.</p>
-      <button>Открыть тему</button>
+    <div class="dictionary-search">
+      <input
+        type="text"
+        placeholder="Поиск слова..."
+      >
     </div>
 
-    <div class="grammar-card">
-      <h3>Present Continuous</h3>
-      <p>Используется для действий, которые происходят сейчас.</p>
-      <p><strong>Example:</strong> I am watching a series now.</p>
-      <button>Открыть тему</button>
-    </div>
+    <div class="dictionary-grid">
 
-    <div class="grammar-card">
-      <h3>Past Simple</h3>
-      <p>Используется для действий, которые произошли в прошлом.</p>
-      <p><strong>Example:</strong> I watched a movie yesterday.</p>
-      <button>Открыть тему</button>
+      <div class="word-card">
+        <h3>latte</h3>
+        <p>латте</p>
+      </div>
+
+      <div class="word-card">
+        <h3>station</h3>
+        <p>станция</p>
+      </div>
+
+      <div class="word-card">
+        <h3>meet</h3>
+        <p>познакомиться</p>
+      </div>
+
+      <div class="word-card">
+        <h3>airport</h3>
+        <p>аэропорт</p>
+      </div>
+
+      <div class="word-card">
+        <h3>travel</h3>
+        <p>путешествие</p>
+      </div>
+
+      <div class="word-card">
+        <h3>awesome</h3>
+        <p>классный</p>
+      </div>
+
     </div>
 
   </div>
 
 </section>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
