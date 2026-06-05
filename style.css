@@ -1224,3 +1224,10 @@ html {
     grid-template-columns: 1fr;
   }
 }
+.learning-card {
+  cursor: pointer;
+}
+
+.learning-card:hover {
+  transform: translateY(-8px);
+}
