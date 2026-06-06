@@ -711,6 +711,60 @@ const friendsQuiz = [
   }
 ];
 
+const wednesdayQuiz = [
+  {
+    question: "Что означает 'I act as if I don't care'?",
+    answers: [
+      { text: "Я веду себя так, будто мне всё равно", correct: true },
+      { text: "Я всегда радуюсь", correct: false },
+      { text: "Я ничего не понимаю", correct: false }
+    ]
+  },
+  {
+    question: "Что означает конструкция 'as if'?",
+    answers: [
+      { text: "Как будто", correct: true },
+      { text: "Потому что", correct: false },
+      { text: "Несмотря на", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'I don't believe'?",
+    answers: [
+      { text: "Я не верю", correct: true },
+      { text: "Я не знаю", correct: false },
+      { text: "Я не хочу", correct: false }
+    ]
+  }
+];
+
+const strangerThingsQuiz = [
+  {
+    question: "Что означает 'Friends don't lie'?",
+    answers: [
+      { text: "Друзья не лгут", correct: true },
+      { text: "Друзья не помогают", correct: false },
+      { text: "Друзья не разговаривают", correct: false }
+    ]
+  },
+  {
+    question: "Какой грамматический tense в 'Friends don't lie'?",
+    answers: [
+      { text: "Present Simple", correct: true },
+      { text: "Past Simple", correct: false },
+      { text: "Present Continuous", correct: false }
+    ]
+  },
+  {
+    question: "Что означает слово 'lie'?",
+    answers: [
+      { text: "Лгать", correct: true },
+      { text: "Смеяться", correct: false },
+      { text: "Бежать", correct: false }
+    ]
+  }
+];
+
 const shortVideosQuiz = [
   {
     question: "Что означает 'Nice to meet you'?",
@@ -769,6 +823,26 @@ function openShortVideosQuiz() {
   quizAnswered = false;
   activeQuiz = shortVideosQuiz;
   quizTitle.textContent = "Short Videos Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function openWednesdayQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = wednesdayQuiz;
+  quizTitle.textContent = "Wednesday Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function openStrangerThingsQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = strangerThingsQuiz;
+  quizTitle.textContent = "Stranger Things Quiz";
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
