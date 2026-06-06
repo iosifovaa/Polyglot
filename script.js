@@ -1,10 +1,5 @@
 const onboardingSteps = [
   {
-    title: "Выберите язык интерфейса",
-    description: "На каком языке вам удобно пользоваться сайтом?",
-    options: ["Русский", "Қазақша", "English", "Türkçe"]
-  },
-  {
     title: "Какой язык вы хотите изучать?",
     description: "Выберите язык, под который будет подбираться программа.",
     options: ["English", "Türkçe", "Қазақша", "Deutsch", "Français", "한국어"]
@@ -81,7 +76,7 @@ renderStep();
 const seriesButtons = document.querySelectorAll(".video-lesson-card button");
 
 const seriesModal = document.querySelector("#seriesModal");
-const seriesTitle = document.querySelector("#seriesTitle");
+const seriesTitle = document.querySelector("#seriesModal #seriesTitle");
 const seriesPhrase = document.querySelector("#seriesPhrase");
 const seriesTranslation = document.querySelector("#seriesTranslation");
 const seriesExplanation = document.querySelector("#seriesExplanation");
@@ -1433,7 +1428,25 @@ const translations = {
     about: "О проекте",
     lessons: "Уроки",
     grammar: "Грамматика",
-    profile: "👤 Профиль"
+    profile: "👤 Профиль",
+    aboutLabel: "About Polyglot",
+    aboutTitle: "Платформа для изучения языков через интересный контент",
+    aboutText: "Polyglot помогает изучать иностранные языки не только через обычные правила, но и через короткие видео, сериалы, музыку, реальные диалоги и интерактивные задания.",
+    learningLabel: "Learning paths",
+    learningTitle: "Выберите формат обучения",
+    learningText: "Учитесь так, как удобно именно вам: через видео, музыку, грамматику и практику.",
+    seriesTitle: "Сериалы и шоу",
+    seriesText: "Изучайте живые фразы, сленг и реальные диалоги из популярных сцен.",
+    musicTitleCard: "Музыка",
+    musicTextCard: "Разбирайте строки песен, переводите выражения и запоминайте новые слова.",
+    shortsTitle: "Короткие видео",
+    shortsText: "Учите современный язык через формат TikTok, Reels и повседневную речь.",
+    grammarTitleCard: "Грамматика",
+    grammarTextCard: "Понимайте правила простым языком и закрепляйте их на примерах.",
+    testsTitle: "Тесты",
+    testsText: "Проверяйте знания после каждого урока и отслеживайте результат.",
+    dictionaryTitle: "Словарь",
+    dictionaryText: "Сохраняйте новые слова и полезные выражения в личный словарь."
   },
 
   kk: {
@@ -1444,7 +1457,25 @@ const translations = {
     about: "Жоба туралы",
     lessons: "Сабақтар",
     grammar: "Грамматика",
-    profile: "👤 Профиль"
+    profile: "👤 Жеке бет",
+    aboutLabel: "Polyglot туралы",
+    aboutTitle: "Тілді қызықты контент арқылы үйренуге арналған платформа",
+    aboutText: "Polyglot шет тілдерін тек ережелер арқылы ғана емес, қысқа видеолар, сериалдар, музыка, нақты диалогтар және интерактивті тапсырмалар арқылы үйренуге көмектеседі.",
+    learningLabel: "Оқу бағыттары",
+    learningTitle: "Оқу форматын таңдаңыз",
+    learningText: "Өзіңізге ыңғайлы түрде оқыңыз: видео, музыка, грамматика және практика арқылы.",
+    seriesTitle: "Сериалдар мен шоулар",
+    seriesText: "Танымал көріністерден тірі сөз тіркестерін, сленгті және нақты диалогтарды үйреніңіз.",
+    musicTitleCard: "Музыка",
+    musicTextCard: "Ән жолдарын талдап, сөз тіркестерін аударып, жаңа сөздерді есте сақтаңыз.",
+    shortsTitle: "Қысқа видеолар",
+    shortsText: "TikTok, Reels және күнделікті сөйлеу форматы арқылы заманауи тілді үйреніңіз.",
+    grammarTitleCard: "Грамматика",
+    grammarTextCard: "Ережелерді қарапайым тілмен түсініп, мысалдар арқылы бекітіңіз.",
+    testsTitle: "Тесттер",
+    testsText: "Әр сабақтан кейін біліміңізді тексеріп, нәтижені бақылаңыз.",
+    dictionaryTitle: "Сөздік",
+    dictionaryText: "Жаңа сөздер мен пайдалы тіркестерді жеке сөздікке сақтаңыз."
   },
 
   en: {
@@ -1455,7 +1486,25 @@ const translations = {
     about: "About",
     lessons: "Lessons",
     grammar: "Grammar",
-    profile: "👤 Profile"
+    profile: "👤 Profile",
+    aboutLabel: "About Polyglot",
+    aboutTitle: "A platform for learning languages through engaging content",
+    aboutText: "Polyglot helps users learn foreign languages not only through grammar rules, but also through short videos, series, music, real dialogues and interactive tasks.",
+    learningLabel: "Learning paths",
+    learningTitle: "Choose your learning format",
+    learningText: "Learn in the way that works for you: through videos, music, grammar and practice.",
+    seriesTitle: "Series and shows",
+    seriesText: "Study natural phrases, slang and real dialogues from popular scenes.",
+    musicTitleCard: "Music",
+    musicTextCard: "Break down song lyrics, translate expressions and remember new words.",
+    shortsTitle: "Short videos",
+    shortsText: "Learn modern language through TikTok, Reels and everyday speech.",
+    grammarTitleCard: "Grammar",
+    grammarTextCard: "Understand rules in simple language and reinforce them with examples.",
+    testsTitle: "Quizzes",
+    testsText: "Check your knowledge after each lesson and track your results.",
+    dictionaryTitle: "Dictionary",
+    dictionaryText: "Save new words and useful expressions in your personal dictionary."
   },
 
   tr: {
@@ -1466,12 +1515,36 @@ const translations = {
     about: "Proje hakkında",
     lessons: "Dersler",
     grammar: "Dil bilgisi",
-    profile: "👤 Profil"
+    profile: "👤 Profil",
+    aboutLabel: "Polyglot hakkında",
+    aboutTitle: "İlgi çekici içeriklerle dil öğrenme platformu",
+    aboutText: "Polyglot, yabancı dilleri sadece kurallarla değil; kısa videolar, diziler, müzik, gerçek diyaloglar ve etkileşimli görevlerle öğrenmeye yardımcı olur.",
+    learningLabel: "Öğrenme yolları",
+    learningTitle: "Öğrenme formatını seçin",
+    learningText: "Size uygun şekilde öğrenin: video, müzik, gramer ve pratikle.",
+    seriesTitle: "Diziler ve şovlar",
+    seriesText: "Popüler sahnelerden doğal ifadeleri, argo kelimeleri ve gerçek diyalogları öğrenin.",
+    musicTitleCard: "Müzik",
+    musicTextCard: "Şarkı sözlerini inceleyin, ifadeleri çevirin ve yeni kelimeleri aklınızda tutun.",
+    shortsTitle: "Kısa videolar",
+    shortsText: "TikTok, Reels ve günlük konuşma formatıyla modern dili öğrenin.",
+    grammarTitleCard: "Gramer",
+    grammarTextCard: "Kuralları sade bir dille anlayın ve örneklerle pekiştirin.",
+    testsTitle: "Testler",
+    testsText: "Her dersten sonra bilginizi kontrol edin ve sonucunuzu takip edin.",
+    dictionaryTitle: "Sözlük",
+    dictionaryText: "Yeni kelimeleri ve yararlı ifadeleri kişisel sözlüğünüze kaydedin."
   }
 };
 
 function changeSiteLanguage(lang) {
   const t = translations[lang];
+  const setText = (id, text) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.textContent = text;
+    }
+  };
 
   document.querySelector(".text-block h1").textContent = t.heroTitle;
   document.querySelector(".text-block p").textContent = t.heroText;
@@ -1488,6 +1561,25 @@ function changeSiteLanguage(lang) {
   }
 
   localStorage.setItem("polyglotLang", lang);
+  document.querySelector(".about-text span").textContent = t.aboutLabel;
+  document.querySelector(".about-text h2").textContent = t.aboutTitle;
+  document.querySelector(".about-text p").textContent = t.aboutText;
+
+  setText("learningLabel", t.learningLabel);
+  setText("learningTitle", t.learningTitle);
+  setText("learningText", t.learningText);
+  setText("seriesTitle", t.seriesTitle);
+  setText("seriesText", t.seriesText);
+  setText("musicTitleCard", t.musicTitleCard);
+  setText("musicTextCard", t.musicTextCard);
+  setText("shortsTitle", t.shortsTitle);
+  setText("shortsText", t.shortsText);
+  setText("grammarTitleCard", t.grammarTitleCard);
+  setText("grammarTextCard", t.grammarTextCard);
+  setText("testsTitle", t.testsTitle);
+  setText("testsText", t.testsText);
+  setText("dictionaryTitle", t.dictionaryTitle);
+  setText("dictionaryText", t.dictionaryText);
 }
 
 const savedLang = localStorage.getItem("polyglotLang");
