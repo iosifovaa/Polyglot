@@ -1424,3 +1424,74 @@ function updateDashboard() {
 }
 
 updateDashboard();
+const translations = {
+  ru: {
+    heroTitle: "Изучай языки через то, что тебе действительно интересно",
+    heroText: "Сериалы, музыка, короткие видео, реальные диалоги, грамматика и тесты — всё в одном современном сайте для изучения языков.",
+    chooseLang: "Выберите язык сайта",
+    startBtn: "Начать обучение",
+    about: "О проекте",
+    lessons: "Уроки",
+    grammar: "Грамматика",
+    profile: "👤 Профиль"
+  },
+
+  kk: {
+    heroTitle: "Тілді өзіңізге қызықты контент арқылы үйреніңіз",
+    heroText: "Сериалдар, музыка, қысқа видеолар, нақты диалогтар, грамматика және тесттер — бәрі бір заманауи сайтта.",
+    chooseLang: "Сайт тілін таңдаңыз",
+    startBtn: "Оқуды бастау",
+    about: "Жоба туралы",
+    lessons: "Сабақтар",
+    grammar: "Грамматика",
+    profile: "👤 Профиль"
+  },
+
+  en: {
+    heroTitle: "Learn languages through content you actually enjoy",
+    heroText: "Series, music, short videos, real dialogues, grammar and quizzes — all in one modern language learning website.",
+    chooseLang: "Choose site language",
+    startBtn: "Start learning",
+    about: "About",
+    lessons: "Lessons",
+    grammar: "Grammar",
+    profile: "👤 Profile"
+  },
+
+  tr: {
+    heroTitle: "Dilleri gerçekten ilginizi çeken içeriklerle öğrenin",
+    heroText: "Diziler, müzik, kısa videolar, gerçek diyaloglar, gramer ve testler — hepsi modern bir dil öğrenme sitesinde.",
+    chooseLang: "Site dilini seçin",
+    startBtn: "Öğrenmeye başla",
+    about: "Proje hakkında",
+    lessons: "Dersler",
+    grammar: "Dil bilgisi",
+    profile: "👤 Profil"
+  }
+};
+
+function changeSiteLanguage(lang) {
+  const t = translations[lang];
+
+  document.querySelector(".text-block h1").textContent = t.heroTitle;
+  document.querySelector(".text-block p").textContent = t.heroText;
+  document.querySelector(".language-box h3").textContent = t.chooseLang;
+  document.querySelector(".start-btn").textContent = t.startBtn;
+
+  document.querySelector('a[href="#about"]').textContent = t.about;
+  document.querySelector('a[href="#shorts"]').textContent = t.lessons;
+  document.querySelector('a[href="#grammar"]').textContent = t.grammar;
+
+  const profileLink = document.querySelector("#profileLink");
+  if (!localStorage.getItem("polyglotUser")) {
+    profileLink.textContent = t.profile;
+  }
+
+  localStorage.setItem("polyglotLang", lang);
+}
+
+const savedLang = localStorage.getItem("polyglotLang");
+
+if (savedLang) {
+  changeSiteLanguage(savedLang);
+}
