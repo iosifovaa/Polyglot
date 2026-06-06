@@ -1243,11 +1243,26 @@ nextQuizQuestion.addEventListener("click", () => {
     quizProgress.textContent = "Тест завершён";
     quizQuestion.textContent = `Ваш результат: ${quizScore} из ${activeQuiz.length}`;
     quizAnswerOptions.innerHTML = "";
-    quizResult.textContent = quizScore >= 4
-      ? "🎉 Отличный результат!"
-      : "Хорошая попытка! Попробуйте пройти ещё раз.";
+
+    let currentXP = Number(localStorage.getItem("polyglotXP")) || 0;
+    let currentLessons = Number(localStorage.getItem("polyglotLessons")) || 0;
+
+    currentXP += 50;
+    currentLessons += 1;
+
+    localStorage.setItem("polyglotXP", currentXP);
+    localStorage.setItem("polyglotLessons", currentLessons);
+
+    quizResult.textContent =
+      quizScore >= 4
+        ? "🎉 Отличный результат! +50 XP"
+        : "Хорошая попытка! +50 XP за прохождение";
+
     quizResult.style.color = "#38bdf8";
+
     nextQuizQuestion.classList.add("hidden-content");
+
+    updateDashboard();
   }
 });
 
