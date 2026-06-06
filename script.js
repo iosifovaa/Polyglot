@@ -194,9 +194,9 @@ function showSeriesPhrase() {
   seriesExplanation.textContent = lesson.explanation;
 
   if (currentPhraseIndex === seriesData[currentSeries].length - 1) {
-    continueSeriesBtn.textContent = "Завершить урок";
+    continueSeriesBtn.textContent = translations[currentSiteLanguage].finishLessonBtn;
   } else {
-    continueSeriesBtn.textContent = "Продолжить изучение";
+    continueSeriesBtn.textContent = translations[currentSiteLanguage].continueStudyBtn;
   }
 }
 
@@ -255,7 +255,7 @@ function showSeriesQuiz() {
 
   const quiz = quizzes[currentSeries];
 
-  seriesTitle.textContent = "Мини-тест";
+  seriesTitle.textContent = translations[currentSiteLanguage].miniQuizTitle;
   seriesPhrase.textContent = quiz.question;
   seriesTranslation.textContent = "";
   seriesExplanation.innerHTML = "";
@@ -289,19 +289,21 @@ function checkQuizAnswer(isCorrect) {
 
   if (isCorrect) {
 
-    seriesTitle.textContent = "Урок завершён 🎉";
+    const t = translations[currentSiteLanguage];
+
+    seriesTitle.textContent = t.lessonFinishedTitle;
     seriesPhrase.textContent = "+10 XP";
-    seriesTranslation.textContent = "Вы успешно прошли мини-урок по сериалу.";
+    seriesTranslation.textContent = t.lessonFinishedText;
 
     seriesExplanation.innerHTML = `
       <div class="finish-card">
-        <p>✅ Новая фраза изучена</p>
-        <p>⭐ Прогресс обновлён</p>
-        <p>🔥 Продолжайте обучение каждый день</p>
+        <p>${t.newPhraseLearned}</p>
+        <p>${t.progressUpdated}</p>
+        <p>${t.keepLearning}</p>
       </div>
     `;
 
-    continueSeriesBtn.textContent = "Вернуться к сериалам";
+    continueSeriesBtn.textContent = t.backToSeriesBtn;
     continueSeriesBtn.style.display = "block";
 
     continueSeriesBtn.onclick = () => {
@@ -313,7 +315,7 @@ function checkQuizAnswer(isCorrect) {
     seriesExplanation.insertAdjacentHTML(
       "beforeend",
       `<p class="wrong-answer">
-        Неправильно. Попробуйте ещё раз.
+        ${translations[currentSiteLanguage].wrongTryAgain}
       </p>`
     );
 
@@ -360,13 +362,7 @@ nextSeriesPhraseBtn.addEventListener("click", () => {
     currentSeriesVideoLesson = 0;
   }
 
-  const lesson = seriesVideoLessons[currentSeriesVideoLesson];
-
-  seriesVideo.src = lesson.video;
-  seriesCategory.textContent = lesson.category;
-  seriesStudyPhrase.textContent = lesson.phrase;
-  seriesStudyTranslation.textContent = lesson.translation;
-  seriesStudyExplanation.textContent = lesson.explanation;
+  applySeriesVideoLesson();
 });
 
 const shortLessons = [
@@ -452,24 +448,11 @@ nextShortBtn.addEventListener("click", () => {
     currentShort = 0;
   }
 
-  const lesson = shortLessons[currentShort];
-  shortTranslation.classList.add("hidden-content");
-  shortExplanation.classList.add("hidden-content");
-
-  shortVideo.src = lesson.video;
-  shortCategory.textContent = lesson.category;
-  shortPhrase.textContent = lesson.phrase;
-  shortTranslation.textContent = lesson.translation;
-
-  shortExplanation.innerHTML = lesson.explanation
-  .map(item => `<p>${item}</p>`)
-  .join("");
-
-renderShortQuiz();
+  applyShortLesson(true);
 });
 function renderShortQuiz() {
 
-  const lesson = shortLessons[currentShort];
+  const lesson = getShortLesson();
 
   shortQuiz.classList.add("active");
 
@@ -518,12 +501,11 @@ function renderShortQuiz() {
 
 }
 const dictionarySearch = document.querySelector(".dictionary-search input");
-const wordCards = document.querySelectorAll(".word-card");
 
 dictionarySearch.addEventListener("input", () => {
   const searchText = dictionarySearch.value.toLowerCase();
 
-  wordCards.forEach(card => {
+  document.querySelectorAll(".word-card").forEach(card => {
     const word = card.querySelector("h3").textContent.toLowerCase();
     const translation = card.querySelector("p").textContent.toLowerCase();
 
@@ -562,7 +544,7 @@ addWordBtn.addEventListener("click", () => {
   const translation = newTranslationInput.value.trim();
 
   if (word === "" || translation === "") {
-    alert("Введите слово и перевод");
+    alert(translations[currentSiteLanguage].wordRequiredAlert);
     return;
   }
 
@@ -1268,8 +1250,8 @@ nextQuizQuestion.addEventListener("click", () => {
 
     quizResult.textContent =
       quizScore >= 4
-        ? "🎉 Отличный результат! +50 XP"
-        : "Хорошая попытка! +50 XP за прохождение";
+        ? translations[currentSiteLanguage].excellentQuizResult
+        : translations[currentSiteLanguage].goodQuizResult;
 
     quizResult.style.color = "#38bdf8";
 
@@ -1328,7 +1310,7 @@ const musicModalBody = document.querySelector("#musicModalBody");
 const closeMusic = document.querySelector("#closeMusic");
 
 function updateMusicCards() {
-  const lesson = musicData[currentMusicIndex];
+  const lesson = getMusicLesson();
 
   musicCardPhrase.textContent = lesson.phrase;
   musicCardTranslation.textContent = lesson.translation;
@@ -1336,7 +1318,7 @@ function updateMusicCards() {
 }
 
 function openMusicModal(type) {
-  const lesson = musicData[currentMusicIndex];
+  const lesson = getMusicLesson();
   const t = translations[currentSiteLanguage];
 
   musicModal.classList.add("active");
@@ -1415,14 +1397,13 @@ function saveMusicWord(word, translation) {
 
   localStorage.setItem("polyglotWords", JSON.stringify(savedWords));
 
-  alert("Слово сохранено в словарь!");
+  alert(translations[currentSiteLanguage].wordSavedAlert);
 }
 
 closeMusic.addEventListener("click", () => {
   musicModal.classList.remove("active");
 });
 
-updateMusicCards();
 const wordsCount = document.querySelector("#wordsCount");
 const weeklyXP = document.querySelector("#weeklyXP");
 const lessonsCount = document.querySelector("#lessonsCount");
@@ -1949,6 +1930,300 @@ const translations = {
   }
 };
 
+const localizedPageData = {
+  ru: {
+    previewTodayTitle: "Сегодняшний урок",
+    previewLessonTitle: "Фразы из сериалов",
+    previewPhrase: "“What are you up to?” — Чем занимаешься?",
+    previewProgressLabel: "Прогресс",
+    aboutFeatureShortTitle: "📱 Короткие видео",
+    aboutFeatureShortText: "Изучение фраз через реальные ситуации и современные видеоформаты.",
+    aboutFeaturePathTitle: "🎯 Персональный путь",
+    aboutFeaturePathText: "Программа подбирается по цели пользователя: учёба, работа, путешествия или общение.",
+    aboutFeatureProgressTitle: "📊 Прогресс",
+    aboutFeatureProgressText: "Тесты, уровни и задания помогают отслеживать результат обучения.",
+    continueStudyBtn: "Продолжить изучение",
+    finishLessonBtn: "Завершить урок",
+    miniQuizTitle: "Мини-тест",
+    lessonFinishedTitle: "Урок завершён 🎉",
+    lessonFinishedText: "Вы успешно прошли мини-урок по сериалу.",
+    newPhraseLearned: "✅ Новая фраза изучена",
+    progressUpdated: "⭐ Прогресс обновлён",
+    keepLearning: "🔥 Продолжайте обучение каждый день",
+    backToSeriesBtn: "Вернуться к сериалам",
+    wordRequiredAlert: "Введите слово и перевод",
+    wordSavedAlert: "Слово сохранено в словарь!",
+    excellentQuizResult: "🎉 Отличный результат! +50 XP",
+    goodQuizResult: "Хорошая попытка! +50 XP за прохождение",
+    seriesVideoLessons: [
+      { category: "Friends • A2–B1", translation: "Как дела?", explanation: "Неформальное приветствие, которое часто используется в разговорной речи." },
+      { category: "Wednesday • B1", translation: "Я веду себя так, будто мне всё равно.", explanation: "Конструкция “as if” используется для сравнения или описания поведения." },
+      { category: "Stranger Things • B1–B2", translation: "Друзья не лгут.", explanation: "Пример короткого отрицательного предложения в Present Simple." }
+    ],
+    shortLessons: [
+      {
+        category: "Coffee Shop • Beginner",
+        translation: "Можно мне латте, пожалуйста?",
+        explanation: ["<strong>Can I get...</strong> — можно мне...", "<strong>latte</strong> — латте", "<strong>please</strong> — пожалуйста"],
+        quiz: { question: "Что означает фраза: Can I get a latte, please?", answers: ["Можно мне латте, пожалуйста?", "Где находится станция?", "Приятно познакомиться."] }
+      },
+      {
+        category: "Asking Directions • Beginner",
+        translation: "Где находится ближайшая станция?",
+        explanation: ["<strong>where is...</strong> — где находится...", "<strong>nearest</strong> — ближайший", "<strong>station</strong> — станция"],
+        quiz: { question: "Что означает фраза: Where is the nearest station?", answers: ["Где находится ближайшая станция?", "Можно мне кофе?", "Приятно познакомиться."] }
+      },
+      {
+        category: "Meeting People • Beginner",
+        translation: "Приятно познакомиться.",
+        explanation: ["<strong>nice</strong> — приятно", "<strong>meet</strong> — познакомиться", "<strong>you</strong> — ты / вы"],
+        quiz: { question: "Что означает фраза: Nice to meet you?", answers: ["Приятно познакомиться.", "Как дела?", "Спасибо."] }
+      }
+    ],
+    musicData: [
+      { translation: "Я продолжаю думать о тебе.", words: [{ word: "keep", translation: "продолжать" }, { word: "thinking", translation: "думать" }, { word: "about", translation: "о / про" }] },
+      { translation: "У нас заканчивается время.", words: [{ word: "running out", translation: "заканчиваться" }, { word: "time", translation: "время" }, { word: "we're", translation: "мы" }] },
+      { translation: "Всё изменилось так быстро.", words: [{ word: "everything", translation: "всё" }, { word: "changed", translation: "изменилось" }, { word: "fast", translation: "быстро" }] }
+    ],
+    dictionaryDefaults: ["латте", "станция", "познакомиться", "аэропорт", "путешествие", "классный"]
+  },
+  kk: {
+    previewTodayTitle: "Бүгінгі сабақ",
+    previewLessonTitle: "Сериалдардан фразалар",
+    previewPhrase: "“What are you up to?” — Немен айналысып жатырсың?",
+    previewProgressLabel: "Прогресс",
+    aboutFeatureShortTitle: "📱 Қысқа видеолар",
+    aboutFeatureShortText: "Фразаларды нақты жағдайлар мен заманауи видео форматтар арқылы үйрену.",
+    aboutFeaturePathTitle: "🎯 Жеке оқу жолы",
+    aboutFeaturePathText: "Бағдарлама мақсатқа қарай таңдалады: оқу, жұмыс, саяхат немесе қарым-қатынас.",
+    aboutFeatureProgressTitle: "📊 Прогресс",
+    aboutFeatureProgressText: "Тесттер, деңгейлер және тапсырмалар оқу нәтижесін бақылауға көмектеседі.",
+    continueStudyBtn: "Оқуды жалғастыру",
+    finishLessonBtn: "Сабақты аяқтау",
+    miniQuizTitle: "Мини-тест",
+    lessonFinishedTitle: "Сабақ аяқталды 🎉",
+    lessonFinishedText: "Сіз сериал бойынша мини-сабақты сәтті өттіңіз.",
+    newPhraseLearned: "✅ Жаңа фраза үйренілді",
+    progressUpdated: "⭐ Прогресс жаңартылды",
+    keepLearning: "🔥 Күн сайын оқуды жалғастырыңыз",
+    backToSeriesBtn: "Сериалдарға оралу",
+    wordRequiredAlert: "Сөз бен аударманы енгізіңіз",
+    wordSavedAlert: "Сөз сөздікке сақталды!",
+    excellentQuizResult: "🎉 Тамаша нәтиже! +50 XP",
+    goodQuizResult: "Жақсы талпыныс! Өткені үшін +50 XP",
+    seriesVideoLessons: [
+      { category: "Friends • A2–B1", translation: "Қалайсың?", explanation: "Күнделікті сөйлеуде жиі қолданылатын бейресми амандасу." },
+      { category: "Wednesday • B1", translation: "Мен бәрібір сияқты әрекет етемін.", explanation: "“as if” құрылымы салыстыру немесе мінез-құлықты сипаттау үшін қолданылады." },
+      { category: "Stranger Things • B1–B2", translation: "Достар өтірік айтпайды.", explanation: "Present Simple шақтағы қысқа болымсыз сөйлемнің мысалы." }
+    ],
+    shortLessons: [
+      {
+        category: "Coffee Shop • Beginner",
+        translation: "Маған латте бересіз бе, өтінемін?",
+        explanation: ["<strong>Can I get...</strong> — маған ... бола ма", "<strong>latte</strong> — латте", "<strong>please</strong> — өтінемін"],
+        quiz: { question: "Can I get a latte, please? фразасы нені білдіреді?", answers: ["Маған латте бересіз бе, өтінемін?", "Станция қайда орналасқан?", "Танысқаныма қуаныштымын."] }
+      },
+      {
+        category: "Asking Directions • Beginner",
+        translation: "Ең жақын станция қайда?",
+        explanation: ["<strong>where is...</strong> — қайда орналасқан", "<strong>nearest</strong> — ең жақын", "<strong>station</strong> — станция"],
+        quiz: { question: "Where is the nearest station? фразасы нені білдіреді?", answers: ["Ең жақын станция қайда?", "Маған кофе бола ма?", "Танысқаныма қуаныштымын."] }
+      },
+      {
+        category: "Meeting People • Beginner",
+        translation: "Танысқаныма қуаныштымын.",
+        explanation: ["<strong>nice</strong> — қуанышты / жағымды", "<strong>meet</strong> — танысу", "<strong>you</strong> — сен / сіз"],
+        quiz: { question: "Nice to meet you фразасы нені білдіреді?", answers: ["Танысқаныма қуаныштымын.", "Қалайсың?", "Рақмет."] }
+      }
+    ],
+    musicData: [
+      { translation: "Мен сен туралы ойлай беремін.", words: [{ word: "keep", translation: "жалғастыру" }, { word: "thinking", translation: "ойлау" }, { word: "about", translation: "туралы" }] },
+      { translation: "Уақытымыз таусылып бара жатыр.", words: [{ word: "running out", translation: "таусылу" }, { word: "time", translation: "уақыт" }, { word: "we're", translation: "біз" }] },
+      { translation: "Бәрі өте тез өзгерді.", words: [{ word: "everything", translation: "бәрі" }, { word: "changed", translation: "өзгерді" }, { word: "fast", translation: "тез" }] }
+    ],
+    dictionaryDefaults: ["латте", "станция", "танысу", "әуежай", "саяхат", "керемет"]
+  },
+  en: {
+    previewTodayTitle: "Today's lesson",
+    previewLessonTitle: "Phrases from series",
+    previewPhrase: "“What are you up to?” — What are you doing?",
+    previewProgressLabel: "Progress",
+    aboutFeatureShortTitle: "📱 Short videos",
+    aboutFeatureShortText: "Learn phrases through real situations and modern video formats.",
+    aboutFeaturePathTitle: "🎯 Personal path",
+    aboutFeaturePathText: "The program adapts to your goal: study, work, travel or communication.",
+    aboutFeatureProgressTitle: "📊 Progress",
+    aboutFeatureProgressText: "Quizzes, levels and tasks help you track your learning results.",
+    continueStudyBtn: "Continue learning",
+    finishLessonBtn: "Finish lesson",
+    miniQuizTitle: "Mini quiz",
+    lessonFinishedTitle: "Lesson complete 🎉",
+    lessonFinishedText: "You successfully completed the mini lesson for this series.",
+    newPhraseLearned: "✅ New phrase learned",
+    progressUpdated: "⭐ Progress updated",
+    keepLearning: "🔥 Keep learning every day",
+    backToSeriesBtn: "Back to series",
+    wordRequiredAlert: "Enter a word and translation",
+    wordSavedAlert: "Word saved to dictionary!",
+    excellentQuizResult: "🎉 Excellent result! +50 XP",
+    goodQuizResult: "Good try! +50 XP for completing it",
+    seriesVideoLessons: [
+      { category: "Friends • A2–B1", translation: "How are you?", explanation: "An informal greeting often used in conversational speech." },
+      { category: "Wednesday • B1", translation: "I behave as though I do not care.", explanation: "The “as if” structure is used for comparison or describing behavior." },
+      { category: "Stranger Things • B1–B2", translation: "Friends do not lie.", explanation: "An example of a short negative sentence in Present Simple." }
+    ],
+    shortLessons: [
+      {
+        category: "Coffee Shop • Beginner",
+        translation: "Can I get a latte, please?",
+        explanation: ["<strong>Can I get...</strong> — a polite request", "<strong>latte</strong> — latte", "<strong>please</strong> — polite marker"],
+        quiz: { question: "What does “Can I get a latte, please?” mean?", answers: ["Can I get a latte, please?", "Where is the station?", "Nice to meet you."] }
+      },
+      {
+        category: "Asking Directions • Beginner",
+        translation: "Where is the nearest station?",
+        explanation: ["<strong>where is...</strong> — asking for a location", "<strong>nearest</strong> — closest", "<strong>station</strong> — station"],
+        quiz: { question: "What does “Where is the nearest station?” mean?", answers: ["Where is the nearest station?", "Can I get a coffee?", "Nice to meet you."] }
+      },
+      {
+        category: "Meeting People • Beginner",
+        translation: "Nice to meet you.",
+        explanation: ["<strong>nice</strong> — pleasant", "<strong>meet</strong> — meet someone", "<strong>you</strong> — the person you speak to"],
+        quiz: { question: "What does “Nice to meet you” mean?", answers: ["Nice to meet you.", "How are you?", "Thank you."] }
+      }
+    ],
+    musicData: [
+      { translation: "I keep thinking about you.", words: [{ word: "keep", translation: "continue" }, { word: "thinking", translation: "thinking" }, { word: "about", translation: "about" }] },
+      { translation: "We are running out of time.", words: [{ word: "running out", translation: "becoming used up" }, { word: "time", translation: "time" }, { word: "we're", translation: "we are" }] },
+      { translation: "Everything changed so fast.", words: [{ word: "everything", translation: "everything" }, { word: "changed", translation: "changed" }, { word: "fast", translation: "quickly" }] }
+    ],
+    dictionaryDefaults: ["latte", "station", "meet", "airport", "travel", "awesome"]
+  },
+  tr: {
+    previewTodayTitle: "Bugünün dersi",
+    previewLessonTitle: "Dizilerden ifadeler",
+    previewPhrase: "“What are you up to?” — Ne yapıyorsun?",
+    previewProgressLabel: "İlerleme",
+    aboutFeatureShortTitle: "📱 Kısa videolar",
+    aboutFeatureShortText: "İfadeleri gerçek durumlar ve modern video formatlarıyla öğrenin.",
+    aboutFeaturePathTitle: "🎯 Kişisel yol",
+    aboutFeaturePathText: "Program hedefinize göre seçilir: eğitim, iş, seyahat veya iletişim.",
+    aboutFeatureProgressTitle: "📊 İlerleme",
+    aboutFeatureProgressText: "Testler, seviyeler ve görevler öğrenme sonucunu takip etmeye yardımcı olur.",
+    continueStudyBtn: "Öğrenmeye devam et",
+    finishLessonBtn: "Dersi bitir",
+    miniQuizTitle: "Mini test",
+    lessonFinishedTitle: "Ders tamamlandı 🎉",
+    lessonFinishedText: "Dizi mini dersini başarıyla tamamladınız.",
+    newPhraseLearned: "✅ Yeni ifade öğrenildi",
+    progressUpdated: "⭐ İlerleme güncellendi",
+    keepLearning: "🔥 Her gün öğrenmeye devam edin",
+    backToSeriesBtn: "Dizilere dön",
+    wordRequiredAlert: "Kelime ve çeviri girin",
+    wordSavedAlert: "Kelime sözlüğe kaydedildi!",
+    excellentQuizResult: "🎉 Harika sonuç! +50 XP",
+    goodQuizResult: "İyi deneme! Tamamladığınız için +50 XP",
+    seriesVideoLessons: [
+      { category: "Friends • A2–B1", translation: "Nasılsın?", explanation: "Günlük konuşmada sık kullanılan samimi bir selamlaşma." },
+      { category: "Wednesday • B1", translation: "Umursamıyormuş gibi davranıyorum.", explanation: "“as if” yapısı karşılaştırma veya davranış anlatmak için kullanılır." },
+      { category: "Stranger Things • B1–B2", translation: "Arkadaşlar yalan söylemez.", explanation: "Present Simple ile kısa bir olumsuz cümle örneği." }
+    ],
+    shortLessons: [
+      {
+        category: "Coffee Shop • Beginner",
+        translation: "Bir latte alabilir miyim, lütfen?",
+        explanation: ["<strong>Can I get...</strong> — ... alabilir miyim", "<strong>latte</strong> — latte", "<strong>please</strong> — lütfen"],
+        quiz: { question: "Can I get a latte, please? ifadesi ne anlama gelir?", answers: ["Bir latte alabilir miyim, lütfen?", "İstasyon nerede?", "Tanıştığımıza memnun oldum."] }
+      },
+      {
+        category: "Asking Directions • Beginner",
+        translation: "En yakın istasyon nerede?",
+        explanation: ["<strong>where is...</strong> — nerede", "<strong>nearest</strong> — en yakın", "<strong>station</strong> — istasyon"],
+        quiz: { question: "Where is the nearest station? ifadesi ne anlama gelir?", answers: ["En yakın istasyon nerede?", "Bir kahve alabilir miyim?", "Tanıştığımıza memnun oldum."] }
+      },
+      {
+        category: "Meeting People • Beginner",
+        translation: "Tanıştığımıza memnun oldum.",
+        explanation: ["<strong>nice</strong> — hoş / güzel", "<strong>meet</strong> — tanışmak", "<strong>you</strong> — sen / siz"],
+        quiz: { question: "Nice to meet you ifadesi ne anlama gelir?", answers: ["Tanıştığımıza memnun oldum.", "Nasılsın?", "Teşekkürler."] }
+      }
+    ],
+    musicData: [
+      { translation: "Seni düşünmeye devam ediyorum.", words: [{ word: "keep", translation: "devam etmek" }, { word: "thinking", translation: "düşünmek" }, { word: "about", translation: "hakkında" }] },
+      { translation: "Zamanımız tükeniyor.", words: [{ word: "running out", translation: "tükenmek" }, { word: "time", translation: "zaman" }, { word: "we're", translation: "biz" }] },
+      { translation: "Her şey çok hızlı değişti.", words: [{ word: "everything", translation: "her şey" }, { word: "changed", translation: "değişti" }, { word: "fast", translation: "hızlı" }] }
+    ],
+    dictionaryDefaults: ["latte", "istasyon", "tanışmak", "havaalanı", "seyahat", "harika"]
+  }
+};
+
+Object.keys(localizedPageData).forEach(lang => {
+  Object.assign(translations[lang], localizedPageData[lang]);
+});
+
+function getSeriesVideoLesson() {
+  const base = seriesVideoLessons[currentSeriesVideoLesson];
+  const localized = translations[currentSiteLanguage].seriesVideoLessons[currentSeriesVideoLesson];
+  return { ...base, ...localized };
+}
+
+function applySeriesVideoLesson() {
+  const lesson = getSeriesVideoLesson();
+  if (seriesVideo) seriesVideo.src = lesson.video;
+  if (seriesCategory) seriesCategory.textContent = lesson.category;
+  if (seriesStudyPhrase) seriesStudyPhrase.textContent = lesson.phrase;
+  if (seriesStudyTranslation) seriesStudyTranslation.textContent = lesson.translation;
+  if (seriesStudyExplanation) seriesStudyExplanation.textContent = lesson.explanation;
+}
+
+function getShortLesson() {
+  const base = shortLessons[currentShort];
+  const localized = translations[currentSiteLanguage].shortLessons[currentShort];
+  return {
+    ...base,
+    ...localized,
+    quiz: {
+      question: localized.quiz.question,
+      answers: base.quiz.answers.map((answer, index) => ({
+        ...answer,
+        text: localized.quiz.answers[index]
+      }))
+    }
+  };
+}
+
+function applyShortLesson(resetQuiz) {
+  const lesson = getShortLesson();
+  const shouldRenderQuiz = resetQuiz || (shortQuiz && shortQuiz.classList.contains("active"));
+  if (shortTranslation && resetQuiz) shortTranslation.classList.add("hidden-content");
+  if (shortExplanation && resetQuiz) shortExplanation.classList.add("hidden-content");
+  if (shortVideo) shortVideo.src = lesson.video;
+  if (shortCategory) shortCategory.textContent = lesson.category;
+  if (shortPhrase) shortPhrase.textContent = lesson.phrase;
+  if (shortTranslation) shortTranslation.textContent = lesson.translation;
+  if (shortExplanation) {
+    shortExplanation.innerHTML = lesson.explanation.map(item => `<p>${item}</p>`).join("");
+  }
+  if (shouldRenderQuiz) {
+    renderShortQuiz();
+  }
+}
+
+function getMusicLesson() {
+  const base = musicData[currentMusicIndex];
+  const localized = translations[currentSiteLanguage].musicData[currentMusicIndex];
+  return { ...base, ...localized };
+}
+
+function applyDictionaryDefaults() {
+  const translationsList = translations[currentSiteLanguage].dictionaryDefaults;
+  document.querySelectorAll(".dictionary-grid .word-card").forEach((card, index) => {
+    if (index >= translationsList.length) return;
+    const translation = card.querySelector("p");
+    if (translation) translation.textContent = translationsList[index];
+  });
+}
+
 function changeSiteLanguage(lang) {
   currentSiteLanguage = translations[lang] ? lang : "ru";
   const t = translations[currentSiteLanguage];
@@ -2006,6 +2281,16 @@ function changeSiteLanguage(lang) {
   setQueryText(".about-text span", t.aboutLabel);
   setQueryText(".about-text h2", t.aboutTitle);
   setQueryText(".about-text p", t.aboutText);
+  setText("previewTodayTitle", t.previewTodayTitle);
+  setText("previewLessonTitle", t.previewLessonTitle);
+  setText("previewPhrase", t.previewPhrase);
+  setText("previewProgressLabel", t.previewProgressLabel);
+  setText("aboutFeatureShortTitle", t.aboutFeatureShortTitle);
+  setText("aboutFeatureShortText", t.aboutFeatureShortText);
+  setText("aboutFeaturePathTitle", t.aboutFeaturePathTitle);
+  setText("aboutFeaturePathText", t.aboutFeaturePathText);
+  setText("aboutFeatureProgressTitle", t.aboutFeatureProgressTitle);
+  setText("aboutFeatureProgressText", t.aboutFeatureProgressText);
 
   setText("learningLabel", t.learningLabel);
   setText("learningTitle", t.learningTitle);
@@ -2118,6 +2403,10 @@ function changeSiteLanguage(lang) {
   setPlaceholder("#newTranslation", t.newTranslationPlaceholder);
   setText("addWordBtn", t.addWordBtn);
   setPlaceholder(".dictionary-search input", t.searchWordPlaceholder);
+  applySeriesVideoLesson();
+  applyShortLesson(false);
+  updateMusicCards();
+  applyDictionaryDefaults();
 
   renderStep();
 }
