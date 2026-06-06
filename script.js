@@ -1254,3 +1254,143 @@ nextQuizQuestion.addEventListener("click", () => {
 closeQuiz.addEventListener("click", () => {
   quizModal.classList.remove("active");
 });
+
+const musicData = [
+  {
+    phrase: "I keep thinking about you.",
+    translation: "Я продолжаю думать о тебе.",
+    missing: "thinking",
+    words: [
+      { word: "keep", translation: "продолжать" },
+      { word: "thinking", translation: "думать" },
+      { word: "about", translation: "о / про" }
+    ]
+  },
+  {
+    phrase: "We're running out of time.",
+    translation: "У нас заканчивается время.",
+    missing: "time",
+    words: [
+      { word: "running out", translation: "заканчиваться" },
+      { word: "time", translation: "время" },
+      { word: "we're", translation: "мы" }
+    ]
+  },
+  {
+    phrase: "Everything changed so fast.",
+    translation: "Всё изменилось так быстро.",
+    missing: "changed",
+    words: [
+      { word: "everything", translation: "всё" },
+      { word: "changed", translation: "изменилось" },
+      { word: "fast", translation: "быстро" }
+    ]
+  }
+];
+
+let currentMusicIndex = 0;
+
+const musicCardPhrase = document.querySelector("#musicCardPhrase");
+const musicCardTranslation = document.querySelector("#musicCardTranslation");
+const musicCardWords = document.querySelector("#musicCardWords");
+
+const musicModal = document.querySelector("#musicModal");
+const musicModalTitle = document.querySelector("#musicModalTitle");
+const musicModalBody = document.querySelector("#musicModalBody");
+const closeMusic = document.querySelector("#closeMusic");
+
+function updateMusicCards() {
+  const lesson = musicData[currentMusicIndex];
+
+  musicCardPhrase.textContent = lesson.phrase;
+  musicCardTranslation.textContent = lesson.translation;
+  musicCardWords.textContent = lesson.words.map(item => item.word).join(", ");
+}
+
+function openMusicModal(type) {
+  const lesson = musicData[currentMusicIndex];
+
+  musicModal.classList.add("active");
+
+  if (type === "lyrics") {
+    musicModalTitle.textContent = "Разбор строки";
+    musicModalBody.innerHTML = `
+      <p><strong>Фраза:</strong> ${lesson.phrase}</p>
+      <p><strong>Перевод:</strong> ${lesson.translation}</p>
+      ${lesson.words.map(item => `
+        <p><strong>${item.word}</strong> — ${item.translation}</p>
+      `).join("")}
+
+      <button onclick="goToNextMusicLesson()">Следующая фраза</button>
+    `;
+  }
+
+  if (type === "listening") {
+    const sentence = lesson.phrase.replace(lesson.missing, "_____");
+
+    musicModalTitle.textContent = "Listening Practice";
+    musicModalBody.innerHTML = `
+      <p><strong>Задание:</strong> ${sentence}</p>
+      <button onclick="checkMusicAnswer(false)">working</button>
+      <button onclick="checkMusicAnswer(true)">${lesson.missing}</button>
+      <button onclick="checkMusicAnswer(false)">looking</button>
+      <p id="musicAnswerResult"></p>
+    `;
+  }
+
+  if (type === "vocabulary") {
+    musicModalTitle.textContent = "Vocabulary";
+    musicModalBody.innerHTML = `
+      ${lesson.words.map(item => `
+        <div class="music-vocab-item">
+          <p><strong>${item.word}</strong> — ${item.translation}</p>
+          <button onclick="saveMusicWord('${item.word}', '${item.translation}')">
+            ⭐ Сохранить в словарь
+          </button>
+        </div>
+      `).join("")}
+    `;
+  }
+}
+
+function checkMusicAnswer(isCorrect) {
+  const result = document.querySelector("#musicAnswerResult");
+
+  if (isCorrect) {
+    result.textContent = "✅ Правильно!";
+    result.style.color = "#22c55e";
+  } else {
+    result.textContent = "❌ Неправильно. Попробуйте ещё раз.";
+    result.style.color = "#ef4444";
+  }
+}
+
+function goToNextMusicLesson() {
+  currentMusicIndex++;
+
+  if (currentMusicIndex >= musicData.length) {
+    currentMusicIndex = 0;
+  }
+
+  updateMusicCards();
+  musicModal.classList.remove("active");
+}
+
+function saveMusicWord(word, translation) {
+  createWordCard(word, translation);
+
+  savedWords.push({
+    word: word,
+    translation: translation
+  });
+
+  localStorage.setItem("polyglotWords", JSON.stringify(savedWords));
+
+  alert("Слово сохранено в словарь!");
+}
+
+closeMusic.addEventListener("click", () => {
+  musicModal.classList.remove("active");
+});
+
+updateMusicCards();

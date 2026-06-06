@@ -1454,3 +1454,43 @@ html {
 .track-item {
   cursor: pointer;
 }
+
+.music-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.music-modal.active {
+  display: flex;
+}
+
+.music-modal-content {
+  width: 90%;
+  max-width: 600px;
+  background: #1e293b;
+  padding: 40px;
+  border-radius: 30px;
+  position: relative;
+}
+
+.close-music {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.music-modal-content h2 {
+  color: #38bdf8;
+  margin-bottom: 20px;
+}
+
+.music-modal-content p {
+  margin-bottom: 14px;
+}

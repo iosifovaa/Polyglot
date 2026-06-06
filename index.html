@@ -384,28 +384,37 @@
 
     <div class="music-card">
       <h3>🎵 Song Lyrics</h3>
-      <p><strong>Фраза:</strong> I’m feeling good</p>
-      <p><strong>Перевод:</strong> Я чувствую себя хорошо</p>
-      <button>Разобрать строку</button>
+      <p><strong>Фраза:</strong> <span id="musicCardPhrase">I keep thinking about you.</span></p>
+      <p><strong>Перевод:</strong> <span id="musicCardTranslation">Я продолжаю думать о тебе.</span></p>
+      <button onclick="openMusicModal('lyrics')">Разобрать строку</button>
     </div>
 
     <div class="music-card">
       <h3>🎧 Listening Practice</h3>
       <p><strong>Задание:</strong> Найти пропущенное слово</p>
       <p><strong>Навык:</strong> Аудирование</p>
-      <button>Начать практику</button>
+      <button onclick="openMusicModal('listening')">Начать практику</button>
     </div>
 
     <div class="music-card">
       <h3>⭐ Vocabulary</h3>
-      <p><strong>Слова:</strong> feeling, dream, heart</p>
+      <p><strong>Слова:</strong> <span id="musicCardWords">keep, thinking, about</span></p>
       <p><strong>Цель:</strong> Пополнить словарный запас</p>
-      <button>Изучить слова</button>
+      <button onclick="openMusicModal('vocabulary')">Изучить слова</button>
     </div>
 
   </div>
 
 </section>
+
+<div class="music-modal" id="musicModal">
+  <div class="music-modal-content">
+    <span class="close-music" id="closeMusic">&times;</span>
+
+    <h2 id="musicModalTitle">Music Practice</h2>
+    <div id="musicModalBody"></div>
+  </div>
+</div>
 
 <section class="grammar-section" id="grammar">
 
