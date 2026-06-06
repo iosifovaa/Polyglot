@@ -1,8 +1,17 @@
+let currentSiteLanguage = localStorage.getItem("polyglotLang") || "ru";
+
+const profileLabels = {
+  ru: "👤 Профиль",
+  kk: "👤 Жеке бет",
+  en: "👤 Profile",
+  tr: "👤 Profil"
+};
+
 const onboardingSteps = [
   {
     title: "Какой язык вы хотите изучать?",
     description: "Выберите язык, под который будет подбираться программа.",
-    options: ["English", "Türkçe", "Қазақша", "Deutsch", "Français", "한국어"]
+    options: ["Русский", "Қазақша", "English", "Türkçe"]
   },
   {
     title: "Какая у вас цель?",
@@ -26,9 +35,11 @@ const nextStepBtn = document.querySelector("#nextStepBtn");
 const backStepBtn = document.querySelector("#backStepBtn");
 
 function renderStep() {
-  const step = onboardingSteps[currentStep];
+  const t = translations[currentSiteLanguage];
+  const steps = t.onboardingSteps || onboardingSteps;
+  const step = steps[currentStep];
 
-  stepNumber.textContent = `Шаг ${currentStep + 1} из ${onboardingSteps.length}`;
+  stepNumber.textContent = `${t.stepLabel} ${currentStep + 1} ${t.stepOf} ${steps.length}`;
   stepTitle.textContent = step.title;
   stepDescription.textContent = step.description;
 
@@ -50,17 +61,21 @@ function renderStep() {
   });
 
   nextStepBtn.textContent =
-    currentStep === onboardingSteps.length - 1 ? "Завершить" : "Далее";
+    currentStep === steps.length - 1 ? t.finishBtn : t.nextBtn;
+
+  backStepBtn.textContent = t.backBtn;
 
   backStepBtn.disabled = currentStep === 0;
 }
 
 nextStepBtn.addEventListener("click", () => {
-  if (currentStep < onboardingSteps.length - 1) {
+  const steps = translations[currentSiteLanguage].onboardingSteps || onboardingSteps;
+
+  if (currentStep < steps.length - 1) {
     currentStep++;
     renderStep();
   } else {
-    alert("Программа обучения настроена!");
+    alert(translations[currentSiteLanguage].onboardingDone);
   }
 });
 
@@ -69,9 +84,7 @@ backStepBtn.addEventListener("click", () => {
     currentStep--;
     renderStep();
   }
-}); 
-
-renderStep();
+});
 
 const seriesButtons = document.querySelectorAll(".video-lesson-card button");
 
@@ -479,7 +492,7 @@ function renderShortQuiz() {
       if (answer.correct) {
 
         shortQuizResult.textContent =
-          "✅ Правильно! +10 XP";
+          translations[currentSiteLanguage].correctResult;
 
         shortQuizResult.style.color =
           "#22c55e";
@@ -490,7 +503,7 @@ function renderShortQuiz() {
       } else {
 
         shortQuizResult.textContent =
-          "❌ Неправильно. Попробуйте ещё раз.";
+          translations[currentSiteLanguage].wrongTryAgain;
 
         shortQuizResult.style.color =
           "#ef4444";
@@ -590,7 +603,7 @@ function showRegisterForm() {
   registerForm.classList.remove("hidden-content");
   profileBox.classList.add("hidden-content");
 
-  profileLink.textContent = "👤 Профиль";
+  profileLink.textContent = profileLabels[currentSiteLanguage] || profileLabels.ru;
 }
 
 const savedUser = JSON.parse(localStorage.getItem("polyglotUser"));
@@ -606,7 +619,7 @@ registerBtn.addEventListener("click", () => {
   const email = userEmailInput.value.trim();
 
   if (name === "" || email === "") {
-    alert("Введите имя и email");
+    alert(translations[currentSiteLanguage].requiredFieldsAlert);
     return;
   }
 
@@ -1194,11 +1207,14 @@ function openFinalChallengeQuiz() {
 function renderQuizQuestion() {
   const current = activeQuiz[currentQuizQuestion];
 
-  quizProgress.textContent = `Вопрос ${currentQuizQuestion + 1} из ${activeQuiz.length}`;
+  const t = translations[currentSiteLanguage];
+
+  quizProgress.textContent = `${t.quizQuestionProgress} ${currentQuizQuestion + 1} ${t.quizOf} ${activeQuiz.length}`;
   quizQuestion.textContent = current.question;
   quizResult.textContent = "";
   quizAnswerOptions.innerHTML = "";
   nextQuizQuestion.classList.add("hidden-content");
+  nextQuizQuestion.textContent = t.nextQuestionBtn;
   quizAnswered = false;
 
   const shuffledAnswers =
@@ -1215,10 +1231,10 @@ function renderQuizQuestion() {
 
       if (answer.correct) {
         quizScore++;
-        quizResult.textContent = "✅ Правильно!";
+        quizResult.textContent = t.correctShort;
         quizResult.style.color = "#22c55e";
       } else {
-        quizResult.textContent = "❌ Неправильно.";
+        quizResult.textContent = t.wrongTryAgain;
         quizResult.style.color = "#ef4444";
       }
 
@@ -1235,8 +1251,10 @@ nextQuizQuestion.addEventListener("click", () => {
   if (currentQuizQuestion < activeQuiz.length) {
     renderQuizQuestion();
   } else {
-    quizProgress.textContent = "Тест завершён";
-    quizQuestion.textContent = `Ваш результат: ${quizScore} из ${activeQuiz.length}`;
+    const t = translations[currentSiteLanguage];
+
+    quizProgress.textContent = t.quizComplete;
+    quizQuestion.textContent = `${t.quizResultPrefix}: ${quizScore} ${t.quizOf} ${activeQuiz.length}`;
     quizAnswerOptions.innerHTML = "";
 
     let currentXP = Number(localStorage.getItem("polyglotXP")) || 0;
@@ -1319,28 +1337,29 @@ function updateMusicCards() {
 
 function openMusicModal(type) {
   const lesson = musicData[currentMusicIndex];
+  const t = translations[currentSiteLanguage];
 
   musicModal.classList.add("active");
 
   if (type === "lyrics") {
-    musicModalTitle.textContent = "Разбор строки";
+    musicModalTitle.textContent = t.lyricsModalTitle;
     musicModalBody.innerHTML = `
-      <p><strong>Фраза:</strong> ${lesson.phrase}</p>
-      <p><strong>Перевод:</strong> ${lesson.translation}</p>
+      <p><strong>${t.phraseLabel}:</strong> ${lesson.phrase}</p>
+      <p><strong>${t.translationLabel}:</strong> ${lesson.translation}</p>
       ${lesson.words.map(item => `
         <p><strong>${item.word}</strong> — ${item.translation}</p>
       `).join("")}
 
-      <button onclick="goToNextMusicLesson()">Следующая фраза</button>
+      <button onclick="goToNextMusicLesson()">${t.nextPhraseBtn}</button>
     `;
   }
 
   if (type === "listening") {
     const sentence = lesson.phrase.replace(lesson.missing, "_____");
 
-    musicModalTitle.textContent = "Listening Practice";
+    musicModalTitle.textContent = t.listeningPractice;
     musicModalBody.innerHTML = `
-      <p><strong>Задание:</strong> ${sentence}</p>
+      <p><strong>${t.taskLabel}:</strong> ${sentence}</p>
       <button onclick="checkMusicAnswer(false)">working</button>
       <button onclick="checkMusicAnswer(true)">${lesson.missing}</button>
       <button onclick="checkMusicAnswer(false)">looking</button>
@@ -1349,13 +1368,13 @@ function openMusicModal(type) {
   }
 
   if (type === "vocabulary") {
-    musicModalTitle.textContent = "Vocabulary";
+    musicModalTitle.textContent = t.vocabularyTitle;
     musicModalBody.innerHTML = `
       ${lesson.words.map(item => `
         <div class="music-vocab-item">
           <p><strong>${item.word}</strong> — ${item.translation}</p>
           <button onclick="saveMusicWord('${item.word}', '${item.translation}')">
-            ⭐ Сохранить в словарь
+            ⭐ ${t.saveToDictionaryBtn}
           </button>
         </div>
       `).join("")}
@@ -1367,10 +1386,10 @@ function checkMusicAnswer(isCorrect) {
   const result = document.querySelector("#musicAnswerResult");
 
   if (isCorrect) {
-    result.textContent = "✅ Правильно!";
+    result.textContent = translations[currentSiteLanguage].correctShort;
     result.style.color = "#22c55e";
   } else {
-    result.textContent = "❌ Неправильно. Попробуйте ещё раз.";
+    result.textContent = translations[currentSiteLanguage].wrongTryAgain;
     result.style.color = "#ef4444";
   }
 }
@@ -1435,7 +1454,7 @@ const translations = {
     learningLabel: "Learning paths",
     learningTitle: "Выберите формат обучения",
     learningText: "Учитесь так, как удобно именно вам: через видео, музыку, грамматику и практику.",
-    seriesTitle: "Сериалы и шоу",
+    learningSeriesTitle: "Сериалы и шоу",
     seriesText: "Изучайте живые фразы, сленг и реальные диалоги из популярных сцен.",
     musicTitleCard: "Музыка",
     musicTextCard: "Разбирайте строки песен, переводите выражения и запоминайте новые слова.",
@@ -1446,9 +1465,107 @@ const translations = {
     testsTitle: "Тесты",
     testsText: "Проверяйте знания после каждого урока и отслеживайте результат.",
     dictionaryTitle: "Словарь",
-    dictionaryText: "Сохраняйте новые слова и полезные выражения в личный словарь."
+    dictionaryText: "Сохраняйте новые слова и полезные выражения в личный словарь.",
+    authLabel: "User Account",
+    authTitle: "Создайте профиль",
+    authText: "Введите данные, чтобы Polyglot мог персонализировать обучение.",
+    namePlaceholder: "Ваше имя",
+    emailPlaceholder: "Email",
+    registerBtn: "Зарегистрироваться",
+    profileLabel: "My Profile",
+    profileTitle: "👤 Мой профиль",
+    nameLabel: "Имя",
+    studiedLanguageLabel: "Изучаемый язык",
+    levelLabel: "Уровень",
+    logoutBtn: "Выйти",
+    requiredFieldsAlert: "Введите имя и email",
+    stepLabel: "Шаг",
+    stepOf: "из",
+    backBtn: "Назад",
+    nextBtn: "Далее",
+    finishBtn: "Завершить",
+    onboardingDone: "Программа обучения настроена!",
+    onboardingSteps: [
+      { title: "Какой язык вы хотите изучать?", description: "Выберите язык, под который будет подбираться программа.", options: ["Русский", "Қазақша", "English", "Türkçe"] },
+      { title: "Какая у вас цель?", description: "Это поможет подобрать темы и задания.", options: ["Путешествия", "Работа", "Учёба", "Сериалы и фильмы"] },
+      { title: "Ваш уровень", description: "Выберите примерный уровень владения языком.", options: ["Beginner", "Elementary", "Intermediate", "Advanced"] },
+      { title: "Готово к старту", description: "Мы соберём для вас маршрут обучения по выбранным ответам.", options: ["Начать обучение"] }
+    ],
+    shortsLabel: "Short Video Lessons",
+    shortsSectionTitle: "Изучение через короткие видео",
+    shortsSectionText: "Смотрите короткое видео и сразу разбирайте фразу из него.",
+    miniTest: "Мини-тест",
+    nextVideoBtn: "Следующее видео",
+    correctShort: "✅ Правильно!",
+    correctResult: "✅ Правильно! +10 XP",
+    wrongTryAgain: "❌ Неправильно. Попробуйте ещё раз.",
+    dashboardLabel: "Your progress",
+    dashboardTitle: "Ваш прогресс обучения",
+    currentLevel: "Текущий уровень",
+    nextGoal: "Следующая цель",
+    skillLabel: "Навык",
+    recommendationLabel: "Рекомендация",
+    recommendationText: "Пройти 3 урока грамматики",
+    streakTitle: "Серия дней",
+    streakText: "Вы заходили 12 дней подряд",
+    lessonsDoneTitle: "Пройдено уроков",
+    lessonsDoneText: "Продолжайте обучение каждый день",
+    wordsLearnedTitle: "Изучено слов",
+    wordsLearnedText: "Ваш словарный запас растёт",
+    weeklyXP: "Weekly XP",
+    seriesLabel: "Series Learning",
+    seriesSectionTitle: "Изучение через видео-отрывки",
+    seriesSectionText: "Смотрите короткий отрывок, затем разбирайте фразу, перевод и объяснение.",
+    nextPhraseBtn: "Следующая фраза",
+    phraseLabel: "Фраза",
+    translationLabel: "Перевод",
+    explanationLabel: "Объяснение",
+    musicLabel: "Music Learning",
+    musicSectionTitle: "Изучение через музыку",
+    musicSectionText: "Разбирайте строки из песен, переводите выражения и запоминайте новые слова.",
+    songLyricsTitle: "🎵 Song Lyrics",
+    analyzeLineBtn: "Разобрать строку",
+    listeningPractice: "Listening Practice",
+    taskLabel: "Задание",
+    taskText: "Найти пропущенное слово",
+    listeningSkill: "Аудирование",
+    startPracticeBtn: "Начать практику",
+    vocabularyTitle: "Vocabulary",
+    wordsLabel: "Слова",
+    goalLabel: "Цель",
+    vocabGoalText: "Пополнить словарный запас",
+    studyWordsBtn: "Изучить слова",
+    lyricsModalTitle: "Разбор строки",
+    saveToDictionaryBtn: "Сохранить в словарь",
+    grammarLabel: "Grammar",
+    grammarSectionTitle: "Грамматика простым языком",
+    grammarSectionText: "Изучайте правила языка через понятные объяснения и реальные примеры.",
+    grammarPresentSimpleText: "Используется для привычек, фактов и регулярных действий.",
+    grammarPresentContinuousText: "Используется для действий, которые происходят сейчас.",
+    grammarPastSimpleText: "Используется для действий, которые произошли в прошлом.",
+    openTopicBtn: "Открыть тему",
+    testsLabel: "Assessment Center",
+    testsSectionTitle: "Проверка знаний",
+    testsSectionText: "Проходите тесты по мере изучения контента и открывайте новые уровни.",
+    vocabularyTrack: "📖 Vocabulary Track",
+    seriesTrack: "🎬 Series Track",
+    shortVideosTrack: "📱 Short Videos Track",
+    finalChallenge: "🏆 Final Challenge",
+    levelWord: "Level",
+    finalWord: "Final",
+    nextQuestionBtn: "Следующий вопрос",
+    quizQuestionProgress: "Вопрос",
+    quizOf: "из",
+    quizComplete: "Тест завершён",
+    quizResultPrefix: "Ваш результат",
+    dictionaryLabel: "Personal Dictionary",
+    dictionarySectionTitle: "Ваш словарь",
+    dictionarySectionText: "Сохраняйте новые слова и выражения для повторения.",
+    newWordPlaceholder: "Новое слово",
+    newTranslationPlaceholder: "Перевод",
+    addWordBtn: "Добавить слово",
+    searchWordPlaceholder: "Поиск слова..."
   },
-
   kk: {
     heroTitle: "Тілді өзіңізге қызықты контент арқылы үйреніңіз",
     heroText: "Сериалдар, музыка, қысқа видеолар, нақты диалогтар, грамматика және тесттер — бәрі бір заманауи сайтта.",
@@ -1464,7 +1581,7 @@ const translations = {
     learningLabel: "Оқу бағыттары",
     learningTitle: "Оқу форматын таңдаңыз",
     learningText: "Өзіңізге ыңғайлы түрде оқыңыз: видео, музыка, грамматика және практика арқылы.",
-    seriesTitle: "Сериалдар мен шоулар",
+    learningSeriesTitle: "Сериалдар мен шоулар",
     seriesText: "Танымал көріністерден тірі сөз тіркестерін, сленгті және нақты диалогтарды үйреніңіз.",
     musicTitleCard: "Музыка",
     musicTextCard: "Ән жолдарын талдап, сөз тіркестерін аударып, жаңа сөздерді есте сақтаңыз.",
@@ -1475,9 +1592,107 @@ const translations = {
     testsTitle: "Тесттер",
     testsText: "Әр сабақтан кейін біліміңізді тексеріп, нәтижені бақылаңыз.",
     dictionaryTitle: "Сөздік",
-    dictionaryText: "Жаңа сөздер мен пайдалы тіркестерді жеке сөздікке сақтаңыз."
+    dictionaryText: "Жаңа сөздер мен пайдалы тіркестерді жеке сөздікке сақтаңыз.",
+    authLabel: "Пайдаланушы аккаунты",
+    authTitle: "Профиль жасаңыз",
+    authText: "Polyglot оқуды жекелендіруі үшін деректеріңізді енгізіңіз.",
+    namePlaceholder: "Атыңыз",
+    emailPlaceholder: "Email",
+    registerBtn: "Тіркелу",
+    profileLabel: "Менің профилім",
+    profileTitle: "👤 Менің профилім",
+    nameLabel: "Аты",
+    studiedLanguageLabel: "Үйреніп жатқан тіл",
+    levelLabel: "Деңгей",
+    logoutBtn: "Шығу",
+    requiredFieldsAlert: "Атыңыз бен email енгізіңіз",
+    stepLabel: "Қадам",
+    stepOf: "/",
+    backBtn: "Артқа",
+    nextBtn: "Келесі",
+    finishBtn: "Аяқтау",
+    onboardingDone: "Оқу бағдарламасы бапталды!",
+    onboardingSteps: [
+      { title: "Қай тілді үйренгіңіз келеді?", description: "Бағдарлама соған қарай таңдалады.", options: ["Русский", "Қазақша", "English", "Türkçe"] },
+      { title: "Мақсатыңыз қандай?", description: "Бұл тақырыптар мен тапсырмаларды таңдауға көмектеседі.", options: ["Саяхат", "Жұмыс", "Оқу", "Сериалдар мен фильмдер"] },
+      { title: "Деңгейіңіз", description: "Тілді меңгеру деңгейіңізді таңдаңыз.", options: ["Beginner", "Elementary", "Intermediate", "Advanced"] },
+      { title: "Бастауға дайын", description: "Жауаптарыңыз бойынша оқу маршрутын құрамыз.", options: ["Оқуды бастау"] }
+    ],
+    shortsLabel: "Қысқа видео сабақтар",
+    shortsSectionTitle: "Қысқа видеолар арқылы оқу",
+    shortsSectionText: "Қысқа видеоны көріп, одан алынған фразаны бірден талдаңыз.",
+    miniTest: "Мини-тест",
+    nextVideoBtn: "Келесі видео",
+    correctShort: "✅ Дұрыс!",
+    correctResult: "✅ Дұрыс! +10 XP",
+    wrongTryAgain: "❌ Қате. Қайта көріңіз.",
+    dashboardLabel: "Сіздің прогресіңіз",
+    dashboardTitle: "Оқу прогресіңіз",
+    currentLevel: "Қазіргі деңгей",
+    nextGoal: "Келесі мақсат",
+    skillLabel: "Дағды",
+    recommendationLabel: "Ұсыныс",
+    recommendationText: "3 грамматика сабағын өту",
+    streakTitle: "Күндер сериясы",
+    streakText: "Сіз 12 күн қатарынан кірдіңіз",
+    lessonsDoneTitle: "Өткен сабақтар",
+    lessonsDoneText: "Күн сайын оқуды жалғастырыңыз",
+    wordsLearnedTitle: "Үйренген сөздер",
+    wordsLearnedText: "Сөздік қорыңыз өсіп келеді",
+    weeklyXP: "Апталық XP",
+    seriesLabel: "Сериал арқылы оқу",
+    seriesSectionTitle: "Видео үзінділер арқылы оқу",
+    seriesSectionText: "Қысқа үзіндіні көріп, фразаны, аударманы және түсіндірмені талдаңыз.",
+    nextPhraseBtn: "Келесі фраза",
+    phraseLabel: "Фраза",
+    translationLabel: "Аударма",
+    explanationLabel: "Түсіндірме",
+    musicLabel: "Музыка арқылы оқу",
+    musicSectionTitle: "Музыка арқылы оқу",
+    musicSectionText: "Ән жолдарын талдап, сөз тіркестерін аударып, жаңа сөздерді есте сақтаңыз.",
+    songLyricsTitle: "🎵 Ән мәтіні",
+    analyzeLineBtn: "Жолды талдау",
+    listeningPractice: "Тыңдау практикасы",
+    taskLabel: "Тапсырма",
+    taskText: "Түсіп қалған сөзді табу",
+    listeningSkill: "Тыңдалым",
+    startPracticeBtn: "Практиканы бастау",
+    vocabularyTitle: "Сөздік",
+    wordsLabel: "Сөздер",
+    goalLabel: "Мақсат",
+    vocabGoalText: "Сөздік қорды толықтыру",
+    studyWordsBtn: "Сөздерді үйрену",
+    lyricsModalTitle: "Жолды талдау",
+    saveToDictionaryBtn: "Сөздікке сақтау",
+    grammarLabel: "Грамматика",
+    grammarSectionTitle: "Грамматика қарапайым тілмен",
+    grammarSectionText: "Тіл ережелерін түсінікті түсіндірмелер мен нақты мысалдар арқылы үйреніңіз.",
+    grammarPresentSimpleText: "Әдеттер, фактілер және тұрақты әрекеттер үшін қолданылады.",
+    grammarPresentContinuousText: "Қазір болып жатқан әрекеттер үшін қолданылады.",
+    grammarPastSimpleText: "Өткен уақытта болған әрекеттер үшін қолданылады.",
+    openTopicBtn: "Тақырыпты ашу",
+    testsLabel: "Білімді тексеру орталығы",
+    testsSectionTitle: "Білімді тексеру",
+    testsSectionText: "Контентті үйренген сайын тесттерден өтіп, жаңа деңгейлерді ашыңыз.",
+    vocabularyTrack: "📖 Сөздік бағыты",
+    seriesTrack: "🎬 Сериал бағыты",
+    shortVideosTrack: "📱 Қысқа видео бағыты",
+    finalChallenge: "🏆 Қорытынды сынақ",
+    levelWord: "Деңгей",
+    finalWord: "Финал",
+    nextQuestionBtn: "Келесі сұрақ",
+    quizQuestionProgress: "Сұрақ",
+    quizOf: "/",
+    quizComplete: "Тест аяқталды",
+    quizResultPrefix: "Нәтижеңіз",
+    dictionaryLabel: "Жеке сөздік",
+    dictionarySectionTitle: "Сіздің сөздігіңіз",
+    dictionarySectionText: "Қайталау үшін жаңа сөздер мен тіркестерді сақтаңыз.",
+    newWordPlaceholder: "Жаңа сөз",
+    newTranslationPlaceholder: "Аударма",
+    addWordBtn: "Сөз қосу",
+    searchWordPlaceholder: "Сөз іздеу..."
   },
-
   en: {
     heroTitle: "Learn languages through content you actually enjoy",
     heroText: "Series, music, short videos, real dialogues, grammar and quizzes — all in one modern language learning website.",
@@ -1493,7 +1708,7 @@ const translations = {
     learningLabel: "Learning paths",
     learningTitle: "Choose your learning format",
     learningText: "Learn in the way that works for you: through videos, music, grammar and practice.",
-    seriesTitle: "Series and shows",
+    learningSeriesTitle: "Series and shows",
     seriesText: "Study natural phrases, slang and real dialogues from popular scenes.",
     musicTitleCard: "Music",
     musicTextCard: "Break down song lyrics, translate expressions and remember new words.",
@@ -1504,9 +1719,107 @@ const translations = {
     testsTitle: "Quizzes",
     testsText: "Check your knowledge after each lesson and track your results.",
     dictionaryTitle: "Dictionary",
-    dictionaryText: "Save new words and useful expressions in your personal dictionary."
+    dictionaryText: "Save new words and useful expressions in your personal dictionary.",
+    authLabel: "User Account",
+    authTitle: "Create a profile",
+    authText: "Enter your details so Polyglot can personalize your learning.",
+    namePlaceholder: "Your name",
+    emailPlaceholder: "Email",
+    registerBtn: "Register",
+    profileLabel: "My Profile",
+    profileTitle: "👤 My Profile",
+    nameLabel: "Name",
+    studiedLanguageLabel: "Learning language",
+    levelLabel: "Level",
+    logoutBtn: "Log out",
+    requiredFieldsAlert: "Enter your name and email",
+    stepLabel: "Step",
+    stepOf: "of",
+    backBtn: "Back",
+    nextBtn: "Next",
+    finishBtn: "Finish",
+    onboardingDone: "Your learning program is ready!",
+    onboardingSteps: [
+      { title: "Which language do you want to learn?", description: "Choose the language your program will be built around.", options: ["Русский", "Қазақша", "English", "Türkçe"] },
+      { title: "What is your goal?", description: "This helps us choose topics and tasks.", options: ["Travel", "Work", "Study", "Series and movies"] },
+      { title: "Your level", description: "Choose your approximate language level.", options: ["Beginner", "Elementary", "Intermediate", "Advanced"] },
+      { title: "Ready to start", description: "We will build a learning path from your answers.", options: ["Start learning"] }
+    ],
+    shortsLabel: "Short Video Lessons",
+    shortsSectionTitle: "Learn through short videos",
+    shortsSectionText: "Watch a short video and immediately break down a phrase from it.",
+    miniTest: "Mini quiz",
+    nextVideoBtn: "Next video",
+    correctShort: "✅ Correct!",
+    correctResult: "✅ Correct! +10 XP",
+    wrongTryAgain: "❌ Incorrect. Try again.",
+    dashboardLabel: "Your progress",
+    dashboardTitle: "Your learning progress",
+    currentLevel: "Current level",
+    nextGoal: "Next goal",
+    skillLabel: "Skill",
+    recommendationLabel: "Recommendation",
+    recommendationText: "Complete 3 grammar lessons",
+    streakTitle: "Day streak",
+    streakText: "You logged in 12 days in a row",
+    lessonsDoneTitle: "Lessons completed",
+    lessonsDoneText: "Keep learning every day",
+    wordsLearnedTitle: "Words learned",
+    wordsLearnedText: "Your vocabulary is growing",
+    weeklyXP: "Weekly XP",
+    seriesLabel: "Series Learning",
+    seriesSectionTitle: "Learn through video clips",
+    seriesSectionText: "Watch a short clip, then break down the phrase, translation and explanation.",
+    nextPhraseBtn: "Next phrase",
+    phraseLabel: "Phrase",
+    translationLabel: "Translation",
+    explanationLabel: "Explanation",
+    musicLabel: "Music Learning",
+    musicSectionTitle: "Learn through music",
+    musicSectionText: "Break down song lyrics, translate expressions and remember new words.",
+    songLyricsTitle: "🎵 Song Lyrics",
+    analyzeLineBtn: "Analyze line",
+    listeningPractice: "Listening Practice",
+    taskLabel: "Task",
+    taskText: "Find the missing word",
+    listeningSkill: "Listening",
+    startPracticeBtn: "Start practice",
+    vocabularyTitle: "Vocabulary",
+    wordsLabel: "Words",
+    goalLabel: "Goal",
+    vocabGoalText: "Build your vocabulary",
+    studyWordsBtn: "Study words",
+    lyricsModalTitle: "Line breakdown",
+    saveToDictionaryBtn: "Save to dictionary",
+    grammarLabel: "Grammar",
+    grammarSectionTitle: "Grammar in simple language",
+    grammarSectionText: "Learn language rules through clear explanations and real examples.",
+    grammarPresentSimpleText: "Used for habits, facts and regular actions.",
+    grammarPresentContinuousText: "Used for actions happening right now.",
+    grammarPastSimpleText: "Used for actions that happened in the past.",
+    openTopicBtn: "Open topic",
+    testsLabel: "Assessment Center",
+    testsSectionTitle: "Knowledge check",
+    testsSectionText: "Take quizzes as you study content and unlock new levels.",
+    vocabularyTrack: "📖 Vocabulary Track",
+    seriesTrack: "🎬 Series Track",
+    shortVideosTrack: "📱 Short Videos Track",
+    finalChallenge: "🏆 Final Challenge",
+    levelWord: "Level",
+    finalWord: "Final",
+    nextQuestionBtn: "Next question",
+    quizQuestionProgress: "Question",
+    quizOf: "of",
+    quizComplete: "Quiz complete",
+    quizResultPrefix: "Your result",
+    dictionaryLabel: "Personal Dictionary",
+    dictionarySectionTitle: "Your dictionary",
+    dictionarySectionText: "Save new words and expressions for review.",
+    newWordPlaceholder: "New word",
+    newTranslationPlaceholder: "Translation",
+    addWordBtn: "Add word",
+    searchWordPlaceholder: "Search word..."
   },
-
   tr: {
     heroTitle: "Dilleri gerçekten ilginizi çeken içeriklerle öğrenin",
     heroText: "Diziler, müzik, kısa videolar, gerçek diyaloglar, gramer ve testler — hepsi modern bir dil öğrenme sitesinde.",
@@ -1522,7 +1835,7 @@ const translations = {
     learningLabel: "Öğrenme yolları",
     learningTitle: "Öğrenme formatını seçin",
     learningText: "Size uygun şekilde öğrenin: video, müzik, gramer ve pratikle.",
-    seriesTitle: "Diziler ve şovlar",
+    learningSeriesTitle: "Diziler ve şovlar",
     seriesText: "Popüler sahnelerden doğal ifadeleri, argo kelimeleri ve gerçek diyalogları öğrenin.",
     musicTitleCard: "Müzik",
     musicTextCard: "Şarkı sözlerini inceleyin, ifadeleri çevirin ve yeni kelimeleri aklınızda tutun.",
@@ -1533,42 +1846,171 @@ const translations = {
     testsTitle: "Testler",
     testsText: "Her dersten sonra bilginizi kontrol edin ve sonucunuzu takip edin.",
     dictionaryTitle: "Sözlük",
-    dictionaryText: "Yeni kelimeleri ve yararlı ifadeleri kişisel sözlüğünüze kaydedin."
+    dictionaryText: "Yeni kelimeleri ve yararlı ifadeleri kişisel sözlüğünüze kaydedin.",
+    authLabel: "Kullanıcı Hesabı",
+    authTitle: "Profil oluşturun",
+    authText: "Polyglot'un öğrenmeyi kişiselleştirmesi için bilgilerinizi girin.",
+    namePlaceholder: "Adınız",
+    emailPlaceholder: "Email",
+    registerBtn: "Kayıt ol",
+    profileLabel: "Profilim",
+    profileTitle: "👤 Profilim",
+    nameLabel: "Ad",
+    studiedLanguageLabel: "Öğrenilen dil",
+    levelLabel: "Seviye",
+    logoutBtn: "Çıkış yap",
+    requiredFieldsAlert: "Adınızı ve email adresinizi girin",
+    stepLabel: "Adım",
+    stepOf: "/",
+    backBtn: "Geri",
+    nextBtn: "İleri",
+    finishBtn: "Bitir",
+    onboardingDone: "Öğrenme programı hazırlandı!",
+    onboardingSteps: [
+      { title: "Hangi dili öğrenmek istiyorsunuz?", description: "Programın hazırlanacağı dili seçin.", options: ["Русский", "Қазақша", "English", "Türkçe"] },
+      { title: "Hedefiniz nedir?", description: "Bu, konu ve görevleri seçmemize yardımcı olur.", options: ["Seyahat", "İş", "Eğitim", "Diziler ve filmler"] },
+      { title: "Seviyeniz", description: "Yaklaşık dil seviyenizi seçin.", options: ["Beginner", "Elementary", "Intermediate", "Advanced"] },
+      { title: "Başlamaya hazır", description: "Cevaplarınıza göre bir öğrenme yolu oluşturacağız.", options: ["Öğrenmeye başla"] }
+    ],
+    shortsLabel: "Kısa Video Dersleri",
+    shortsSectionTitle: "Kısa videolarla öğrenme",
+    shortsSectionText: "Kısa bir video izleyin ve içindeki ifadeyi hemen inceleyin.",
+    miniTest: "Mini test",
+    nextVideoBtn: "Sonraki video",
+    correctShort: "✅ Doğru!",
+    correctResult: "✅ Doğru! +10 XP",
+    wrongTryAgain: "❌ Yanlış. Tekrar deneyin.",
+    dashboardLabel: "İlerlemeniz",
+    dashboardTitle: "Öğrenme ilerlemeniz",
+    currentLevel: "Mevcut seviye",
+    nextGoal: "Sonraki hedef",
+    skillLabel: "Beceri",
+    recommendationLabel: "Öneri",
+    recommendationText: "3 gramer dersi tamamla",
+    streakTitle: "Gün serisi",
+    streakText: "12 gün üst üste giriş yaptınız",
+    lessonsDoneTitle: "Tamamlanan dersler",
+    lessonsDoneText: "Her gün öğrenmeye devam edin",
+    wordsLearnedTitle: "Öğrenilen kelimeler",
+    wordsLearnedText: "Kelime bilginiz büyüyor",
+    weeklyXP: "Haftalık XP",
+    seriesLabel: "Dizilerle öğrenme",
+    seriesSectionTitle: "Video kesitleriyle öğrenme",
+    seriesSectionText: "Kısa bir kesit izleyin, ardından ifadeyi, çeviriyi ve açıklamayı inceleyin.",
+    nextPhraseBtn: "Sonraki ifade",
+    phraseLabel: "İfade",
+    translationLabel: "Çeviri",
+    explanationLabel: "Açıklama",
+    musicLabel: "Müzikle öğrenme",
+    musicSectionTitle: "Müzikle öğrenme",
+    musicSectionText: "Şarkı sözlerini inceleyin, ifadeleri çevirin ve yeni kelimeleri aklınızda tutun.",
+    songLyricsTitle: "🎵 Şarkı sözleri",
+    analyzeLineBtn: "Satırı incele",
+    listeningPractice: "Dinleme pratiği",
+    taskLabel: "Görev",
+    taskText: "Eksik kelimeyi bul",
+    listeningSkill: "Dinleme",
+    startPracticeBtn: "Pratiğe başla",
+    vocabularyTitle: "Kelime bilgisi",
+    wordsLabel: "Kelimeler",
+    goalLabel: "Hedef",
+    vocabGoalText: "Kelime hazinesini geliştirmek",
+    studyWordsBtn: "Kelimeleri öğren",
+    lyricsModalTitle: "Satır incelemesi",
+    saveToDictionaryBtn: "Sözlüğe kaydet",
+    grammarLabel: "Gramer",
+    grammarSectionTitle: "Basit dille gramer",
+    grammarSectionText: "Dil kurallarını anlaşılır açıklamalar ve gerçek örneklerle öğrenin.",
+    grammarPresentSimpleText: "Alışkanlıklar, gerçekler ve düzenli eylemler için kullanılır.",
+    grammarPresentContinuousText: "Şu anda gerçekleşen eylemler için kullanılır.",
+    grammarPastSimpleText: "Geçmişte gerçekleşen eylemler için kullanılır.",
+    openTopicBtn: "Konuyu aç",
+    testsLabel: "Değerlendirme Merkezi",
+    testsSectionTitle: "Bilgi kontrolü",
+    testsSectionText: "İçerikleri öğrendikçe testleri çözün ve yeni seviyeler açın.",
+    vocabularyTrack: "📖 Kelime rotası",
+    seriesTrack: "🎬 Dizi rotası",
+    shortVideosTrack: "📱 Kısa video rotası",
+    finalChallenge: "🏆 Final mücadelesi",
+    levelWord: "Seviye",
+    finalWord: "Final",
+    nextQuestionBtn: "Sonraki soru",
+    quizQuestionProgress: "Soru",
+    quizOf: "/",
+    quizComplete: "Test tamamlandı",
+    quizResultPrefix: "Sonucunuz",
+    dictionaryLabel: "Kişisel Sözlük",
+    dictionarySectionTitle: "Sözlüğünüz",
+    dictionarySectionText: "Tekrar etmek için yeni kelimeleri ve ifadeleri kaydedin.",
+    newWordPlaceholder: "Yeni kelime",
+    newTranslationPlaceholder: "Çeviri",
+    addWordBtn: "Kelime ekle",
+    searchWordPlaceholder: "Kelime ara..."
   }
 };
 
 function changeSiteLanguage(lang) {
-  const t = translations[lang];
+  currentSiteLanguage = translations[lang] ? lang : "ru";
+  const t = translations[currentSiteLanguage];
   const setText = (id, text) => {
     const element = document.getElementById(id);
     if (element) {
       element.textContent = text;
     }
   };
+  const setQueryText = (selector, text) => {
+    const element = document.querySelector(selector);
+    if (element) {
+      element.textContent = text;
+    }
+  };
+  const setPlaceholder = (selector, text) => {
+    const input = document.querySelector(selector);
+    if (input) {
+      input.placeholder = text;
+    }
+  };
+  const setStrongLine = (selector, label, text) => {
+    const element = document.querySelector(selector);
+    if (!element) return;
 
-  document.querySelector(".text-block h1").textContent = t.heroTitle;
-  document.querySelector(".text-block p").textContent = t.heroText;
-  document.querySelector(".language-box h3").textContent = t.chooseLang;
-  document.querySelector(".start-btn").textContent = t.startBtn;
+    const strong = element.querySelector("strong");
+    if (strong) {
+      strong.textContent = `${label}:`;
+    }
 
-  document.querySelector('a[href="#about"]').textContent = t.about;
-  document.querySelector('a[href="#shorts"]').textContent = t.lessons;
-  document.querySelector('a[href="#grammar"]').textContent = t.grammar;
+    const textNode = Array.from(element.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
+    if (textNode) {
+      textNode.textContent = ` ${text}`;
+    }
+  };
+
+  setQueryText(".text-block h1", t.heroTitle);
+  setQueryText(".text-block p", t.heroText);
+  setQueryText(".language-box h3", t.chooseLang);
+  setQueryText(".start-btn", t.startBtn);
+
+  setQueryText('a[href="#about"]', t.about);
+  setQueryText('a[href="#shorts"]', t.lessons);
+  setQueryText('a[href="#grammar"]', t.grammar);
 
   const profileLink = document.querySelector("#profileLink");
-  if (!localStorage.getItem("polyglotUser")) {
+  const savedUser = JSON.parse(localStorage.getItem("polyglotUser"));
+  if (savedUser && profileLink) {
+    profileLink.textContent = `👤 ${savedUser.name}`;
+  } else if (profileLink) {
     profileLink.textContent = t.profile;
   }
 
-  localStorage.setItem("polyglotLang", lang);
-  document.querySelector(".about-text span").textContent = t.aboutLabel;
-  document.querySelector(".about-text h2").textContent = t.aboutTitle;
-  document.querySelector(".about-text p").textContent = t.aboutText;
+  localStorage.setItem("polyglotLang", currentSiteLanguage);
+  setQueryText(".about-text span", t.aboutLabel);
+  setQueryText(".about-text h2", t.aboutTitle);
+  setQueryText(".about-text p", t.aboutText);
 
   setText("learningLabel", t.learningLabel);
   setText("learningTitle", t.learningTitle);
   setText("learningText", t.learningText);
-  setText("seriesTitle", t.seriesTitle);
+  setText("learningSeriesTitle", t.learningSeriesTitle);
   setText("seriesText", t.seriesText);
   setText("musicTitleCard", t.musicTitleCard);
   setText("musicTextCard", t.musicTextCard);
@@ -1580,10 +2022,110 @@ function changeSiteLanguage(lang) {
   setText("testsText", t.testsText);
   setText("dictionaryTitle", t.dictionaryTitle);
   setText("dictionaryText", t.dictionaryText);
+
+  setQueryText("#registerForm span", t.authLabel);
+  setQueryText("#registerForm h2", t.authTitle);
+  setQueryText("#registerForm p", t.authText);
+  setPlaceholder("#userNameInput", t.namePlaceholder);
+  setPlaceholder("#userEmailInput", t.emailPlaceholder);
+  setText("registerBtn", t.registerBtn);
+  setQueryText("#profileBox > span", t.profileLabel);
+  setQueryText("#profileBox h2", t.profileTitle);
+  setQueryText("#profileBox .profile-info p:nth-child(1) strong", `${t.nameLabel}:`);
+  setQueryText("#profileBox .profile-info p:nth-child(3) strong", `${t.studiedLanguageLabel}:`);
+  setQueryText("#profileBox .profile-info p:nth-child(4) strong", `${t.levelLabel}:`);
+  setText("logoutBtn", t.logoutBtn);
+
+  setQueryText("#shorts .section-title span", t.shortsLabel);
+  setQueryText("#shorts .section-title h2", t.shortsSectionTitle);
+  setQueryText("#shorts .section-title p", t.shortsSectionText);
+  setQueryText("#shortQuiz h4", t.miniTest);
+  setText("nextShortBtn", t.nextVideoBtn);
+  if (shortQuiz && shortQuiz.classList.contains("active")) {
+    renderShortQuiz();
+  }
+
+  setQueryText("#dashboard .dashboard-header span", t.dashboardLabel);
+  setQueryText("#dashboard .dashboard-header h2", t.dashboardTitle);
+  setQueryText("#dashboard .big-card h3", t.currentLevel);
+  setQueryText("#dashboard .level-info div:nth-child(1) strong", t.nextGoal);
+  setQueryText("#dashboard .level-info div:nth-child(2) strong", t.skillLabel);
+  setQueryText("#dashboard .level-info div:nth-child(3) strong", t.recommendationLabel);
+  setQueryText("#dashboard .level-info div:nth-child(3) span", t.recommendationText);
+  setQueryText("#dashboard .dashboard-card:nth-child(2) h3", t.streakTitle);
+  setQueryText("#dashboard .dashboard-card:nth-child(2) p", t.streakText);
+  setQueryText("#dashboard .dashboard-card:nth-child(3) h3", t.lessonsDoneTitle);
+  setQueryText("#dashboard .dashboard-card:nth-child(3) p", t.lessonsDoneText);
+  setQueryText("#dashboard .dashboard-card:nth-child(4) h3", t.wordsLearnedTitle);
+  setQueryText("#dashboard .dashboard-card:nth-child(4) p", t.wordsLearnedText);
+  setQueryText("#dashboard .dashboard-card:nth-child(5) h3", t.weeklyXP);
+
+  setQueryText("#series .section-title span", t.seriesLabel);
+  setQueryText("#series .section-title h2", t.seriesSectionTitle);
+  setQueryText("#series .section-title p", t.seriesSectionText);
+  setText("nextSeriesPhraseBtn", t.nextPhraseBtn);
+  setQueryText("#seriesModal .phrase-block:nth-of-type(1) h4", t.phraseLabel);
+  setQueryText("#seriesModal .phrase-block:nth-of-type(2) h4", t.translationLabel);
+  setQueryText("#seriesModal .phrase-block:nth-of-type(3) h4", t.explanationLabel);
+
+  setQueryText("#music .section-title span", t.musicLabel);
+  setQueryText("#music .section-title h2", t.musicSectionTitle);
+  setQueryText("#music .section-title p", t.musicSectionText);
+  setQueryText("#music .music-card:nth-child(1) h3", t.songLyricsTitle);
+  setQueryText("#music .music-card:nth-child(1) p:nth-of-type(1) strong", `${t.phraseLabel}:`);
+  setQueryText("#music .music-card:nth-child(1) p:nth-of-type(2) strong", `${t.translationLabel}:`);
+  setQueryText("#music .music-card:nth-child(1) button", t.analyzeLineBtn);
+  setQueryText("#music .music-card:nth-child(2) h3", `🎧 ${t.listeningPractice}`);
+  setStrongLine("#music .music-card:nth-child(2) p:nth-of-type(1)", t.taskLabel, t.taskText);
+  setStrongLine("#music .music-card:nth-child(2) p:nth-of-type(2)", t.skillLabel, t.listeningSkill);
+  setQueryText("#music .music-card:nth-child(2) button", t.startPracticeBtn);
+  setQueryText("#music .music-card:nth-child(3) h3", `⭐ ${t.vocabularyTitle}`);
+  setQueryText("#music .music-card:nth-child(3) p:nth-of-type(1) strong", `${t.wordsLabel}:`);
+  setStrongLine("#music .music-card:nth-child(3) p:nth-of-type(2)", t.goalLabel, t.vocabGoalText);
+  setQueryText("#music .music-card:nth-child(3) button", t.studyWordsBtn);
+
+  setQueryText("#grammar .section-title span", t.grammarLabel);
+  setQueryText("#grammar .section-title h2", t.grammarSectionTitle);
+  setQueryText("#grammar .section-title p", t.grammarSectionText);
+  setQueryText("#grammar .grammar-card:nth-child(1) p:nth-of-type(1)", t.grammarPresentSimpleText);
+  setQueryText("#grammar .grammar-card:nth-child(2) p:nth-of-type(1)", t.grammarPresentContinuousText);
+  setQueryText("#grammar .grammar-card:nth-child(3) p:nth-of-type(1)", t.grammarPastSimpleText);
+  document.querySelectorAll("#grammar .grammar-card button").forEach(button => {
+    button.textContent = t.openTopicBtn;
+  });
+
+  setQueryText("#tests .section-title span", t.testsLabel);
+  setQueryText("#tests .section-title h2", t.testsSectionTitle);
+  setQueryText("#tests .section-title p", t.testsSectionText);
+  setQueryText("#tests .track-column:nth-child(1) .track-title", t.vocabularyTrack);
+  setQueryText("#tests .track-column:nth-child(2) .track-title", t.seriesTrack);
+  setQueryText("#tests .track-column:nth-child(3) .track-title:nth-of-type(1)", t.shortVideosTrack);
+  setQueryText("#tests .final-title", t.finalChallenge);
+  document.querySelectorAll("#tests .track-item span, #tests .track-column > span").forEach(span => {
+    if (/Level\s+\d+|Деңгей\s+\d+|Seviye\s+\d+/.test(span.textContent)) {
+      const number = span.textContent.match(/\d+/);
+      if (number) span.textContent = `${t.levelWord} ${number[0]}`;
+    } else if (span.textContent.trim() === "Final" || span.textContent.trim() === "Финал") {
+      span.textContent = t.finalWord;
+    }
+  });
+  setText("nextQuizQuestion", t.nextQuestionBtn);
+
+  setQueryText("#dictionary .section-title span", t.dictionaryLabel);
+  setQueryText("#dictionary .section-title h2", t.dictionarySectionTitle);
+  setQueryText("#dictionary .section-title p", t.dictionarySectionText);
+  setPlaceholder("#newWord", t.newWordPlaceholder);
+  setPlaceholder("#newTranslation", t.newTranslationPlaceholder);
+  setText("addWordBtn", t.addWordBtn);
+  setPlaceholder(".dictionary-search input", t.searchWordPlaceholder);
+
+  renderStep();
 }
 
 const savedLang = localStorage.getItem("polyglotLang");
 
 if (savedLang) {
   changeSiteLanguage(savedLang);
+} else {
+  changeSiteLanguage(currentSiteLanguage);
 }
