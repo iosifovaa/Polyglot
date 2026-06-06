@@ -1394,3 +1394,18 @@ closeMusic.addEventListener("click", () => {
 });
 
 updateMusicCards();
+const wordsCount = document.querySelector("#wordsCount");
+const weeklyXP = document.querySelector("#weeklyXP");
+const lessonsCount = document.querySelector("#lessonsCount");
+
+function updateDashboard() {
+  const words = JSON.parse(localStorage.getItem("polyglotWords")) || [];
+  const xp = Number(localStorage.getItem("polyglotXP")) || 0;
+  const lessons = Number(localStorage.getItem("polyglotLessons")) || 0;
+
+  wordsCount.textContent = words.length;
+  weeklyXP.textContent = xp;
+  lessonsCount.textContent = lessons;
+}
+
+updateDashboard();
