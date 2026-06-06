@@ -1,4 +1,6 @@
 let currentSiteLanguage = localStorage.getItem("polyglotLang") || "ru";
+let currentLearningLanguage = localStorage.getItem("polyglotLearningLang") || "English";
+let selectedLearningLang = currentLearningLanguage;
 
 const profileLabels = {
   ru: "👤 Профиль",
@@ -11,7 +13,7 @@ const onboardingSteps = [
   {
     title: "Какой язык вы хотите изучать?",
     description: "Выберите язык, под который будет подбираться программа.",
-    options: ["Русский", "Қазақша", "English", "Türkçe"]
+    options: ["English", "Türkçe", "Қазақша", "Deutsch", "Français", "한국어"]
   },
   {
     title: "Какая у вас цель?",
@@ -34,10 +36,15 @@ const stepOptions = document.querySelector("#stepOptions");
 const nextStepBtn = document.querySelector("#nextStepBtn");
 const backStepBtn = document.querySelector("#backStepBtn");
 
+function isLearningLanguageStep(step) {
+  return step.options.includes("Deutsch") && step.options.includes("한국어");
+}
+
 function renderStep() {
   const t = translations[currentSiteLanguage];
   const steps = t.onboardingSteps || onboardingSteps;
   const step = steps[currentStep];
+  const learningLanguageStep = isLearningLanguageStep(step);
 
   stepNumber.textContent = `${t.stepLabel} ${currentStep + 1} ${t.stepOf} ${steps.length}`;
   stepTitle.textContent = step.title;
@@ -49,12 +56,21 @@ function renderStep() {
     const button = document.createElement("button");
     button.textContent = option;
 
+    if (learningLanguageStep && option === selectedLearningLang) {
+      button.classList.add("selected");
+    }
+
     button.addEventListener("click", () => {
       document.querySelectorAll(".step-options button").forEach(btn => {
         btn.classList.remove("selected");
       });
 
       button.classList.add("selected");
+
+      if (learningLanguageStep) {
+        selectedLearningLang = option;
+        localStorage.setItem("polyglotLearningLang", selectedLearningLang);
+      }
     });
 
     stepOptions.appendChild(button);
@@ -75,6 +91,7 @@ nextStepBtn.addEventListener("click", () => {
     currentStep++;
     renderStep();
   } else {
+    applyLearningLanguage(selectedLearningLang);
     alert(translations[currentSiteLanguage].onboardingDone);
   }
 });
@@ -569,6 +586,7 @@ const registerForm = document.querySelector("#registerForm");
 const profileBox = document.querySelector("#profileBox");
 const profileName = document.querySelector("#profileName");
 const profileEmail = document.querySelector("#profileEmail");
+const profileLearningLang = document.querySelector("#profileLearningLang");
 const logoutBtn = document.querySelector("#logoutBtn");
 const profileLink = document.querySelector("#profileLink");
 
@@ -1467,7 +1485,7 @@ const translations = {
     finishBtn: "Завершить",
     onboardingDone: "Программа обучения настроена!",
     onboardingSteps: [
-      { title: "Какой язык вы хотите изучать?", description: "Выберите язык, под который будет подбираться программа.", options: ["Русский", "Қазақша", "English", "Türkçe"] },
+      { title: "Какой язык вы хотите изучать?", description: "Выберите язык, под который будет подбираться программа.", options: ["English", "Türkçe", "Қазақша", "Deutsch", "Français", "한국어"] },
       { title: "Какая у вас цель?", description: "Это поможет подобрать темы и задания.", options: ["Путешествия", "Работа", "Учёба", "Сериалы и фильмы"] },
       { title: "Ваш уровень", description: "Выберите примерный уровень владения языком.", options: ["Beginner", "Elementary", "Intermediate", "Advanced"] },
       { title: "Готово к старту", description: "Мы соберём для вас маршрут обучения по выбранным ответам.", options: ["Начать обучение"] }
@@ -1594,7 +1612,7 @@ const translations = {
     finishBtn: "Аяқтау",
     onboardingDone: "Оқу бағдарламасы бапталды!",
     onboardingSteps: [
-      { title: "Қай тілді үйренгіңіз келеді?", description: "Бағдарлама соған қарай таңдалады.", options: ["Русский", "Қазақша", "English", "Türkçe"] },
+      { title: "Қай тілді үйренгіңіз келеді?", description: "Бағдарлама соған қарай таңдалады.", options: ["English", "Türkçe", "Қазақша", "Deutsch", "Français", "한국어"] },
       { title: "Мақсатыңыз қандай?", description: "Бұл тақырыптар мен тапсырмаларды таңдауға көмектеседі.", options: ["Саяхат", "Жұмыс", "Оқу", "Сериалдар мен фильмдер"] },
       { title: "Деңгейіңіз", description: "Тілді меңгеру деңгейіңізді таңдаңыз.", options: ["Beginner", "Elementary", "Intermediate", "Advanced"] },
       { title: "Бастауға дайын", description: "Жауаптарыңыз бойынша оқу маршрутын құрамыз.", options: ["Оқуды бастау"] }
@@ -1721,7 +1739,7 @@ const translations = {
     finishBtn: "Finish",
     onboardingDone: "Your learning program is ready!",
     onboardingSteps: [
-      { title: "Which language do you want to learn?", description: "Choose the language your program will be built around.", options: ["Русский", "Қазақша", "English", "Türkçe"] },
+      { title: "Which language do you want to learn?", description: "Choose the language your program will be built around.", options: ["English", "Türkçe", "Қазақша", "Deutsch", "Français", "한국어"] },
       { title: "What is your goal?", description: "This helps us choose topics and tasks.", options: ["Travel", "Work", "Study", "Series and movies"] },
       { title: "Your level", description: "Choose your approximate language level.", options: ["Beginner", "Elementary", "Intermediate", "Advanced"] },
       { title: "Ready to start", description: "We will build a learning path from your answers.", options: ["Start learning"] }
@@ -1848,7 +1866,7 @@ const translations = {
     finishBtn: "Bitir",
     onboardingDone: "Öğrenme programı hazırlandı!",
     onboardingSteps: [
-      { title: "Hangi dili öğrenmek istiyorsunuz?", description: "Programın hazırlanacağı dili seçin.", options: ["Русский", "Қазақша", "English", "Türkçe"] },
+      { title: "Hangi dili öğrenmek istiyorsunuz?", description: "Programın hazırlanacağı dili seçin.", options: ["English", "Türkçe", "Қазақша", "Deutsch", "Français", "한국어"] },
       { title: "Hedefiniz nedir?", description: "Bu, konu ve görevleri seçmemize yardımcı olur.", options: ["Seyahat", "İş", "Eğitim", "Diziler ve filmler"] },
       { title: "Seviyeniz", description: "Yaklaşık dil seviyenizi seçin.", options: ["Beginner", "Elementary", "Intermediate", "Advanced"] },
       { title: "Başlamaya hazır", description: "Cevaplarınıza göre bir öğrenme yolu oluşturacağız.", options: ["Öğrenmeye başla"] }
@@ -2161,6 +2179,106 @@ Object.keys(localizedPageData).forEach(lang => {
   Object.assign(translations[lang], localizedPageData[lang]);
 });
 
+const learningContent = {
+  English: {
+    useDefaultContent: true,
+    profileLanguage: "English",
+    shortLesson: {
+      category: "Meet & Greet • Beginner",
+      phrase: "Nice to meet you.",
+      translation: "Приятно познакомиться.",
+      explanation: ["<strong>nice</strong> — приятно", "<strong>meet</strong> — познакомиться", "<strong>you</strong> — ты / вы"],
+      quiz: { question: "Что означает фраза: Nice to meet you?", answers: ["Приятно познакомиться.", "Как дела?", "Спасибо."] }
+    },
+    grammarExamples: ["I study English every day.", "I am watching a series now.", "I watched a movie yesterday."],
+    dictionaryWords: [
+      { word: "meet", translation: "познакомиться" },
+      { word: "you", translation: "ты / вы" },
+      { word: "nice", translation: "приятно" }
+    ]
+  },
+  Türkçe: {
+    profileLanguage: "Türkçe",
+    shortLesson: {
+      category: "Tanışma • Beginner",
+      phrase: "Tanıştığıma memnun oldum.",
+      translation: "Приятно познакомиться.",
+      explanation: ["<strong>tanışmak</strong> — знакомиться", "<strong>memnun</strong> — довольный / рад", "<strong>oldum</strong> — я стал / мне стало"],
+      quiz: { question: "Что означает фраза: Tanıştığıma memnun oldum?", answers: ["Приятно познакомиться.", "Где станция?", "Спасибо."] }
+    },
+    grammarExamples: ["Her gün Türkçe çalışıyorum.", "Şimdi bir dizi izliyorum.", "Dün bir film izledim."],
+    dictionaryWords: [
+      { word: "tanışmak", translation: "знакомиться" },
+      { word: "memnun", translation: "довольный / рад" },
+      { word: "oldum", translation: "я стал / мне стало" }
+    ]
+  },
+  Қазақша: {
+    profileLanguage: "Қазақша",
+    shortLesson: {
+      category: "Танысу • Beginner",
+      phrase: "Танысқаныма қуаныштымын.",
+      translation: "Приятно познакомиться.",
+      explanation: ["<strong>танысу</strong> — знакомиться", "<strong>қуаныш</strong> — радость", "<strong>мен</strong> — я"],
+      quiz: { question: "Что означает фраза: Танысқаныма қуаныштымын?", answers: ["Приятно познакомиться.", "Как дела?", "Спасибо."] }
+    },
+    grammarExamples: ["Мен күн сайын қазақ тілін оқимын.", "Мен қазір сериал көріп отырмын.", "Мен кеше фильм көрдім."],
+    dictionaryWords: [
+      { word: "танысу", translation: "знакомиться" },
+      { word: "қуаныш", translation: "радость" },
+      { word: "мен", translation: "я" }
+    ]
+  },
+  Deutsch: {
+    profileLanguage: "Deutsch",
+    shortLesson: {
+      category: "Begrüßung • Beginner",
+      phrase: "Schön, dich kennenzulernen.",
+      translation: "Приятно познакомиться.",
+      explanation: ["<strong>schön</strong> — приятно", "<strong>kennenlernen</strong> — знакомиться", "<strong>dich</strong> — тебя"],
+      quiz: { question: "Что означает фраза: Schön, dich kennenzulernen?", answers: ["Приятно познакомиться.", "Где станция?", "До завтра."] }
+    },
+    grammarExamples: ["Ich lerne jeden Tag Deutsch.", "Ich schaue jetzt eine Serie.", "Ich habe gestern einen Film gesehen."],
+    dictionaryWords: [
+      { word: "schön", translation: "приятно" },
+      { word: "kennenlernen", translation: "знакомиться" },
+      { word: "dich", translation: "тебя" }
+    ]
+  },
+  Français: {
+    profileLanguage: "Français",
+    shortLesson: {
+      category: "Rencontre • Beginner",
+      phrase: "Ravi de vous rencontrer.",
+      translation: "Приятно познакомиться.",
+      explanation: ["<strong>ravi</strong> — рад", "<strong>rencontrer</strong> — встречать / знакомиться", "<strong>vous</strong> — вы"],
+      quiz: { question: "Что означает фраза: Ravi de vous rencontrer?", answers: ["Приятно познакомиться.", "Как пройти?", "Спасибо."] }
+    },
+    grammarExamples: ["J'étudie le français chaque jour.", "Je regarde une série maintenant.", "J'ai regardé un film hier."],
+    dictionaryWords: [
+      { word: "ravi", translation: "рад" },
+      { word: "rencontrer", translation: "встречать / знакомиться" },
+      { word: "vous", translation: "вы" }
+    ]
+  },
+  한국어: {
+    profileLanguage: "한국어",
+    shortLesson: {
+      category: "인사 • Beginner",
+      phrase: "만나서 반가워요.",
+      translation: "Приятно познакомиться.",
+      explanation: ["<strong>만나다</strong> — встречать", "<strong>반갑다</strong> — быть радостным встрече", "<strong>요</strong> — вежливое окончание"],
+      quiz: { question: "Что означает фраза: 만나서 반가워요?", answers: ["Приятно познакомиться.", "Где кафе?", "Спасибо."] }
+    },
+    grammarExamples: ["저는 매일 한국어를 공부해요.", "저는 지금 드라마를 보고 있어요.", "저는 어제 영화를 봤어요."],
+    dictionaryWords: [
+      { word: "만나다", translation: "встречать" },
+      { word: "반갑다", translation: "быть радостным встрече" },
+      { word: "요", translation: "вежливое окончание" }
+    ]
+  }
+};
+
 function getSeriesVideoLesson() {
   const base = seriesVideoLessons[currentSeriesVideoLesson];
   const localized = translations[currentSiteLanguage].seriesVideoLessons[currentSeriesVideoLesson];
@@ -2179,14 +2297,18 @@ function applySeriesVideoLesson() {
 function getShortLesson() {
   const base = shortLessons[currentShort];
   const localized = translations[currentSiteLanguage].shortLessons[currentShort];
+  const currentLearningContent = learningContent[currentLearningLanguage];
+  const learningLesson = currentLearningContent?.useDefaultContent ? null : currentLearningContent?.shortLesson;
+  const quizAnswers = learningLesson?.quiz?.answers || localized.quiz.answers;
   return {
     ...base,
     ...localized,
+    ...learningLesson,
     quiz: {
-      question: localized.quiz.question,
+      question: learningLesson?.quiz?.question || localized.quiz.question,
       answers: base.quiz.answers.map((answer, index) => ({
         ...answer,
-        text: localized.quiz.answers[index]
+        text: quizAnswers[index]
       }))
     }
   };
@@ -2216,12 +2338,47 @@ function getMusicLesson() {
 }
 
 function applyDictionaryDefaults() {
+  const currentLearningContent = learningContent[currentLearningLanguage];
+  const learningWords = currentLearningContent?.useDefaultContent ? [] : currentLearningContent?.dictionaryWords || [];
   const translationsList = translations[currentSiteLanguage].dictionaryDefaults;
+  const defaultWords = ["latte", "station", "meet", "airport", "travel", "awesome"];
   document.querySelectorAll(".dictionary-grid .word-card").forEach((card, index) => {
+    const learningWord = learningWords[index];
+    if (learningWord) {
+      const word = card.querySelector("h3");
+      const translation = card.querySelector("p");
+      if (word) word.textContent = learningWord.word;
+      if (translation) translation.textContent = learningWord.translation;
+      return;
+    }
     if (index >= translationsList.length) return;
+    const word = card.querySelector("h3");
     const translation = card.querySelector("p");
+    if (word && defaultWords[index]) word.textContent = defaultWords[index];
     if (translation) translation.textContent = translationsList[index];
   });
+}
+
+function applyLearningLanguage(language) {
+  currentLearningLanguage = learningContent[language] ? language : "English";
+  selectedLearningLang = currentLearningLanguage;
+  localStorage.setItem("polyglotLearningLang", currentLearningLanguage);
+
+  const content = learningContent[currentLearningLanguage];
+
+  if (profileLearningLang) {
+    profileLearningLang.textContent = content.profileLanguage;
+  }
+
+  document.querySelectorAll("#grammar .grammar-card").forEach((card, index) => {
+    const example = card.querySelector("p:nth-of-type(2)");
+    if (example && content.grammarExamples[index]) {
+      example.innerHTML = `<strong>Example:</strong> ${content.grammarExamples[index]}`;
+    }
+  });
+
+  applyShortLesson(true);
+  applyDictionaryDefaults();
 }
 
 function changeSiteLanguage(lang) {
@@ -2407,6 +2564,7 @@ function changeSiteLanguage(lang) {
   applyShortLesson(false);
   updateMusicCards();
   applyDictionaryDefaults();
+  applyLearningLanguage(currentLearningLanguage);
 
   renderStep();
 }
