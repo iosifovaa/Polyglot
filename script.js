@@ -927,6 +927,33 @@ const modernDialoguesQuiz = [
   }
 ];
 
+const meetingPeopleQuiz = [
+  {
+    question: "Что означает 'Nice to meet you'?",
+    answers: [
+      { text: "Приятно познакомиться", correct: true },
+      { text: "До свидания", correct: false },
+      { text: "Как дела?", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'What is your name?'",
+    answers: [
+      { text: "Как тебя зовут?", correct: true },
+      { text: "Где ты живёшь?", correct: false },
+      { text: "Сколько тебе лет?", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'Where are you from?'",
+    answers: [
+      { text: "Откуда ты?", correct: true },
+      { text: "Куда ты идёшь?", correct: false },
+      { text: "Где ты работаешь?", correct: false }
+    ]
+  }
+];
+
 const dailyRoutineQuiz = [
   {
     question: "Что означает 'I wake up early'?",
@@ -1125,6 +1152,16 @@ function openModernDialoguesQuiz() {
   quizAnswered = false;
   activeQuiz = modernDialoguesQuiz;
   quizTitle.textContent = "Modern Dialogues Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function openMeetingPeopleQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = meetingPeopleQuiz;
+  quizTitle.textContent = "Meeting People Quiz";
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
