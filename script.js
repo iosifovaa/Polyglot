@@ -931,7 +931,10 @@ function renderQuizQuestion() {
   nextQuizQuestion.classList.add("hidden-content");
   quizAnswered = false;
 
-  current.answers.forEach(answer => {
+  const shuffledAnswers =
+  [...current.answers].sort(() => Math.random() - 0.5);
+
+  shuffledAnswers.forEach(answer => {
     const button = document.createElement("button");
     button.textContent = answer.text;
 
