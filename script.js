@@ -792,6 +792,60 @@ const shortVideosQuiz = [
   }
 ];
 
+const travelQuiz = [
+  {
+    question: "Что означает 'Where is the hotel?'",
+    answers: [
+      { text: "Где находится отель?", correct: true },
+      { text: "Где находится кафе?", correct: false },
+      { text: "Где находится аэропорт?", correct: false }
+    ]
+  },
+  {
+    question: "Как переводится 'ticket'?",
+    answers: [
+      { text: "Билет", correct: true },
+      { text: "Чемодан", correct: false },
+      { text: "Отель", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'I need a taxi'?",
+    answers: [
+      { text: "Мне нужно такси", correct: true },
+      { text: "Мне нужен билет", correct: false },
+      { text: "Мне нужен номер", correct: false }
+    ]
+  }
+];
+
+const airportQuiz = [
+  {
+    question: "Что означает 'boarding pass'?",
+    answers: [
+      { text: "Посадочный талон", correct: true },
+      { text: "Паспорт", correct: false },
+      { text: "Багаж", correct: false }
+    ]
+  },
+  {
+    question: "Как переводится 'luggage'?",
+    answers: [
+      { text: "Багаж", correct: true },
+      { text: "Билет", correct: false },
+      { text: "Выход", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'departure gate'?",
+    answers: [
+      { text: "Выход на посадку", correct: true },
+      { text: "Регистрация", correct: false },
+      { text: "Паспортный контроль", correct: false }
+    ]
+  }
+];
+
 let currentQuizQuestion = 0;
 let quizScore = 0;
 let quizAnswered = false;
@@ -843,6 +897,26 @@ function openStrangerThingsQuiz() {
   quizAnswered = false;
   activeQuiz = strangerThingsQuiz;
   quizTitle.textContent = "Stranger Things Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function openTravelQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = travelQuiz;
+  quizTitle.textContent = "Travel Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function openAirportQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = airportQuiz;
+  quizTitle.textContent = "Airport Quiz";
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
