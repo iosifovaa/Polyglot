@@ -846,6 +846,184 @@ const airportQuiz = [
   }
 ];
 
+const restaurantQuiz = [
+  {
+    question: "Что означает 'Can I see the menu?'",
+    answers: [
+      { text: "Можно посмотреть меню?", correct: true },
+      { text: "Где находится отель?", correct: false },
+      { text: "Сколько стоит билет?", correct: false }
+    ]
+  },
+  {
+    question: "Как переводится 'bill' в ресторане?",
+    answers: [
+      { text: "Счёт", correct: true },
+      { text: "Стол", correct: false },
+      { text: "Блюдо", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'I would like some water'?",
+    answers: [
+      { text: "Я бы хотел воды", correct: true },
+      { text: "Я ищу воду", correct: false },
+      { text: "Мне не нужна вода", correct: false }
+    ]
+  }
+];
+
+const hotelQuiz = [
+  {
+    question: "Что означает 'I have a reservation'?",
+    answers: [
+      { text: "У меня есть бронь", correct: true },
+      { text: "Мне нужен билет", correct: false },
+      { text: "Я ищу ресторан", correct: false }
+    ]
+  },
+  {
+    question: "Как переводится 'room key'?",
+    answers: [
+      { text: "Ключ от номера", correct: true },
+      { text: "Багаж", correct: false },
+      { text: "Лифт", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'check-in'?",
+    answers: [
+      { text: "Регистрация / заселение", correct: true },
+      { text: "Выезд", correct: false },
+      { text: "Завтрак", correct: false }
+    ]
+  }
+];
+
+const modernDialoguesQuiz = [
+  {
+    question: "Что означает 'What are you up to?'",
+    answers: [
+      { text: "Чем занимаешься?", correct: true },
+      { text: "Куда ты идёшь?", correct: false },
+      { text: "Где ты живёшь?", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'Sounds good'?",
+    answers: [
+      { text: "Звучит хорошо / хорошо", correct: true },
+      { text: "Это громко", correct: false },
+      { text: "Я не слышу", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'No worries'?",
+    answers: [
+      { text: "Без проблем", correct: true },
+      { text: "Не волнуй меня", correct: false },
+      { text: "Я переживаю", correct: false }
+    ]
+  }
+];
+
+const dailyRoutineQuiz = [
+  {
+    question: "Что означает 'I wake up early'?",
+    answers: [
+      { text: "Я просыпаюсь рано", correct: true },
+      { text: "Я ложусь поздно", correct: false },
+      { text: "Я завтракаю", correct: false }
+    ]
+  },
+  {
+    question: "Как переводится 'breakfast'?",
+    answers: [
+      { text: "Завтрак", correct: true },
+      { text: "Обед", correct: false },
+      { text: "Ужин", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'I go to work'?",
+    answers: [
+      { text: "Я иду на работу", correct: true },
+      { text: "Я иду домой", correct: false },
+      { text: "Я учусь дома", correct: false }
+    ]
+  }
+];
+
+const workStudyQuiz = [
+  {
+    question: "Что означает 'I have a meeting'?",
+    answers: [
+      { text: "У меня встреча", correct: true },
+      { text: "У меня экзамен", correct: false },
+      { text: "У меня отпуск", correct: false }
+    ]
+  },
+  {
+    question: "Как переводится 'deadline'?",
+    answers: [
+      { text: "Срок сдачи", correct: true },
+      { text: "Перерыв", correct: false },
+      { text: "Задание", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'I need to study'?",
+    answers: [
+      { text: "Мне нужно учиться", correct: true },
+      { text: "Мне нужно работать", correct: false },
+      { text: "Мне нужно отдыхать", correct: false }
+    ]
+  }
+];
+
+const finalChallengeQuiz = [
+  {
+    question: "Что означает 'Nice to meet you'?",
+    answers: [
+      { text: "Приятно познакомиться", correct: true },
+      { text: "До свидания", correct: false },
+      { text: "Я устал", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'boarding pass'?",
+    answers: [
+      { text: "Посадочный талон", correct: true },
+      { text: "Ключ от номера", correct: false },
+      { text: "Счёт в ресторане", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'Friends don't lie'?",
+    answers: [
+      { text: "Друзья не лгут", correct: true },
+      { text: "Друзья не спорят", correct: false },
+      { text: "Друзья не уходят", correct: false }
+    ]
+  },
+  {
+    question: "Как переводится 'deadline'?",
+    answers: [
+      { text: "Срок сдачи", correct: true },
+      { text: "Меню", correct: false },
+      { text: "Багаж", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'Can I get a latte, please?'",
+    answers: [
+      { text: "Можно мне латте, пожалуйста?", correct: true },
+      { text: "Где ближайшая станция?", correct: false },
+      { text: "У меня есть бронь", correct: false }
+    ]
+  }
+];
+
 let currentQuizQuestion = 0;
 let quizScore = 0;
 let quizAnswered = false;
@@ -917,6 +1095,66 @@ function openAirportQuiz() {
   quizAnswered = false;
   activeQuiz = airportQuiz;
   quizTitle.textContent = "Airport Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function openRestaurantQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = restaurantQuiz;
+  quizTitle.textContent = "Restaurant Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function openHotelQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = hotelQuiz;
+  quizTitle.textContent = "Hotel Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function openModernDialoguesQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = modernDialoguesQuiz;
+  quizTitle.textContent = "Modern Dialogues Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function openDailyRoutineQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = dailyRoutineQuiz;
+  quizTitle.textContent = "Daily Routine Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function openWorkStudyQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = workStudyQuiz;
+  quizTitle.textContent = "Work & Study Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function openFinalChallengeQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = finalChallengeQuiz;
+  quizTitle.textContent = "Polyglot Final Challenge";
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
