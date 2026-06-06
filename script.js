@@ -684,23 +684,99 @@ const coffeeQuiz = [
   }
 ];
 
+const friendsQuiz = [
+  {
+    question: "Что означает фраза 'How you doin'?'",
+    answers: [
+      { text: "Как дела?", correct: true },
+      { text: "Куда ты идёшь?", correct: false },
+      { text: "Что ты заказал?", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'We were on a break!'?",
+    answers: [
+      { text: "У нас был перерыв в отношениях!", correct: true },
+      { text: "Мы были на работе!", correct: false },
+      { text: "Мы были в кафе!", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'He's her lobster'?",
+    answers: [
+      { text: "Он её судьба", correct: true },
+      { text: "Он её брат", correct: false },
+      { text: "Он её сосед", correct: false }
+    ]
+  }
+];
+
+const shortVideosQuiz = [
+  {
+    question: "Что означает 'Nice to meet you'?",
+    answers: [
+      { text: "Приятно познакомиться", correct: true },
+      { text: "До свидания", correct: false },
+      { text: "Как тебя зовут?", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'Where is the nearest station?'",
+    answers: [
+      { text: "Где находится ближайшая станция?", correct: true },
+      { text: "Где находится кафе?", correct: false },
+      { text: "Где находится отель?", correct: false }
+    ]
+  },
+  {
+    question: "Что означает 'Can I get a latte, please?'",
+    answers: [
+      { text: "Можно мне латте, пожалуйста?", correct: true },
+      { text: "Можно мне билет?", correct: false },
+      { text: "Где мой кофе?", correct: false }
+    ]
+  }
+];
+
 let currentQuizQuestion = 0;
 let quizScore = 0;
 let quizAnswered = false;
+let activeQuiz = coffeeQuiz;
 
 function openCoffeeQuiz() {
   currentQuizQuestion = 0;
   quizScore = 0;
   quizAnswered = false;
+  activeQuiz = coffeeQuiz;
   quizTitle.textContent = "Coffee Shop Quiz";
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
 
-function renderQuizQuestion() {
-  const current = coffeeQuiz[currentQuizQuestion];
+function openFriendsQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = friendsQuiz;
+  quizTitle.textContent = "Friends Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
 
-  quizProgress.textContent = `Вопрос ${currentQuizQuestion + 1} из ${coffeeQuiz.length}`;
+function openShortVideosQuiz() {
+  currentQuizQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  activeQuiz = shortVideosQuiz;
+  quizTitle.textContent = "Short Videos Quiz";
+  quizModal.classList.add("active");
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+  const current = activeQuiz[currentQuizQuestion];
+
+  quizProgress.textContent = `Вопрос ${currentQuizQuestion + 1} из ${activeQuiz.length}`;
   quizQuestion.textContent = current.question;
   quizResult.textContent = "";
   quizAnswerOptions.innerHTML = "";
@@ -735,11 +811,11 @@ function renderQuizQuestion() {
 nextQuizQuestion.addEventListener("click", () => {
   currentQuizQuestion++;
 
-  if (currentQuizQuestion < coffeeQuiz.length) {
+  if (currentQuizQuestion < activeQuiz.length) {
     renderQuizQuestion();
   } else {
     quizProgress.textContent = "Тест завершён";
-    quizQuestion.textContent = `Ваш результат: ${quizScore} из ${coffeeQuiz.length}`;
+    quizQuestion.textContent = `Ваш результат: ${quizScore} из ${activeQuiz.length}`;
     quizAnswerOptions.innerHTML = "";
     quizResult.textContent = quizScore >= 4
       ? "🎉 Отличный результат!"
