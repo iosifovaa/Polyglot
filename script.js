@@ -473,8 +473,10 @@ function renderShortQuiz() {
 
   shortQuiz.classList.add("active");
 
-  shortQuizQuestion.textContent =
-    lesson.quiz.question;
+  if (shortQuizQuestion) {
+    shortQuizQuestion.textContent =
+      lesson.quiz.question;
+  }
 
   shortQuizResult.textContent = "";
 
@@ -1063,13 +1065,20 @@ let currentQuizQuestion = 0;
 let quizScore = 0;
 let quizAnswered = false;
 let activeQuiz = coffeeQuiz;
+let activeQuizTitleIndex = 0;
+
+function getLearningQuizTitle(index, fallback) {
+  const content = learningContent[currentLearningLanguage] || learningContent.English;
+  return content.quizTitles[index] || fallback;
+}
 
 function openCoffeeQuiz() {
   currentQuizQuestion = 0;
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = coffeeQuiz;
-  quizTitle.textContent = "Coffee Shop Quiz";
+  activeQuizTitleIndex = 0;
+  quizTitle.textContent = getLearningQuizTitle(0, "Coffee Shop Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1079,7 +1088,8 @@ function openFriendsQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = friendsQuiz;
-  quizTitle.textContent = "Friends Quiz";
+  activeQuizTitleIndex = 5;
+  quizTitle.textContent = getLearningQuizTitle(5, "Friends Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1089,7 +1099,8 @@ function openShortVideosQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = shortVideosQuiz;
-  quizTitle.textContent = "Short Videos Quiz";
+  activeQuizTitleIndex = 9;
+  quizTitle.textContent = getLearningQuizTitle(9, "Short Videos Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1099,7 +1110,8 @@ function openWednesdayQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = wednesdayQuiz;
-  quizTitle.textContent = "Wednesday Quiz";
+  activeQuizTitleIndex = 6;
+  quizTitle.textContent = getLearningQuizTitle(6, "Wednesday Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1109,7 +1121,8 @@ function openStrangerThingsQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = strangerThingsQuiz;
-  quizTitle.textContent = "Stranger Things Quiz";
+  activeQuizTitleIndex = 7;
+  quizTitle.textContent = getLearningQuizTitle(7, "Stranger Things Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1119,7 +1132,8 @@ function openTravelQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = travelQuiz;
-  quizTitle.textContent = "Travel Quiz";
+  activeQuizTitleIndex = 2;
+  quizTitle.textContent = getLearningQuizTitle(2, "Travel Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1129,7 +1143,8 @@ function openAirportQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = airportQuiz;
-  quizTitle.textContent = "Airport Quiz";
+  activeQuizTitleIndex = 3;
+  quizTitle.textContent = getLearningQuizTitle(3, "Airport Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1139,7 +1154,8 @@ function openRestaurantQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = restaurantQuiz;
-  quizTitle.textContent = "Restaurant Quiz";
+  activeQuizTitleIndex = 1;
+  quizTitle.textContent = getLearningQuizTitle(1, "Restaurant Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1149,7 +1165,8 @@ function openHotelQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = hotelQuiz;
-  quizTitle.textContent = "Hotel Quiz";
+  activeQuizTitleIndex = 4;
+  quizTitle.textContent = getLearningQuizTitle(4, "Hotel Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1159,7 +1176,8 @@ function openModernDialoguesQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = modernDialoguesQuiz;
-  quizTitle.textContent = "Modern Dialogues Quiz";
+  activeQuizTitleIndex = 8;
+  quizTitle.textContent = getLearningQuizTitle(8, "Modern Dialogues Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1169,7 +1187,8 @@ function openMeetingPeopleQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = meetingPeopleQuiz;
-  quizTitle.textContent = "Meeting People Quiz";
+  activeQuizTitleIndex = 10;
+  quizTitle.textContent = getLearningQuizTitle(10, "Meeting People Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1179,7 +1198,8 @@ function openDailyRoutineQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = dailyRoutineQuiz;
-  quizTitle.textContent = "Daily Routine Quiz";
+  activeQuizTitleIndex = 11;
+  quizTitle.textContent = getLearningQuizTitle(11, "Daily Routine Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1189,7 +1209,8 @@ function openWorkStudyQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = workStudyQuiz;
-  quizTitle.textContent = "Work & Study Quiz";
+  activeQuizTitleIndex = 12;
+  quizTitle.textContent = getLearningQuizTitle(12, "Work & Study Quiz");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1199,7 +1220,8 @@ function openFinalChallengeQuiz() {
   quizScore = 0;
   quizAnswered = false;
   activeQuiz = finalChallengeQuiz;
-  quizTitle.textContent = "Polyglot Final Challenge";
+  activeQuizTitleIndex = 13;
+  quizTitle.textContent = getLearningQuizTitle(13, "Polyglot Final Challenge");
   quizModal.classList.add("active");
   renderQuizQuestion();
 }
@@ -1330,9 +1352,9 @@ const closeMusic = document.querySelector("#closeMusic");
 function updateMusicCards() {
   const lesson = getMusicLesson();
 
-  musicCardPhrase.textContent = lesson.phrase;
-  musicCardTranslation.textContent = lesson.translation;
-  musicCardWords.textContent = lesson.words.map(item => item.word).join(", ");
+  if (musicCardPhrase) musicCardPhrase.textContent = lesson.phrase;
+  if (musicCardTranslation) musicCardTranslation.textContent = lesson.translation;
+  if (musicCardWords) musicCardWords.textContent = lesson.words.map(item => item.word).join(", ");
 }
 
 function openMusicModal(type) {
@@ -1551,7 +1573,7 @@ const translations = {
     shortVideosTrack: "📱 Short Videos Track",
     finalChallenge: "🏆 Final Challenge",
     levelWord: "Level",
-    finalWord: "Final",
+    finalWord: "Финал",
     nextQuestionBtn: "Следующий вопрос",
     quizQuestionProgress: "Вопрос",
     quizOf: "из",
@@ -1678,7 +1700,7 @@ const translations = {
     shortVideosTrack: "📱 Қысқа видео бағыты",
     finalChallenge: "🏆 Қорытынды сынақ",
     levelWord: "Деңгей",
-    finalWord: "Финал",
+    finalWord: "Қорытынды",
     nextQuestionBtn: "Келесі сұрақ",
     quizQuestionProgress: "Сұрақ",
     quizOf: "/",
@@ -2181,108 +2203,256 @@ Object.keys(localizedPageData).forEach(lang => {
 
 const learningContent = {
   English: {
-    useDefaultContent: true,
     profileLanguage: "English",
-    shortLesson: {
-      category: "Meet & Greet • Beginner",
-      phrase: "Nice to meet you.",
-      translation: "Приятно познакомиться.",
-      explanation: ["<strong>nice</strong> — приятно", "<strong>meet</strong> — познакомиться", "<strong>you</strong> — ты / вы"],
-      quiz: { question: "Что означает фраза: Nice to meet you?", answers: ["Приятно познакомиться.", "Как дела?", "Спасибо."] }
-    },
+    shortPhrase: "Nice to meet you.",
+    shortTranslation: "Приятно познакомиться.",
+    shortExplanation: ["<strong>nice</strong> — приятно", "<strong>meet</strong> — познакомиться", "<strong>you</strong> — ты / вы"],
+    shortQuizQuestion: "Что означает фраза: Nice to meet you?",
+    seriesPhrase: "How you doin'?",
+    seriesTranslation: "Как дела?",
+    seriesExplanation: "Неформальное приветствие, которое часто используется в разговорной речи.",
+    musicPhrase: "I keep thinking about you.",
+    musicTranslation: "Я продолжаю думать о тебе.",
+    musicWords: [{ word: "keep", translation: "продолжать" }, { word: "thinking", translation: "думать" }, { word: "about", translation: "о / про" }],
+    dictionaryWords: [{ word: "meet", translation: "познакомиться" }, { word: "you", translation: "ты / вы" }, { word: "nice", translation: "приятно" }, { word: "airport", translation: "аэропорт" }, { word: "travel", translation: "путешествие" }, { word: "awesome", translation: "классный" }],
     grammarExamples: ["I study English every day.", "I am watching a series now.", "I watched a movie yesterday."],
-    dictionaryWords: [
-      { word: "meet", translation: "познакомиться" },
-      { word: "you", translation: "ты / вы" },
-      { word: "nice", translation: "приятно" }
-    ]
+    quizTitles: ["Coffee Shop Quiz", "Restaurant Quiz", "Travel Quiz", "Airport Quiz", "Hotel Quiz", "Friends Quiz", "Wednesday Quiz", "Stranger Things Quiz", "Modern Dialogues Quiz", "Small Talk Quiz", "Meeting People Quiz", "Daily Routine Quiz", "Work & Study Quiz", "Polyglot Certification Challenge"],
+    previewPhrase: "“What are you up to?” — Чем занимаешься?",
+    dashboardLevelText: "Intermediate English"
   },
   Türkçe: {
     profileLanguage: "Türkçe",
-    shortLesson: {
-      category: "Tanışma • Beginner",
-      phrase: "Tanıştığıma memnun oldum.",
-      translation: "Приятно познакомиться.",
-      explanation: ["<strong>tanışmak</strong> — знакомиться", "<strong>memnun</strong> — довольный / рад", "<strong>oldum</strong> — я стал / мне стало"],
-      quiz: { question: "Что означает фраза: Tanıştığıma memnun oldum?", answers: ["Приятно познакомиться.", "Где станция?", "Спасибо."] }
-    },
+    shortPhrase: "Tanıştığıma memnun oldum.",
+    shortTranslation: "Приятно познакомиться.",
+    shortExplanation: ["<strong>tanışmak</strong> — знакомиться", "<strong>memnun</strong> — довольный / рад", "<strong>oldum</strong> — я стал / мне стало"],
+    shortQuizQuestion: "Что означает фраза: Tanıştığıma memnun oldum?",
+    seriesPhrase: "Nasılsın?",
+    seriesTranslation: "Как дела?",
+    seriesExplanation: "Повседневное турецкое приветствие и вопрос о состоянии собеседника.",
+    musicPhrase: "Seni düşünmeye devam ediyorum.",
+    musicTranslation: "Я продолжаю думать о тебе.",
+    musicWords: [{ word: "seni", translation: "тебя" }, { word: "düşünmek", translation: "думать" }, { word: "devam", translation: "продолжение" }],
+    dictionaryWords: [{ word: "tanışmak", translation: "знакомиться" }, { word: "memnun", translation: "довольный / рад" }, { word: "oldum", translation: "я стал / мне стало" }, { word: "havaalanı", translation: "аэропорт" }, { word: "seyahat", translation: "путешествие" }, { word: "harika", translation: "классный" }],
     grammarExamples: ["Her gün Türkçe çalışıyorum.", "Şimdi bir dizi izliyorum.", "Dün bir film izledim."],
-    dictionaryWords: [
-      { word: "tanışmak", translation: "знакомиться" },
-      { word: "memnun", translation: "довольный / рад" },
-      { word: "oldum", translation: "я стал / мне стало" }
-    ]
+    quizTitles: ["Kafe Quiz", "Restoran Quiz", "Seyahat Quiz", "Havaalanı Quiz", "Otel Quiz", "Selamlaşma Quiz", "Günlük Konuşma Quiz", "Arkadaşlık Quiz", "Modern Diyaloglar Quiz", "Kısa Konuşma Quiz", "Tanışma Quiz", "Günlük Rutin Quiz", "İş ve Eğitim Quiz", "Polyglot Final Quiz"],
+    previewPhrase: "“Ne yapıyorsun?” — Чем занимаешься?",
+    dashboardLevelText: "Intermediate Türkçe"
   },
   Қазақша: {
     profileLanguage: "Қазақша",
-    shortLesson: {
-      category: "Танысу • Beginner",
-      phrase: "Танысқаныма қуаныштымын.",
-      translation: "Приятно познакомиться.",
-      explanation: ["<strong>танысу</strong> — знакомиться", "<strong>қуаныш</strong> — радость", "<strong>мен</strong> — я"],
-      quiz: { question: "Что означает фраза: Танысқаныма қуаныштымын?", answers: ["Приятно познакомиться.", "Как дела?", "Спасибо."] }
-    },
+    shortPhrase: "Танысқаныма қуаныштымын.",
+    shortTranslation: "Приятно познакомиться.",
+    shortExplanation: ["<strong>танысу</strong> — знакомиться", "<strong>қуаныш</strong> — радость", "<strong>мен</strong> — я"],
+    shortQuizQuestion: "Что означает фраза: Танысқаныма қуаныштымын?",
+    seriesPhrase: "Қалайсың?",
+    seriesTranslation: "Как дела?",
+    seriesExplanation: "Короткое казахское приветствие, которое часто используют в разговоре.",
+    musicPhrase: "Мен сені ойлай беремін.",
+    musicTranslation: "Я продолжаю думать о тебе.",
+    musicWords: [{ word: "мен", translation: "я" }, { word: "сені", translation: "тебя" }, { word: "ойлау", translation: "думать" }],
+    dictionaryWords: [{ word: "танысу", translation: "знакомиться" }, { word: "қуаныш", translation: "радость" }, { word: "мен", translation: "я" }, { word: "әуежай", translation: "аэропорт" }, { word: "саяхат", translation: "путешествие" }, { word: "керемет", translation: "классный" }],
     grammarExamples: ["Мен күн сайын қазақ тілін оқимын.", "Мен қазір сериал көріп отырмын.", "Мен кеше фильм көрдім."],
-    dictionaryWords: [
-      { word: "танысу", translation: "знакомиться" },
-      { word: "қуаныш", translation: "радость" },
-      { word: "мен", translation: "я" }
-    ]
+    quizTitles: ["Кафе Quiz", "Мейрамхана Quiz", "Саяхат Quiz", "Әуежай Quiz", "Қонақүй Quiz", "Амандасу Quiz", "Күнделікті сөйлеу Quiz", "Достар Quiz", "Заманауи диалогтар Quiz", "Қысқа әңгіме Quiz", "Танысу Quiz", "Күн тәртібі Quiz", "Жұмыс және оқу Quiz", "Polyglot финал Quiz"],
+    previewPhrase: "“Немен айналысып жатырсың?” — Чем занимаешься?",
+    dashboardLevelText: "Intermediate Қазақша"
   },
   Deutsch: {
     profileLanguage: "Deutsch",
-    shortLesson: {
-      category: "Begrüßung • Beginner",
-      phrase: "Schön, dich kennenzulernen.",
-      translation: "Приятно познакомиться.",
-      explanation: ["<strong>schön</strong> — приятно", "<strong>kennenlernen</strong> — знакомиться", "<strong>dich</strong> — тебя"],
-      quiz: { question: "Что означает фраза: Schön, dich kennenzulernen?", answers: ["Приятно познакомиться.", "Где станция?", "До завтра."] }
-    },
+    shortPhrase: "Schön, dich kennenzulernen.",
+    shortTranslation: "Приятно познакомиться.",
+    shortExplanation: ["<strong>schön</strong> — приятно", "<strong>kennenlernen</strong> — знакомиться", "<strong>dich</strong> — тебя"],
+    shortQuizQuestion: "Что означает фраза: Schön, dich kennenzulernen?",
+    seriesPhrase: "Wie geht's?",
+    seriesTranslation: "Как дела?",
+    seriesExplanation: "Разговорный немецкий вопрос о самочувствии собеседника.",
+    musicPhrase: "Ich denke weiter an dich.",
+    musicTranslation: "Я продолжаю думать о тебе.",
+    musicWords: [{ word: "ich", translation: "я" }, { word: "denken", translation: "думать" }, { word: "dich", translation: "тебя" }],
+    dictionaryWords: [{ word: "schön", translation: "приятно" }, { word: "kennenlernen", translation: "знакомиться" }, { word: "dich", translation: "тебя" }, { word: "Flughafen", translation: "аэропорт" }, { word: "Reise", translation: "путешествие" }, { word: "toll", translation: "классный" }],
     grammarExamples: ["Ich lerne jeden Tag Deutsch.", "Ich schaue jetzt eine Serie.", "Ich habe gestern einen Film gesehen."],
-    dictionaryWords: [
-      { word: "schön", translation: "приятно" },
-      { word: "kennenlernen", translation: "знакомиться" },
-      { word: "dich", translation: "тебя" }
-    ]
+    quizTitles: ["Café Quiz", "Restaurant Quiz", "Reise Quiz", "Flughafen Quiz", "Hotel Quiz", "Begrüßung Quiz", "Alltagsgespräch Quiz", "Freunde Quiz", "Moderne Dialoge Quiz", "Small Talk Quiz", "Kennenlernen Quiz", "Tagesroutine Quiz", "Arbeit und Studium Quiz", "Polyglot Finale Quiz"],
+    previewPhrase: "“Was machst du gerade?” — Чем занимаешься?",
+    dashboardLevelText: "Intermediate Deutsch"
   },
   Français: {
     profileLanguage: "Français",
-    shortLesson: {
-      category: "Rencontre • Beginner",
-      phrase: "Ravi de vous rencontrer.",
-      translation: "Приятно познакомиться.",
-      explanation: ["<strong>ravi</strong> — рад", "<strong>rencontrer</strong> — встречать / знакомиться", "<strong>vous</strong> — вы"],
-      quiz: { question: "Что означает фраза: Ravi de vous rencontrer?", answers: ["Приятно познакомиться.", "Как пройти?", "Спасибо."] }
-    },
+    shortPhrase: "Ravi de vous rencontrer.",
+    shortTranslation: "Приятно познакомиться.",
+    shortExplanation: ["<strong>ravi</strong> — рад", "<strong>rencontrer</strong> — встречать / знакомиться", "<strong>vous</strong> — вы"],
+    shortQuizQuestion: "Что означает фраза: Ravi de vous rencontrer?",
+    seriesPhrase: "Comment ça va ?",
+    seriesTranslation: "Как дела?",
+    seriesExplanation: "Естественный французский вопрос о том, как дела у собеседника.",
+    musicPhrase: "Je continue de penser à vous.",
+    musicTranslation: "Я продолжаю думать о тебе.",
+    musicWords: [{ word: "continuer", translation: "продолжать" }, { word: "penser", translation: "думать" }, { word: "vous", translation: "вы" }],
+    dictionaryWords: [{ word: "ravi", translation: "рад" }, { word: "rencontrer", translation: "встречать / знакомиться" }, { word: "vous", translation: "вы" }, { word: "aéroport", translation: "аэропорт" }, { word: "voyage", translation: "путешествие" }, { word: "super", translation: "классный" }],
     grammarExamples: ["J'étudie le français chaque jour.", "Je regarde une série maintenant.", "J'ai regardé un film hier."],
-    dictionaryWords: [
-      { word: "ravi", translation: "рад" },
-      { word: "rencontrer", translation: "встречать / знакомиться" },
-      { word: "vous", translation: "вы" }
-    ]
+    quizTitles: ["Café Quiz", "Restaurant Quiz", "Voyage Quiz", "Aéroport Quiz", "Hôtel Quiz", "Salutations Quiz", "Dialogue quotidien Quiz", "Amis Quiz", "Dialogues modernes Quiz", "Conversation courte Quiz", "Rencontre Quiz", "Routine quotidienne Quiz", "Travail et études Quiz", "Polyglot Quiz final"],
+    previewPhrase: "“Tu fais quoi ?” — Чем занимаешься?",
+    dashboardLevelText: "Intermediate Français"
   },
   한국어: {
     profileLanguage: "한국어",
-    shortLesson: {
-      category: "인사 • Beginner",
-      phrase: "만나서 반가워요.",
-      translation: "Приятно познакомиться.",
-      explanation: ["<strong>만나다</strong> — встречать", "<strong>반갑다</strong> — быть радостным встрече", "<strong>요</strong> — вежливое окончание"],
-      quiz: { question: "Что означает фраза: 만나서 반가워요?", answers: ["Приятно познакомиться.", "Где кафе?", "Спасибо."] }
-    },
+    shortPhrase: "만나서 반가워요.",
+    shortTranslation: "Приятно познакомиться.",
+    shortExplanation: ["<strong>만나다</strong> — встречать", "<strong>반갑다</strong> — быть радостным встрече", "<strong>요</strong> — вежливое окончание"],
+    shortQuizQuestion: "Что означает фраза: 만나서 반가워요?",
+    seriesPhrase: "어떻게 지내요?",
+    seriesTranslation: "Как дела?",
+    seriesExplanation: "Вежливый корейский вопрос о том, как поживает собеседник.",
+    musicPhrase: "당신 생각을 계속해요.",
+    musicTranslation: "Я продолжаю думать о тебе.",
+    musicWords: [{ word: "당신", translation: "вы / ты" }, { word: "생각", translation: "мысль" }, { word: "계속", translation: "продолжать" }],
+    dictionaryWords: [{ word: "만나다", translation: "встречать" }, { word: "반갑다", translation: "быть радостным встрече" }, { word: "요", translation: "вежливое окончание" }, { word: "공항", translation: "аэропорт" }, { word: "여행", translation: "путешествие" }, { word: "멋져요", translation: "классный" }],
     grammarExamples: ["저는 매일 한국어를 공부해요.", "저는 지금 드라마를 보고 있어요.", "저는 어제 영화를 봤어요."],
-    dictionaryWords: [
-      { word: "만나다", translation: "встречать" },
-      { word: "반갑다", translation: "быть радостным встрече" },
-      { word: "요", translation: "вежливое окончание" }
-    ]
+    quizTitles: ["카페 Quiz", "식당 Quiz", "여행 Quiz", "공항 Quiz", "호텔 Quiz", "인사 Quiz", "일상 대화 Quiz", "친구 Quiz", "현대 대화 Quiz", "짧은 대화 Quiz", "만남 Quiz", "일상 루틴 Quiz", "일과 공부 Quiz", "Polyglot 최종 Quiz"],
+    previewPhrase: "“뭐 하고 있어요?” — Чем занимаешься?",
+    dashboardLevelText: "Intermediate 한국어"
   }
 };
+
+const learningInterfaceContent = {
+  ru: {
+    shortTranslation: "Приятно познакомиться.",
+    stationAnswer: "Где станция?",
+    thanksAnswer: "Спасибо.",
+    seriesTranslation: "Как дела?",
+    musicTranslation: "Я продолжаю думать о тебе.",
+    meaningQuestion: phrase => `Что означает фраза: ${phrase}`,
+    wordTranslations: {
+      meet: "познакомиться", you: "ты / вы", nice: "приятно", airport: "аэропорт", travel: "путешествие", awesome: "классный", keep: "продолжать", thinking: "думать", about: "о / про",
+      "tanışmak": "знакомиться", memnun: "довольный / рад", oldum: "я стал / мне стало", havaalanı: "аэропорт", seyahat: "путешествие", harika: "классный",
+      "танысу": "знакомиться", "қуаныш": "радость", "мен": "я", "әуежай": "аэропорт", "саяхат": "путешествие", "керемет": "классный",
+      "schön": "приятно", kennenlernen: "знакомиться", dich: "тебя", Flughafen: "аэропорт", Reise: "путешествие", toll: "классный",
+      ravi: "рад", rencontrer: "встречать / знакомиться", vous: "вы", "aéroport": "аэропорт", voyage: "путешествие", super: "классный",
+      "만나다": "встречать", "반갑다": "быть радостным встрече", "요": "вежливое окончание", "공항": "аэропорт", "여행": "путешествие", "멋져요": "классный",
+      seni: "тебя", düşünmek: "думать", devam: "продолжение", "сені": "тебя", "ойлау": "думать", ich: "я", denken: "думать", continuer: "продолжать", penser: "думать", "당신": "вы / ты", "생각": "мысль", "계속": "продолжать"
+    },
+    seriesExplanations: {
+      English: "Неформальное приветствие, которое часто используется в разговорной речи.",
+      Türkçe: "Повседневное турецкое приветствие и вопрос о состоянии собеседника.",
+      Қазақша: "Короткое казахское приветствие, которое часто используют в разговоре.",
+      Deutsch: "Разговорный немецкий вопрос о самочувствии собеседника.",
+      Français: "Естественный французский вопрос о том, как дела у собеседника.",
+      한국어: "Вежливый корейский вопрос о том, как поживает собеседник."
+    }
+  },
+  en: {
+    shortTranslation: "Nice to meet you.",
+    stationAnswer: "Where is the station?",
+    thanksAnswer: "Thank you.",
+    seriesTranslation: "How are you?",
+    musicTranslation: "I keep thinking about you.",
+    meaningQuestion: phrase => `What does this phrase mean: ${phrase}`,
+    wordTranslations: {
+      meet: "meet", you: "you", nice: "nice", airport: "airport", travel: "travel", awesome: "awesome", keep: "continue", thinking: "thinking", about: "about",
+      "tanışmak": "to meet", memnun: "pleased", oldum: "I became / I am", havaalanı: "airport", seyahat: "travel", harika: "awesome",
+      "танысу": "to meet", "қуаныш": "joy", "мен": "I", "әуежай": "airport", "саяхат": "travel", "керемет": "awesome",
+      "schön": "nice", kennenlernen: "to get to know", dich: "you", Flughafen: "airport", Reise: "travel", toll: "awesome",
+      ravi: "pleased", rencontrer: "to meet", vous: "you", "aéroport": "airport", voyage: "travel", super: "awesome",
+      "만나다": "to meet", "반갑다": "to be glad", "요": "polite ending", "공항": "airport", "여행": "travel", "멋져요": "awesome",
+      seni: "you", düşünmek: "to think", devam: "continuation", "сені": "you", "ойлау": "to think", ich: "I", denken: "to think", continuer: "to continue", penser: "to think", "당신": "you", "생각": "thought", "계속": "continue"
+    },
+    seriesExplanations: {
+      English: "An informal greeting often used in everyday speech.",
+      Türkçe: "A common Turkish greeting and question about how someone is doing.",
+      Қазақша: "A short Kazakh greeting used in everyday conversation.",
+      Deutsch: "A conversational German question about someone's wellbeing.",
+      Français: "A natural French question asking how someone is doing.",
+      한국어: "A polite Korean question asking how someone is doing."
+    }
+  },
+  kk: {
+    shortTranslation: "Танысқаныма қуаныштымын.",
+    stationAnswer: "Станция қайда?",
+    thanksAnswer: "Рақмет.",
+    seriesTranslation: "Қалайсың?",
+    musicTranslation: "Мен сені ойлай беремін.",
+    meaningQuestion: phrase => `Бұл фраза нені білдіреді: ${phrase}`,
+    wordTranslations: {
+      meet: "танысу", you: "сен / сіз", nice: "жағымды", airport: "әуежай", travel: "саяхат", awesome: "керемет", keep: "жалғастыру", thinking: "ойлау", about: "туралы",
+      "tanışmak": "танысу", memnun: "қуанышты", oldum: "болдым", havaalanı: "әуежай", seyahat: "саяхат", harika: "керемет",
+      "танысу": "танысу", "қуаныш": "қуаныш", "мен": "мен", "әуежай": "әуежай", "саяхат": "саяхат", "керемет": "керемет",
+      "schön": "жағымды", kennenlernen: "танысу", dich: "сені", Flughafen: "әуежай", Reise: "саяхат", toll: "керемет",
+      ravi: "қуанышты", rencontrer: "танысу", vous: "сіз", "aéroport": "әуежай", voyage: "саяхат", super: "керемет",
+      "만나다": "кездесу", "반갑다": "қуану", "요": "сыпайы жалғау", "공항": "әуежай", "여행": "саяхат", "멋져요": "керемет",
+      seni: "сені", düşünmek: "ойлау", devam: "жалғастыру", "сені": "сені", "ойлау": "ойлау", ich: "мен", denken: "ойлау", continuer: "жалғастыру", penser: "ойлау", "당신": "сіз", "생각": "ой", "계속": "жалғастыру"
+    },
+    seriesExplanations: {
+      English: "Күнделікті сөйлеуде жиі қолданылатын бейресми амандасу.",
+      Türkçe: "Сұхбаттасушының жағдайын сұрайтын күнделікті түрікше амандасу.",
+      Қазақша: "Күнделікті сөйлесуде қолданылатын қысқа қазақша амандасу.",
+      Deutsch: "Сұхбаттасушының халін сұрайтын ауызекі немісше сұрақ.",
+      Français: "Сұхбаттасушының жағдайын сұрайтын табиғи французша сұрақ.",
+      한국어: "Сұхбаттасушының халін сұрайтын сыпайы корейше сұрақ."
+    }
+  },
+  tr: {
+    shortTranslation: "Tanıştığımıza memnun oldum.",
+    stationAnswer: "İstasyon nerede?",
+    thanksAnswer: "Teşekkürler.",
+    seriesTranslation: "Nasılsın?",
+    musicTranslation: "Seni düşünmeye devam ediyorum.",
+    meaningQuestion: phrase => `Bu ifade ne anlama gelir: ${phrase}`,
+    wordTranslations: {
+      meet: "tanışmak", you: "sen / siz", nice: "hoş", airport: "havaalanı", travel: "seyahat", awesome: "harika", keep: "devam etmek", thinking: "düşünmek", about: "hakkında",
+      "tanışmak": "tanışmak", memnun: "memnun", oldum: "oldum", havaalanı: "havaalanı", seyahat: "seyahat", harika: "harika",
+      "танысу": "tanışmak", "қуаныш": "sevinç", "мен": "ben", "әуежай": "havaalanı", "саяхат": "seyahat", "керемет": "harika",
+      "schön": "hoş", kennenlernen: "tanışmak", dich: "seni", Flughafen: "havaalanı", Reise: "seyahat", toll: "harika",
+      ravi: "memnun", rencontrer: "tanışmak", vous: "siz", "aéroport": "havaalanı", voyage: "seyahat", super: "harika",
+      "만나다": "tanışmak", "반갑다": "memnun olmak", "요": "kibar ek", "공항": "havaalanı", "여행": "seyahat", "멋져요": "harika",
+      seni: "seni", düşünmek: "düşünmek", devam: "devam", "сені": "seni", "ойлау": "düşünmek", ich: "ben", denken: "düşünmek", continuer: "devam etmek", penser: "düşünmek", "당신": "siz", "생각": "düşünce", "계속": "devam"
+    },
+    seriesExplanations: {
+      English: "Günlük konuşmada sık kullanılan samimi bir selamlaşma.",
+      Türkçe: "Karşınızdaki kişinin nasıl olduğunu soran günlük bir Türkçe ifade.",
+      Қазақша: "Günlük konuşmada kullanılan kısa bir Kazakça selamlaşma.",
+      Deutsch: "Karşınızdaki kişinin halini soran konuşma dilinde Almanca bir soru.",
+      Français: "Karşınızdaki kişinin nasıl olduğunu soran doğal bir Fransızca soru.",
+      한국어: "Karşınızdaki kişinin nasıl olduğunu soran kibar bir Korece soru."
+    }
+  }
+};
+
+function getLearningInterfaceContent() {
+  return learningInterfaceContent[currentSiteLanguage] || learningInterfaceContent.ru;
+}
+
+function getLearningWordTranslation(word, fallback) {
+  const ui = getLearningInterfaceContent();
+  return ui.wordTranslations[word] || fallback;
+}
+
+function getLearningDictionaryWords(content) {
+  return (content.dictionaryWords || []).map(item => ({
+    word: item.word,
+    translation: getLearningWordTranslation(item.word, item.translation)
+  }));
+}
+
+function getLearningExplanation(content) {
+  return getLearningDictionaryWords(content)
+    .slice(0, 3)
+    .map(item => `<strong>${item.word}</strong> — ${item.translation}`);
+}
+
+function getLearningQuizAnswers(content) {
+  const ui = getLearningInterfaceContent();
+  return [ui.shortTranslation, ui.stationAnswer, ui.thanksAnswer];
+}
 
 function getSeriesVideoLesson() {
   const base = seriesVideoLessons[currentSeriesVideoLesson];
   const localized = translations[currentSiteLanguage].seriesVideoLessons[currentSeriesVideoLesson];
-  return { ...base, ...localized };
+  const content = learningContent[currentLearningLanguage] || learningContent.English;
+  const ui = getLearningInterfaceContent();
+  const learningLesson = {
+    phrase: content.seriesPhrase,
+    translation: ui.seriesTranslation,
+    explanation: ui.seriesExplanations[currentLearningLanguage] || content.seriesExplanation
+  };
+  return { ...base, ...localized, ...learningLesson };
 }
 
 function applySeriesVideoLesson() {
@@ -2297,18 +2467,24 @@ function applySeriesVideoLesson() {
 function getShortLesson() {
   const base = shortLessons[currentShort];
   const localized = translations[currentSiteLanguage].shortLessons[currentShort];
-  const currentLearningContent = learningContent[currentLearningLanguage];
-  const learningLesson = currentLearningContent?.useDefaultContent ? null : currentLearningContent?.shortLesson;
-  const quizAnswers = learningLesson?.quiz?.answers || localized.quiz.answers;
+  const content = learningContent[currentLearningLanguage] || learningContent.English;
+  const ui = getLearningInterfaceContent();
+  const learningLesson = {
+    phrase: content.shortPhrase,
+    translation: ui.shortTranslation,
+    explanation: getLearningExplanation(content)
+  };
+  const quizQuestion = ui.meaningQuestion(content.shortPhrase);
+  const quizAnswers = getLearningQuizAnswers(content);
   return {
     ...base,
     ...localized,
     ...learningLesson,
     quiz: {
-      question: learningLesson?.quiz?.question || localized.quiz.question,
+      question: quizQuestion,
       answers: base.quiz.answers.map((answer, index) => ({
         ...answer,
-        text: quizAnswers[index]
+        text: quizAnswers[index] || localized.quiz.answers[index]
       }))
     }
   };
@@ -2334,12 +2510,21 @@ function applyShortLesson(resetQuiz) {
 function getMusicLesson() {
   const base = musicData[currentMusicIndex];
   const localized = translations[currentSiteLanguage].musicData[currentMusicIndex];
-  return { ...base, ...localized };
+  const content = learningContent[currentLearningLanguage] || learningContent.English;
+  const learningLesson = {
+    phrase: content.musicPhrase,
+    translation: getLearningInterfaceContent().musicTranslation,
+    words: content.musicWords.map(item => ({
+      ...item,
+      translation: getLearningWordTranslation(item.word, item.translation)
+    }))
+  };
+  return { ...base, ...localized, ...learningLesson };
 }
 
 function applyDictionaryDefaults() {
-  const currentLearningContent = learningContent[currentLearningLanguage];
-  const learningWords = currentLearningContent?.useDefaultContent ? [] : currentLearningContent?.dictionaryWords || [];
+  const content = learningContent[currentLearningLanguage] || learningContent.English;
+  const learningWords = getLearningDictionaryWords(content);
   const translationsList = translations[currentSiteLanguage].dictionaryDefaults;
   const defaultWords = ["latte", "station", "meet", "airport", "travel", "awesome"];
   document.querySelectorAll(".dictionary-grid .word-card").forEach((card, index) => {
@@ -2366,8 +2551,30 @@ function applyLearningLanguage(language) {
 
   const content = learningContent[currentLearningLanguage];
 
+  const previewPhrase = document.querySelector("#previewPhrase");
+  if (previewPhrase) previewPhrase.textContent = content.previewPhrase;
+
+  const dashboardLevelText = document.querySelector("#dashboardLevelText");
+  if (dashboardLevelText) dashboardLevelText.textContent = content.dashboardLevelText;
+
   if (profileLearningLang) {
     profileLearningLang.textContent = content.profileLanguage;
+  }
+
+  document.querySelectorAll("#tests h4").forEach((title, index) => {
+    if (content.quizTitles[index]) {
+      title.textContent = content.quizTitles[index];
+    }
+  });
+
+  document.querySelectorAll("#tests .track-column > span").forEach(span => {
+    if (translations[currentSiteLanguage]?.finalWord) {
+      span.textContent = translations[currentSiteLanguage].finalWord;
+    }
+  });
+
+  if (quizTitle && content.quizTitles[activeQuizTitleIndex]) {
+    quizTitle.textContent = content.quizTitles[activeQuizTitleIndex];
   }
 
   document.querySelectorAll("#grammar .grammar-card").forEach((card, index) => {
@@ -2378,6 +2585,8 @@ function applyLearningLanguage(language) {
   });
 
   applyShortLesson(true);
+  applySeriesVideoLesson();
+  updateMusicCards();
   applyDictionaryDefaults();
 }
 
@@ -2576,3 +2785,6 @@ if (savedLang) {
 } else {
   changeSiteLanguage(currentSiteLanguage);
 }
+
+const savedLearningLang = localStorage.getItem("polyglotLearningLang") || "English";
+applyLearningLanguage(savedLearningLang);
