@@ -35,6 +35,18 @@ const stepDescription = document.querySelector("#stepDescription");
 const stepOptions = document.querySelector("#stepOptions");
 const nextStepBtn = document.querySelector("#nextStepBtn");
 const backStepBtn = document.querySelector("#backStepBtn");
+const startLearningBtn = document.querySelector(".start-btn");
+const onboardingSection = document.querySelector("#onboarding");
+
+if (startLearningBtn && onboardingSection) {
+  startLearningBtn.addEventListener("click", () => {
+    onboardingSection.classList.remove("hidden", "hidden-content");
+    onboardingSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
+}
 
 function isLearningLanguageStep(step) {
   return step.options.includes("Deutsch") && step.options.includes("한국어");
